@@ -35,7 +35,7 @@
                         </li>
                     </ul>
                     <form class="d-flex">
-                    	<a class="btn btn-success"> 로그인 </a>
+                    	<a class="btn btn-success" href="/account/login"> 로그인 </a>
                         <button class="btn btn-outline-dark" type="submit">
                             <i class="bi-cart-fill me-1"></i>
                             Cart
