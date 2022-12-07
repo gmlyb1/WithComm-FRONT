@@ -1,10 +1,76 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd">
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mybatis-spring="http://mybatis.org/schema/mybatis-spring"
+	xmlns:jdbc="http://www.springframework.org/schema/jdbc"
+	xsi:schemaLocation="http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc-4.3.xsd
+		http://mybatis.org/schema/mybatis-spring http://mybatis.org/schema/mybatis-spring-1.2.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.3.xsd">
 	
 	<!-- Root Context: defines shared resources visible to all other web components -->
+	<!-- 프로젝트 전체에 필요한 설정정보를 지정하는파일(웹정보 제외)  -->
+	
+	<!-- DB연결객체(DataSource) -->
+	
+		<!-- DB연결객체(DataSource) -->
+	<!-- Root Context: defines shared resources visible to all other web components -->
+	<!-- 프로젝트 전체에 필요한 설정정보를 지정하는파일(웹정보 제외)  -->
+	
+	<!-- DB연결객체(DataSource) -->
+	<bean id="dataSource" 
+	      class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+	      
+	      <property name="driverClassName" 
+	      			value="com.mysql.cj.jdbc.Driver"
+	      ></property>
+	      <property name="url" 
+	      value="jdbc:mysql://localhost:3306/SOFT?useSSL=false&amp;serverTimezone=Asia/Seoul">
+	      </property>
+	      <property name="username">
+	      	<value>root</value>
+	      </property>
+	      <property name="password">
+	        <value>1234</value>
+	      </property>
+	</bean>
+	<!-- DB연결객체(DataSource) -->
+	
+	<!-- sqlSessionFactory 객체 : Mybatis와 스프링의 연동(연결정보,SQL실행) -->
+	<bean id="sqlSessionFactory" 
+		class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="dataSource"></property>
+		<property name="configLocation" 
+				  value="classpath:/mybatis-config.xml"></property>
+		<!-- classpath:/ 주소는 src/main/resources 폴더를 의미한다. -->
 		
+		<!-- MyBatis와 Mapper를 연결 -->
+		<property name="mapperLocations" 
+				 value="classpath:mappers/*.xml"></property>
+				 
+	</bean>
+	
+	<!-- sqlSessionFactory 객체 : Mybatis와 스프링의 연동(연결정보,SQL실행) -->
+	
+	<!-- sqlSession 객체  -->
+	<bean id="sqlSession" 
+	      class="org.mybatis.spring.SqlSessionTemplate" 
+	      destroy-method="clearCache" >
+	      <constructor-arg name="sqlSessionFactory" ref="sqlSessionFactory"/>
+	
+	</bean>
+	<!-- sqlSession 객체  -->
+	
+	
+	<!-- rootcontext 파일에서 패키지 정보를 읽어온다.(객체정보를 가져옴) -->
+	<mybatis-spring:scan base-package="com.with.community.dao"/>
+	<context:component-scan base-package="com.with.community.dao"></context:component-scan>
+	<context:component-scan base-package="com.with.community.service"></context:component-scan>
+	<context:component-scan base-package="com.with.community.vo"></context:component-scan>
+	<context:component-scan base-package="com.with.community.mappers"></context:component-scan>
 		
 		
 </beans>

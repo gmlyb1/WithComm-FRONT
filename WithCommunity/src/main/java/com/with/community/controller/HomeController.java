@@ -1,4 +1,4 @@
-package com.with.community;
+package com.with.community.controller;
 
 import java.text.DateFormat;
 import java.util.Date;
@@ -32,6 +32,8 @@ public class HomeController {
 		String formattedDate = dateFormat.format(date);
 		
 		model.addAttribute("serverTime", formattedDate );
+		
+		
 		
 		return "home";
 	}
