@@ -32,55 +32,7 @@
 	rel="stylesheet" />
 <!-- Core theme CSS (includes Bootstrap)-->
 <link href="/resources/css/styles.css" rel="stylesheet" />
-</head>
-<body>
-	<!-- Navigation-->
-	<nav class="navbar navbar-expand-lg navbar-light bg-light">
-		<div class="container px-4 px-lg-5">
-			<a class="navbar-brand" href="#!">Start Bootstrap</a>
-			<button class="navbar-toggler" type="button"
-				data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
-				aria-controls="navbarSupportedContent" aria-expanded="false"
-				aria-label="Toggle navigation">
-				<span class="navbar-toggler-icon"></span>
-			</button>
-			<div class="collapse navbar-collapse" id="navbarSupportedContent">
-				<ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
-					<li class="nav-item"><a class="nav-link active"
-						aria-current="page" href="#!">Home</a></li>
-					<li class="nav-item"><a class="nav-link" href="#!">About</a></li>
-					<li class="nav-item dropdown"><a
-						class="nav-link dropdown-toggle" id="navbarDropdown" href="#"
-						role="button" data-bs-toggle="dropdown" aria-expanded="false">Shop</a>
-						<ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-							<li><a class="dropdown-item" href="#!">All Products</a></li>
-							<li><hr class="dropdown-divider" /></li>
-							<li><a class="dropdown-item" href="#!">Popular Items</a></li>
-							<li><a class="dropdown-item" href="#!">New Arrivals</a></li>
-						</ul></li>
-				</ul>
-				<!-- 세션이 없을때 -->
-				<c:if test="${member == null }">
-					<form class="d-flex">
-						<a class="btn btn-success" href="/account/login"> 로그인 </a>
-						&nbsp;&nbsp;
-					</form>
-				</c:if>
-
-				<!-- 로그인 완료후 -->
-				<c:if test="${member != null }">
-					<form class="d-flex">
-						<span><c:out value="${member.me_name}"></c:out></span>
-						<a class="btn btn-success" href="/account/logout"> 로그아웃 </a> &nbsp;&nbsp;
-							<button class="btn btn-outline-dark" type="submit">
-								<i class="bi-cart-fill me-1"></i> 장바구니 <span
-									class="badge bg-dark text-white ms-1 rounded-pill">0</span>
-							</button>
-					</form>
-				</c:if>
-			</div>
-		</div>
-	</nav>
+<%@include file="/WEB-INF/views/include/header.jsp"%>
 	<!-- Header-->
 	<header class="bg-dark py-5">
 		<div class="container px-4 px-lg-5 my-5">
@@ -330,12 +282,7 @@
 		</div>
 	</section>
 	<!-- Footer-->
-	<footer class="py-5 bg-dark">
-		<div class="container">
-			<p class="m-0 text-center text-white">Copyright &copy; Your
-				Website 2022</p>
-		</div>
-	</footer>
+	<%@include file="/WEB-INF/views/include/footer.jsp"%>
 	<!-- Bootstrap core JS-->
 	<script
 		src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>

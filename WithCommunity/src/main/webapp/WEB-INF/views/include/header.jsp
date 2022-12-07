@@ -6,13 +6,21 @@
 <%@ page import="java.text.SimpleDateFormat"%>
 <%@ page session="true"%>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-<script type="text/javascript">
+<!-- <script type="text/javascript">
 	$(document).ready(function() {
 		var msg = "${msg}"
 		if (msg != "") {
 			alert(msg);
 		}
 	});
+</script> -->
+<script type="text/javascript">
+	$(document).ready(function() {
+		$("#logoutBtn").on("click", function() {
+			alert("로그아웃을 완료하였습니다.");
+			location.href = "/account/logout"
+		})
+	})
 </script>
 <html lang="en">
 <head>
@@ -36,7 +44,7 @@
 	<!-- Navigation-->
 	<nav class="navbar navbar-expand-lg navbar-light bg-light">
 		<div class="container px-4 px-lg-5">
-			<a class="navbar-brand" href="#!">Start Bootstrap</a>
+			<a class="navbar-brand" href="/home">SOFT SHOPPING</a>
 			<button class="navbar-toggler" type="button"
 				data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
 				aria-controls="navbarSupportedContent" aria-expanded="false"
@@ -46,17 +54,20 @@
 			<div class="collapse navbar-collapse" id="navbarSupportedContent">
 				<ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
 					<li class="nav-item"><a class="nav-link active"
-						aria-current="page" href="#!">Home</a></li>
-					<li class="nav-item"><a class="nav-link" href="#!">About</a></li>
+						aria-current="page" href="#!">홈</a></li>
+					<li class="nav-item"><a class="nav-link" href="#!">소개</a></li>
 					<li class="nav-item dropdown"><a
 						class="nav-link dropdown-toggle" id="navbarDropdown" href="#"
-						role="button" data-bs-toggle="dropdown" aria-expanded="false">Shop</a>
+						role="button" data-bs-toggle="dropdown" aria-expanded="false">상품</a>
 						<ul class="dropdown-menu" aria-labelledby="navbarDropdown">
 							<li><a class="dropdown-item" href="#!">All Products</a></li>
 							<li><hr class="dropdown-divider" /></li>
 							<li><a class="dropdown-item" href="#!">Popular Items</a></li>
 							<li><a class="dropdown-item" href="#!">New Arrivals</a></li>
 						</ul></li>
+				<c:if test="${member != null }">
+					<li class="nav-item"><a class="nav-link active" href="/board/list">게시판</a></li>
+				</c:if>
 				</ul>
 				<!-- 세션이 없을때 -->
 				<c:if test="${member == null }">
@@ -70,7 +81,7 @@
 				<c:if test="${member != null }">
 					<form class="d-flex">
 						<span><c:out value="${member.me_name}"></c:out></span>
-						<a class="btn btn-success" href="/account/logout"> 로그아웃 </a> &nbsp;&nbsp;
+						<a class="btn btn-success" href="/account/logout" id="logoutBtn" name="logoutBtn"> 로그아웃 </a> &nbsp;&nbsp;
 							<button class="btn btn-outline-dark" type="submit">
 								<i class="bi-cart-fill me-1"></i> 장바구니 <span
 									class="badge bg-dark text-white ms-1 rounded-pill">0</span>
