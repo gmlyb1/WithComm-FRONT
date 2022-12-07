@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ page session="true"%>
 <!DOCTYPE html>
 
 <html>
@@ -10,6 +11,30 @@
 <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
 <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
 <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script type="text/javascript">
+	$(document).ready(function() {
+		$("#LoginBtn").click(function() {
+			var me_email = $("#me_email").val();
+			var me_pwd = $("#me_pwd").val();
+			
+			if (document.frm.me_email.value == "") {
+				alert("이메일을 입력해 주세요.");
+				return false;
+			}
+			if (document.frm.me_pwd.value == "") {
+				alert("비밀번호를 입력해 주세요.");
+				return false;
+			}
+				
+			if (me_email != "" && me_pwd != "") {
+				return "/account/login";
+			}
+			
+		});
+	});
+</script>
 <style type="text/css">
 body {
     padding-top: 90px;
@@ -111,7 +136,7 @@ body {
 	border-color: #1CA347;
 }
 </style>
-<script type="text/javascript">
+<!-- <script type="text/javascript">
 $(function() {
 
     $('#login-form-link').click(function(e) {
@@ -130,7 +155,7 @@ $(function() {
 	});
 
 });
-</script>
+</script> -->
 </head>
 <body>
 
@@ -154,14 +179,13 @@ $(function() {
 					<div class="panel-body">
 						<div class="row">
 							<div class="col-lg-12">
-								<form id="login-form" action="https://phpoll.com/login/process"
-									method="post" role="form" style="display: block;">
+								<form name="frm" action="/account/login" method="post">
 									<div class="form-group">
-										<input type="text" name="username" id="username" tabindex="1"
+										<input type="text" name="me_email" id="me_email" tabindex="1"
 											class="form-control" placeholder="Username" value="">
 									</div>
 									<div class="form-group">
-										<input type="password" name="password" id="password"
+										<input type="password" name="me_pwd" id="me_pwd"
 											tabindex="2" class="form-control" placeholder="Password">
 									</div>
 									<div class="form-group text-center">
@@ -172,9 +196,9 @@ $(function() {
 									<div class="form-group">
 										<div class="row">
 											<div class="col-sm-6 col-sm-offset-3">
-												<input type="submit" name="login-submit" id="login-submit"
+												<button type="submit" name="LoginBtn" id="LoginBtn"
 													tabindex="4" class="form-control btn btn-login"
-													value="Log In">
+													>로그인</button>
 											</div>
 										</div>
 									</div>
