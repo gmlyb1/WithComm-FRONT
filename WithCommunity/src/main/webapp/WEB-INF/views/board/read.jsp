@@ -154,8 +154,10 @@
 										<td style="width: 60%; height: 50px;"><pre
 												style="font-family: arial;">${replyList.reply_content}</pre>
 											<p>
+											<c:if test="${member.me_name == replyList.reply_writer}">
 												<!-- <a class="btn btn-primary" href="">수정</a> / -->
 												<a class="btn btn-danger" href="javascript:remove_replyNo(${replyList.reply_no},${replyList.board_no});">삭제</a>
+											</c:if>
 											</p></td>
 										<td style="width: 35%; text-align: right;"><fmt:formatDate
 												value="${replyList.reply_regdate}" pattern="yy-MM-dd HH:mm" /></td>
@@ -170,14 +172,15 @@
 
 
 				<!-- 댓글 작성 시작 -->
-				<c:if test="${member.me_grade == '최고관리자' }">
+				 <%-- <c:if test="${member.me_grade == '최고관리자' }"> --%>
+				<c:if test="${member != null }">
 					<div>
 						<form method="post" action="/reply/write">
 						<input type="hidden" name="board_no" value="${read.board_no}">
 							<%-- <input type="hidden" id="reply_no" name="reply_no" value="${replyList.board_no}"> --%>
 							<p>
 								<label>댓글 작성자:</label> <input type="text" name="reply_writer"
-									value="${member.me_name}[${member.me_grade}]" readonly>
+									value="${member.me_name}" readonly>
 							</p>
 							<p>
 								댓글 내용:

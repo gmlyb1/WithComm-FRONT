@@ -66,6 +66,7 @@
 							<li><a class="dropdown-item" href="#!">New Arrivals</a></li>
 						</ul></li>
 				<c:if test="${member != null }">
+					<li class="nav-item"><a class="nav-link active" href="#">공지사항</a></li>
 					<li class="nav-item"><a class="nav-link active" href="/board/list">게시판</a></li>
 				</c:if>
 				</ul>
