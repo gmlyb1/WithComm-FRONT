@@ -22,7 +22,9 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.support.RequestContextUtils;
 
 import com.with.community.service.BoardService;
+import com.with.community.service.ReplyService;
 import com.with.community.vo.BoardVO;
+import com.with.community.vo.ReplyVO;
 
 
 @Controller
@@ -32,6 +34,9 @@ public class BoardController {
 	@Autowired
 	@Inject
 	private BoardService boardService;
+	
+	@Inject
+	private ReplyService replyService;
 	
 	private static final Logger logger = LoggerFactory.getLogger(BoardController.class);
 	
@@ -81,7 +86,6 @@ public class BoardController {
 			return "redirect:/board/list";
 	}
 		
-		// 게시글 조회
 		@RequestMapping(value = "/read", method=RequestMethod.GET)
 		public String BoardRead(@RequestParam("board_no") int board_no,BoardVO vo, Model model) throws Exception {
 			
@@ -89,12 +93,12 @@ public class BoardController {
 			model.addAttribute("read", boardService.BoardRead(vo.getBoard_no()));
 			
 			
-//			List<replyVO> replyList = replyService.replyList(vo.getBoard_no());
-//			model.addAttribute("replyList", replyList);
+			List<ReplyVO> replyList = replyService.replyList(vo.getBoard_no());
+			model.addAttribute("replyList", replyList);
 			// 이전글 다음글
 //			model.addAttribute("move", boardService.movePage(vo.getBoard_no()));
 			
-			System.out.println(vo.getBoard_no());
+//			System.out.println(vo.getBoard_no());
 			
 			return "/board/read";
 		}

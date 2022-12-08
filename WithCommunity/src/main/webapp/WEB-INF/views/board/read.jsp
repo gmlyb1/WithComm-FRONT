@@ -39,6 +39,14 @@
 	}
 
 </script>
+<script type="text/javascript">
+	function remove_replyNo(data1,data2) {
+		if(!confirm("삭제 하시겠습니까?")) return false;
+		else {
+			location.href="/reply/delete?reply_no="+data1+"&board_no="+data2;
+		}
+	}
+</script>
 
 
 
@@ -146,8 +154,8 @@
 										<td style="width: 60%; height: 50px;"><pre
 												style="font-family: arial;">${replyList.reply_content}</pre>
 											<p>
-												<a class="btn btn-primary" href="">수정</a> / <a
-													class="btn btn-danger" href="">삭제</a>
+												<!-- <a class="btn btn-primary" href="">수정</a> / -->
+												<a class="btn btn-danger" href="javascript:remove_replyNo(${replyList.reply_no},${replyList.board_no});">삭제</a>
 											</p></td>
 										<td style="width: 35%; text-align: right;"><fmt:formatDate
 												value="${replyList.reply_regdate}" pattern="yy-MM-dd HH:mm" /></td>
