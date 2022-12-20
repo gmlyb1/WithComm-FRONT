@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="com.with.community.dao.NoticeDAO">
+
+	<!-- 글 목록 -->
+	<select id="NoticeList" resultType="NoticeVO" parameterType="NoticeVO">
+		select
+		 *
+		from
+		 tbl_notice
+	</select>
+
+	<!--  글 작성 -->
+	<insert id="insertNotice">
+  		insert
+		 into
+		tbl_notice
+		(
+			notice_no	
+		 ,	notice_title
+		 ,  notice_content
+		 ,	notice_writer
+		 ,	notice_count
+		 ,	notice_regdate
+		)
+		values
+		(
+			#{notice_no}
+		,	#{notice_title}
+		,   #{notice_content}
+		,	#{notice_writer}
+		,	#{notice_count}
+		,	#{notice_regdate}
+		)
+	</insert>
+	
+	<!-- 게시글 조회 -->
+	<select id="NoticeRead" parameterType="int" resultType="NoticeVO">
+		select
+		 *
+		from 
+		 tbl_notice
+		where notice_no = #{notice_no}
+	
+	</select>
+	
+	<!-- 게시글 수정 -->
+	<update id="NoticeUpdate" parameterType="NoticeVO">
+		update tbl_notice
+			set notice_title = #{notice_title},	
+				notice_content = #{notice_content}
+		where notice_no = #{notice_no}
+	</update>
+	
+	<!-- 게시글 삭제 -->
+	<delete id="NoticeDelete" parameterType="int">
+		delete 
+		  from tbl_notice
+		where notice_no = #{notice_no}
+	</delete>
+
+	<!-- 조회수 -->
+	<update id="NoticeHit" parameterType="int">
+		update tbl_notice set
+		notice_count = notice_count+1
+		where notice_no = #{notice_no}
+	</update>
+	
+</mapper>
