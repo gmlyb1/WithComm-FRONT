@@ -34,9 +34,9 @@
 						회원만 이용 가능합니다.</strong></span>
 			</c:if>
 
-			<c:if test="${member != null }">
+			<%-- <c:if test="${member != null }">
 				<a href="/board/mypage" class="btn btn-success">마이페이지로 이동</a>
-			</c:if>
+			</c:if> --%>
 			<form>
 				<input type="button" class="btn btn-warning" value="페이지 새로 고침"
 					onClick="window.location.reload()">
@@ -69,7 +69,7 @@
 						</c:forEach>
 					</tbody>
 				</table>
-				<c:if test="${member != null}">
+				<c:if test="${member.me_name == '관리자'}">
 					<button type="button" onclick="location.href='/notice/create';"
 						class="btn btn-success">글쓰기</button>
 				</c:if>

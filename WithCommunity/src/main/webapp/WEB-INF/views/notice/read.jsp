@@ -76,7 +76,7 @@
 				<form role="form" method="post" name="readForm">
 				<input type="hidden" id="FILE_NO" name="FILE_NO" value="">
 					<input type="hidden" id="notice_no" name="notice_no"
-						value="${read.board_no}" />
+						value="${read.notice_no}" />
 					<%-- <input type="hidden" id="reply_no" name="reply_no" value="${replyList.board_no}"> --%>
 					<!-- 게시판 글보기  -->
 					<div class="container">
@@ -117,7 +117,7 @@
 					<div style="margin-left: 1px;">
 						<c:if test="${member.me_name == read.notice_writer}">
 							<button type="button" class="btn btn-success"
-								onclick="location.href='/board/update?board_no=${read.notice_no}';">수정</button>
+								onclick="location.href='/notice/update?notice_no=${read.notice_no}';">수정</button>
 							<button type="submit" class="btn btn-danger" id="delete_btn">삭제</button>
 						</c:if>
 						<button type="button" onclick="location.href='/notice/list';"
@@ -137,7 +137,7 @@
 					</div>
 				
 				<!-- 댓글 시작 -->
-				<div class="mb-3" style="height: 270px; OVERFLOW-Y: auto;">
+				<%-- <div class="mb-3" style="height: 270px; OVERFLOW-Y: auto;">
 					<table class="table table-striped">
 						<c:choose>
 							<c:when test="${replyList == null}">
@@ -167,17 +167,17 @@
 							</c:otherwise>
 						</c:choose>
 					</table>
-				</div>
+				</div> --%>
 				<!-- 댓글 끝 -->
 
 
 				<!-- 댓글 작성 시작 -->
 				 <%-- <c:if test="${member.me_grade == '최고관리자' }"> --%>
-				<c:if test="${member != null }">
+				<%-- <c:if test="${member != null }">
 					<div>
 						<form method="post" action="/reply/write">
-						<input type="hidden" name="board_no" value="${read.notice_no}">
-							<%-- <input type="hidden" id="reply_no" name="reply_no" value="${replyList.board_no}"> --%>
+						<input type="hidden" name="notice_no" value="${read.notice_no}">
+							<input type="hidden" id="reply_no" name="reply_no" value="${replyList.board_no}">
 							<p>
 								<label>댓글 작성자:</label> <input type="text" name="reply_writer"
 									value="${member.me_name}" readonly>
@@ -195,7 +195,7 @@
 							</p>
 						</form>
 					</div>
-				</c:if>
+				</c:if> --%>
 				<!-- 댓글 작성 끝 -->
 				<div class="my-3 p-3 bg-white rounded shadow-sm">
 					<c:choose>
@@ -205,7 +205,7 @@
 								onclick="location.href='/notice/read?notice_no=${move.next}'">
 								<span class="glyphicon glyphicon-menu-up" aria-hidden="true"></span>다음글
 							</button>
-							<a href="/board/read?board_no=${move.next}" style="color: black">
+							<a href="/notice/read?notice_no=${move.next}" style="color: black">
 								${move.nexttitle} </a>
 						</c:when>
 
@@ -221,7 +221,7 @@
 								onclick="location.href='/notice/read?notice_no=${move.last}'">
 								<span class="glyphicon glyphicon-menu-down" aria-hidden="true"></span>이전글
 							</button>
-							<a href="/board/read?board_no=${move.last}" style="color: black">
+							<a href="/notice/read?notice_no=${move.last}" style="color: black">
 								${move.lasttitle} </a>
 						</c:when>
 
