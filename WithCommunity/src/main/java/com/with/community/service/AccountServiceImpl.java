@@ -14,8 +14,13 @@ public class AccountServiceImpl implements AccountService {
 	private AccountDAO accountDAO;
 	
 	@Override
+	public void register(AccountVO vo) throws Exception {
+		accountDAO.register(vo);
+	}
+	@Override
 	public AccountVO login(AccountVO vo) throws Exception {
 		return accountDAO.login(vo);
 	}
+
 
 }

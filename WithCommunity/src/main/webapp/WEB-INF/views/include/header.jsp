@@ -73,6 +73,8 @@
 				<!-- 세션이 없을때 -->
 				<c:if test="${member == null }">
 					<form class="d-flex">
+						<a class="btn btn-primary" href="/account/register">회원가입</a>
+						&nbsp;&nbsp;
 						<a class="btn btn-success" href="/account/login"> 로그인 </a>
 						&nbsp;&nbsp;
 					</form>

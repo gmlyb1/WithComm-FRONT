@@ -14,8 +14,14 @@ public class AccountDAOImpl implements AccountDAO{
 	private static final String namespace = "com.with.community.dao.AccountDAO";
 
 	@Override
+	public void register(AccountVO vo) throws Exception {
+		sqlSession.insert("namespace.register", vo);
+	}
+
+	@Override
 	public AccountVO login(AccountVO vo) throws Exception {
 		return sqlSession.selectOne("namespace.login", vo);
 	}
+
 
 }
