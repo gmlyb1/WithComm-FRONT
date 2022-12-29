@@ -50,6 +50,15 @@ public class NoticeServiceImpl implements NoticeService {
 		noticeDAO.NoticeHit(notice_no);
 	}
 
+	@Override
+	public NoticeVO lastNoticeList(int notice_no) throws Exception {
+		return noticeDAO.lastNoticeList(notice_no);
+	}
+
+	@Override
+	public NoticeVO nextNoticeList(int notice_no) throws Exception {
+		return noticeDAO.nextNoticeList(notice_no);
+	}
 	
 
 }

@@ -128,14 +128,6 @@
 				</form>
 				<!-- 게시판 끝 -->
 				
-				<!-- 첨부파일 -->
-				<span>파일 목록</span>
-					<div class="form-group" style="border: 1px solid #dbdbdb;">
-						<c:forEach var="file" items="${file}">
-							<a href="#" onclick="fn_fileDown('${file.FILE_NO}'); return false;">${file.ORG_FILE_NAME}</a>(${file.FILE_SIZE}kb)<br>
-						</c:forEach>
-					</div>
-				
 				<!-- 댓글 시작 -->
 				<div class="mb-3" style="height: 270px; OVERFLOW-Y: auto;">
 					<table class="table table-striped">
@@ -199,37 +191,38 @@
 				<!-- 댓글 작성 끝 -->
 				<div class="my-3 p-3 bg-white rounded shadow-sm">
 					<c:choose>
-						<c:when test="${move.next != 9999}">
+						<c:when test="${nextBoardList.board_no != null}">
 
 							<button type="button" class="btn btn-warning mr-3 mb-3"
-								onclick="location.href='/board/read?board_no=${move.next}'">
+								onclick="location.href='/board/read?board_no=${nextBoardList.board_no}'">
 								<span class="glyphicon glyphicon-menu-up" aria-hidden="true"></span>다음글
 							</button>
-							<a href="/board/read?board_no=${move.next}" style="color: black">
-								${move.nexttitle} </a>
+							<a href="/board/read?board_no=${nextBoardList.board_no}" style="color: black">
+								${nextBoardList.board_title} </a>
 						</c:when>
 
-						<c:when test="${move.next == 9999}">
+						<c:when test="${nextBoardList.board_no == null}">
 							<button type="button" class="btn btn-warning mr-3 mb-3" disabled>다음글이
 								없습니다</button>
 						</c:when>
 					</c:choose>
 					<br />
 					<c:choose>
-						<c:when test="${move.last != 9999}">
+						<c:when test="${lastBoardList.board_no != null}">
 							<button type="button" class="btn btn-info mr-3 "
-								onclick="location.href='/board/read?board_no=${move.last}'">
+								onclick="location.href='/board/read?board_no=${lastBoardList.board_no}'">
 								<span class="glyphicon glyphicon-menu-down" aria-hidden="true"></span>이전글
 							</button>
-							<a href="/board/read?board_no=${move.last}" style="color: black">
-								${move.lasttitle} </a>
+							<a href="/board/read?board_no=${lastBoardList.board_no}" style="color: black">
+								${lastBoardList.board_title} </a>
 						</c:when>
 
-						<c:when test="${move.last == 9999}">
+						<c:when test="${lastBoardList.board_no == null}">
 							<button type="button" class="btn btn-info mr-3" disabled>이전글이
 								없습니다</button>
 						</c:when>
 					</c:choose>
+
 				</div>
 			</div>
 		</div>

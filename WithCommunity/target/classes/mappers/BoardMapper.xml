@@ -69,4 +69,26 @@
 		where board_no = #{board_no}
 	</update>
 	
+	<select id="lastBoardList" parameterType="int" resultType="boardVO">
+	 <![CDATA[
+	SELECT 
+		board_no
+	,   board_title 
+	FROM tbl_board 
+		WHERE board_no < #{board_no}  
+	ORDER BY board_no DESC LIMIT 1
+	]]>
+	</select>
+	
+	<select id="nextBoardList" parameterType="int" resultType="boardVO">
+	 <![CDATA[
+	SELECT 
+		board_no
+	,   board_title 
+	FROM tbl_board 
+		WHERE board_no > #{board_no}  
+	ORDER BY board_no LIMIT 1
+	]]>
+	</select>
+	
 </mapper>

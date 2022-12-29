@@ -69,4 +69,26 @@
 		where notice_no = #{notice_no}
 	</update>
 	
+	<select id="lastNoticeList" parameterType="int" resultType="NoticeVO">
+	 <![CDATA[
+	SELECT 
+		notice_no
+	,   notice_title 
+	FROM tbl_notice
+		WHERE notice_no < #{notice_no}  
+	ORDER BY notice_no DESC LIMIT 1
+	]]>
+	</select>
+	
+	<select id="nextNoticeList" parameterType="int" resultType="NoticeVO">
+	 <![CDATA[
+	SELECT 
+		notice_no
+	,   notice_title 
+	FROM tbl_notice
+		WHERE notice_no > #{notice_no}  
+	ORDER BY notice_no LIMIT 1
+	]]>
+	</select>
+	
 </mapper>

@@ -95,8 +95,11 @@ public class BoardController {
 			
 			List<ReplyVO> replyList = replyService.replyList(vo.getBoard_no());
 			model.addAttribute("replyList", replyList);
-			// 이전글 다음글
-//			model.addAttribute("move", boardService.movePage(vo.getBoard_no()));
+			// 이전 글
+			model.addAttribute("lastBoardList", boardService.lastBoardList(board_no));
+			
+			// 다음 글
+			model.addAttribute("nextBoardList", boardService.nextBoardList(board_no));
 			
 //			System.out.println(vo.getBoard_no());
 			

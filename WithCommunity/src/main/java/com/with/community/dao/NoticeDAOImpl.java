@@ -46,6 +46,16 @@ public class NoticeDAOImpl implements NoticeDAO {
 			
 	}
 
+	@Override
+	public NoticeVO lastNoticeList(int notice_no) throws Exception {
+		return sqlSession.selectOne("namespace.lastNoticeList",notice_no);
+	}
+
+	@Override
+	public NoticeVO nextNoticeList(int notice_no) throws Exception {
+		return sqlSession.selectOne("namespace.nextNoticeList", notice_no);
+	}
+
 
 
 	

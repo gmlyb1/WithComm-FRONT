@@ -18,6 +18,18 @@ public class BoardServiceImpl implements BoardService {
 	private BoardDAO boardDAO;
 	
 	@Override
+	public BoardVO lastBoardList(int board_no) throws Exception {
+
+		return boardDAO.lastBoardList(board_no);
+	}
+
+	@Override
+	public BoardVO nextBoardList(int board_no) throws Exception {
+
+		return boardDAO.nextBoardList(board_no);
+	}
+	
+	@Override
 	public void insertBoard(BoardVO vo) throws Exception {
 		boardDAO.insertBoard(vo);
 	}

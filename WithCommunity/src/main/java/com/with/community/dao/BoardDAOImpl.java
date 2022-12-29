@@ -45,4 +45,15 @@ public class BoardDAOImpl implements BoardDAO {
 		sqlSession.update("namespace.BoardHit",board_no);
 	}
 
+	@Override
+	public BoardVO lastBoardList(int board_no) throws Exception {
+		
+		return sqlSession.selectOne("namespace.lastBoardList", board_no);
+	}
+
+	@Override
+	public BoardVO nextBoardList(int board_no) throws Exception {
+		
+		return sqlSession.selectOne("namespace.nextBoardList", board_no);
+	}
 }
