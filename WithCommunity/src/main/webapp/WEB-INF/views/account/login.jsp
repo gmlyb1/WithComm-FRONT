@@ -35,6 +35,15 @@
 		});
 	});
 </script>
+<script type="text/javascript">
+$(document).ready(function() {
+	var msg = "${msg}"
+
+	if (msg != "") {
+		alert(msg);
+	}
+});
+</script>
 <style type="text/css">
 body {
     padding-top: 90px;

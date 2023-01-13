@@ -69,7 +69,7 @@
 						</c:forEach>
 					</tbody>
 				</table>
-				<c:if test="${member.me_name == '관리자'}">
+				<c:if test="${member.adminCk == 1}">
 					<button type="button" onclick="location.href='/notice/create';"
 						class="btn btn-success">글쓰기</button>
 				</c:if>

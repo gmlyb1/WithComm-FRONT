@@ -1,9 +1,11 @@
 package com.with.community.controller;
 
+import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,6 +22,10 @@ public class AccountController {
 	@Autowired
 	private AccountService accountService;
 	
+//	@Autowired
+//	@Inject
+//	private BCryptPasswordEncoder passEncoder;
+	
 	@RequestMapping(value="/register", method=RequestMethod.GET)
 	public void registerGET() {
 		
@@ -28,6 +34,12 @@ public class AccountController {
 	@RequestMapping(value="register", method=RequestMethod.POST)
 	public String registerPOST(AccountVO vo, Model model, HttpSession sesion, RedirectAttributes rttr)throws Exception
 	{
+		
+//		String inputPass = vo.getMe_pwd();
+//		String pass = passEncoder.encode(inputPass);
+//		vo.setMe_pwd(pass);
+		
+		
 		try {
 			accountService.register(vo);
 			rttr.addFlashAttribute("msg", "회원가입이 완료되었습니다.");
@@ -56,6 +68,7 @@ public class AccountController {
 				session.setAttribute("member", null);
 				rttr.addFlashAttribute("msg", "아이디와 비밀번호를 다시 확인하세요!");
 				return "redirect:/account/login";
+			
 			} else {
 				session.setAttribute("member", login);
 				rttr.addFlashAttribute("msg", "로그인에 성공하였습니다.");
