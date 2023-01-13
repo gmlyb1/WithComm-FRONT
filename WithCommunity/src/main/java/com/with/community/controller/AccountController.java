@@ -4,6 +4,8 @@ import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -22,6 +24,7 @@ public class AccountController {
 	@Autowired
 	private AccountService accountService;
 	
+	private final static Logger logger = LoggerFactory.getLogger(AccountController.class);
 //	@Autowired
 //	@Inject
 //	private BCryptPasswordEncoder passEncoder;
@@ -42,9 +45,10 @@ public class AccountController {
 		
 		try {
 			accountService.register(vo);
-			rttr.addFlashAttribute("msg", "È¸¿ø°¡ÀÔÀÌ ¿Ï·áµÇ¾ú½À´Ï´Ù.");
+			rttr.addFlashAttribute("msg", "íšŒì›ê°€ì…ì„ ì™„ë£Œí•˜ì˜€ìŠµë‹ˆë‹¤.");
 		} catch (Exception e) {
-			rttr.addFlashAttribute("msg", "È¸¿ø°¡ÀÔÁß¿¡ ¿¡·¯°¡ ¹ß»ıÇÏ¿´½À´Ï´Ù.");
+			rttr.addFlashAttribute("msg", "ì˜¤ë¥˜ê°€ ë°œìƒí•˜ì˜€ìŠµë‹ˆë‹¤.");
+			logger.error("ì˜¤ë¥˜ : " + e);
 		}
 		
 			
@@ -66,12 +70,12 @@ public class AccountController {
 			
 			if(login == null)  {
 				session.setAttribute("member", null);
-				rttr.addFlashAttribute("msg", "¾ÆÀÌµğ¿Í ºñ¹Ğ¹øÈ£¸¦ ´Ù½Ã È®ÀÎÇÏ¼¼¿ä!");
+				rttr.addFlashAttribute("msg", "ì•„ì´ë”” í˜¹ì€ ë¹„ë°€ë²ˆí˜¸ë¥¼ ë‹¤ì‹œ í•œë²ˆ í™•ì¸í•´ì£¼ì„¸ìš”!");
 				return "redirect:/account/login";
 			
 			} else {
 				session.setAttribute("member", login);
-				rttr.addFlashAttribute("msg", "·Î±×ÀÎ¿¡ ¼º°øÇÏ¿´½À´Ï´Ù.");
+				rttr.addFlashAttribute("msg", "ë¡œê·¸ì¸ì— ì„±ê³µí•˜ì˜€ìŠµë‹ˆë‹¤.");
 				return "redirect:/home";
 	}
 }

@@ -40,7 +40,7 @@ public class BoardController {
 	
 	private static final Logger logger = LoggerFactory.getLogger(BoardController.class);
 	
-	//°Ô½ÃÆÇ ¸ñ·Ï
+	//ï¿½Ô½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
 		@RequestMapping(value = "/list", method=RequestMethod.GET)
 		public String BoardList(@ModelAttribute("vo") BoardVO vo,HttpServletRequest request,Model model) throws Exception 
 		{
@@ -49,19 +49,19 @@ public class BoardController {
 			if(null != inputFlashMap) {
 				model.addAttribute("msg", (String)inputFlashMap.get("msg"));
 			}
-			//°Ô½Ã¹° ¸ñ·Ï
+			//ï¿½Ô½Ã¹ï¿½ ï¿½ï¿½ï¿½
 			List<BoardVO> boardList = boardService.BoardList();
 			model.addAttribute("boardList", boardList);
 			
 			return "/board/list";
 		}
 		
-		// °Ô½Ã±Û µî·Ï (GET)
+		// ï¿½Ô½Ã±ï¿½ ï¿½ï¿½ï¿½ (GET)
 		@RequestMapping(value = "/create", method= RequestMethod.GET)
 		public void insertBoardGET() {
 		}
 		
-		// °Ô½Ã±Û µî·Ï (POST)
+		// ï¿½Ô½Ã±ï¿½ ï¿½ï¿½ï¿½ (POST)
 		@RequestMapping(value= "/create" , method = RequestMethod.POST)
 		public String insertBoardPOST(@ModelAttribute("vo") BoardVO vo,HttpServletRequest request ,RedirectAttributes redirect) throws Exception 
 		{
@@ -77,10 +77,11 @@ public class BoardController {
 			boardService.insertBoard(vo);
 			
 			redirect.addFlashAttribute("redirect", vo.getBoard_no());
-			redirect.addFlashAttribute("msg", "µî·ÏÀÌ ¿Ï·áµÇ¾ú½À´Ï´Ù.");
+			redirect.addFlashAttribute("msg", "ê¸€ ì‘ì„±ì„ ì™„ë£Œí•˜ì˜€ìŠµë‹ˆë‹¤.");
 			
 		} catch (Exception e) {
-				redirect.addFlashAttribute("msg", "¿À·ù°¡ ¹ß»ıµÇ¾ú½À´Ï´Ù");
+				redirect.addFlashAttribute("msg", "ì˜¤ë¥˜ê°€ ë°œìƒí•˜ì˜€ìŠµë‹ˆë‹¤.");
+				logger.error("ì˜¤ë¥˜ :" + e);
 		}
 			
 			return "redirect:/board/list";
@@ -95,10 +96,10 @@ public class BoardController {
 			
 			List<ReplyVO> replyList = replyService.replyList(vo.getBoard_no());
 			model.addAttribute("replyList", replyList);
-			// ÀÌÀü ±Û
+			// ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½
 			model.addAttribute("lastBoardList", boardService.lastBoardList(board_no));
 			
-			// ´ÙÀ½ ±Û
+			// ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½
 			model.addAttribute("nextBoardList", boardService.nextBoardList(board_no));
 			
 //			System.out.println(vo.getBoard_no());
@@ -117,32 +118,34 @@ public class BoardController {
 			return "/board/update";
 		}
 		
-		//°Ô½Ã±Û ¼öÁ¤
+		//ï¿½Ô½Ã±ï¿½ ï¿½ï¿½ï¿½ï¿½
 		@RequestMapping(value = "/update", method= RequestMethod.POST)
 		public String BoardUpdatePOST(BoardVO vo,Model model,RedirectAttributes rttr) throws Exception
 		{
 			try {
 				boardService.BoardUpdate(vo);
-				rttr.addFlashAttribute("msg", "¼öÁ¤ÀÌ ¿Ï·áµÇ¾ú½À´Ï´Ù.");
+				rttr.addFlashAttribute("msg", "ê¸€ ìˆ˜ì •ì„ ì™„ë£Œí•˜ì˜€ìŠµë‹ˆë‹¤.");
 			}catch (Exception e) {
-				rttr.addFlashAttribute("msg", "¿À·ù°¡ ¹ß»ıµÇ¾ú½À´Ï´Ù.");
+				rttr.addFlashAttribute("msg", "ì˜¤ë¥˜ê°€ ë°œìƒí•˜ì˜€ìŠµë‹ˆë‹¤.");
+				logger.error("ì˜¤ë¥˜ : " + e);
 			}
 			
 			return "redirect:/board/list";
 		}
 		
 		
-		//°Ô½Ã±Û »èÁ¦
+		//ï¿½Ô½Ã±ï¿½ ï¿½ï¿½ï¿½ï¿½
 		@RequestMapping(value = "/delete", method=RequestMethod.POST)
 		public String BoardDeletePOST(BoardVO vo, RedirectAttributes rttr) throws Exception
 		{
 			
 			try {
 			boardService.BoardDelete(vo.getBoard_no());
-			rttr.addFlashAttribute("msg", "»èÁ¦°¡ ¿Ï·áµÇ¾ú½À´Ï´Ù.");
+			rttr.addFlashAttribute("msg", "ì‚­ì œë¥¼ ì„±ê³µí•˜ì˜€ìŠµë‹ˆë‹¤.");
 			
 			}catch(Exception e) {
-			rttr.addFlashAttribute("msg", "¿À·ù°¡ ¹ß»ıµÇ¾ú½À´Ï´Ù.");
+			rttr.addFlashAttribute("msg", "ì˜¤ë¥˜ê°€ ë°œìƒí•˜ì˜€ìŠµë‹ˆë‹¤.");
+			logger.error("ì˜¤ë¥˜ : " + e);
 			}
 			
 			

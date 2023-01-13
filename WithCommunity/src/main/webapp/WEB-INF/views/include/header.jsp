@@ -6,14 +6,14 @@
 <%@ page import="java.text.SimpleDateFormat"%>
 <%@ page session="true"%>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-<!-- <script type="text/javascript">
+ <script type="text/javascript">
 	$(document).ready(function() {
 		var msg = "${msg}"
 		if (msg != "") {
 			alert(msg);
 		}
 	});
-</script> -->
+</script> 
 <script type="text/javascript">
 	$(document).ready(function() {
 		$("#logoutBtn").on("click", function() {
