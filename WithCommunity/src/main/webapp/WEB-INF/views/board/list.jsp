@@ -16,8 +16,8 @@
 <%@include file="../include/header.jsp"%>
 
 <!-- Begin Page Content -->
-<div class="container-fluid">
-
+ <div class="container-fluid">
+<br>
 	<!-- Page Heading -->
 	<h1 class="h3 mb-2 text-gray-800">고객 게시판</h1>
 	<p class="mb-4">
@@ -80,6 +80,5 @@
 </div>
 <!-- /.container-fluid -->
 
-</div>
 
 <%@include file="../include/footer.jsp"%>
