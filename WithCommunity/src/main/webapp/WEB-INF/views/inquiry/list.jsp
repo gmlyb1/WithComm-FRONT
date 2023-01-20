@@ -19,7 +19,7 @@
  <div class="container-fluid">
 <br>
 	<!-- Page Heading -->
-	<h1 class="h3 mb-2 text-gray-800">고객 게시판</h1>
+	<h1 class="h3 mb-2 text-gray-800">1:1문의</h1>
 	<p class="mb-4">
 		<a><strong>저희 소프트홈페이지의 고객 게시판을 찾아 주셔서 감사합니다.</strong></a>
 	</p>

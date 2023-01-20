@@ -88,4 +88,9 @@ public class AccountController {
 		
 		return "redirect:/home";
 	}
+	
+	@RequestMapping(value="/profile" , method=RequestMethod.GET)
+	public void profileGET() {
+		
+	}
 }

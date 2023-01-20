@@ -17,6 +17,8 @@ public class AccountVO {
 //	private String me_addr2;
 //	private String me_addr3;
 	private int adminCk;
+	private String state;
+	
 	public int getMe_id() {
 		return me_id;
 	}
@@ -59,11 +61,20 @@ public class AccountVO {
 	public void setAdminCk(int adminCk) {
 		this.adminCk = adminCk;
 	}
+	public String getState() {
+		return state;
+	}
+	public void setState(String state) {
+		this.state = state;
+	}
+
 	@Override
 	public String toString() {
 		return "AccountVO [me_id=" + me_id + ", me_email=" + me_email + ", me_pwd=" + me_pwd + ", me_name=" + me_name
-				+ ", me_regDate=" + me_regDate + ", me_image=" + me_image + ", adminCk=" + adminCk + "]";
+				+ ", me_regDate=" + me_regDate + ", me_image=" + me_image + ", adminCk=" + adminCk + ", state=" + state
+				+ "]";
 	}
+	
 
 	
 	
