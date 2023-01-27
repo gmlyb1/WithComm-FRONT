@@ -25,6 +25,34 @@
 	}
 </script>
 <script type="text/javascript">
+$(".cancel_btn").on("click",function() {
+	event.preventDefault();
+	location.href="/board/read?board_no=${update.board_no}"
+	+ "&page=${scri.page}"
+	+ "&perPageNum=${scri.perPageNum}"
+	+ "&searchTpe=${scri.searchType}"
+	+ "&keyword=${scri.keyword}"
+})
+
+
+</script>
+<script type="text/javascript">
+//수정 
+$("#update_btn").on("click", function(){
+	formObj.attr("action", "/board/updateView");
+	formObj.attr("method", "get");
+	formObj.submit();
+	
+
+	location.href = "/board/updateView?bno=${read.bno}"
+		+"&page=${scri.page}"
+		+"&perPageNum=${scri.perPageNum}"
+		+"&searchType=${scri.searchType}&keyword=${scri.keyword}";
+})
+
+
+</script>
+<script type="text/javascript">
 	function fn_addFile() {
 		var fileIndex = 1;
 		$("#fileAdd_btn")
@@ -71,11 +99,15 @@
 			<div class="panel-body">
 				<form action="/board/update" role="form" method="post"
 					name="updateForm" onsubmit="return _onSubmit();">
-					<input type="hidden" name="board_no" value="${update.board_no}"
-						readonly="readonly" /> <input type="hidden" id="fileNoDel"
-						name="fileNoDel[]" value=""> <input type="hidden"
-						id="fileNameDel" name="fileNameDel[]" value="">
-					<div class="table-responsive" style="text-align: center;">
+					<input type="hidden" name="board_no" value="${update.board_no}" readonly="readonly" /> 
+					<input type="hidden" id="fileNoDel" name="fileNoDel[]" value=""> 
+					<input type="hidden" id="fileNameDel" name="fileNameDel[]" value="">
+					<%-- <input type="hidden" name="bno" value="${update.bno}" readonly="readonly"/>
+					<input type="hidden" id="page" name="page" value="${scri.page}"> 
+					<input type="hidden" id="perPageNum" name="perPageNum" value="${scri.perPageNum}"> 
+					<input type="hidden" id="searchType" name="searchType" value="${scri.searchType}"> 
+					<input type="hidden" id="keyword" name="keyword" value="${scri.keyword}">
+					<div class="table-responsive" style="text-align: center;"> --%>
 						<table id="datatable-scroller"
 							class="table table-bordered tbl_Form">
 							<caption></caption>
@@ -132,7 +164,7 @@
 
 				<div style="margin-left: 1px;">
 					<button type="submit" class="btn btn-primary">수정</button>
-					<a href="/board/list" class="btn btn-danger">취소</a>
+					<a href="/board/list" class="btn btn-danger" id="cancel_btn">취소</a>
 				</div>
 				</form>
 			</div>

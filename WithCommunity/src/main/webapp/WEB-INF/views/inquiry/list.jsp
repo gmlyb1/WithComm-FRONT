@@ -21,7 +21,7 @@
 	<!-- Page Heading -->
 	<h1 class="h3 mb-2 text-gray-800">1:1문의</h1>
 	<p class="mb-4">
-		<a><strong>저희 소프트홈페이지의 고객 게시판을 찾아 주셔서 감사합니다.</strong></a>
+		<a><strong>관리자와 1:1 문의가 가능합니다.</strong></a>
 	</p>
 
 	<!-- DataTales Example -->
@@ -34,9 +34,9 @@
 						회원만 이용 가능합니다.</strong></span>
 			</c:if>
 
-			<c:if test="${member != null }">
+			<%-- <c:if test="${member != null }">
 				<a href="/board/mypage" class="btn btn-success">마이페이지로 이동</a>
-			</c:if>
+			</c:if> --%>
 			<form>
 				<input type="button" class="btn btn-warning" value="페이지 새로 고침"
 					onClick="window.location.reload()">
@@ -56,22 +56,21 @@
 						</tr>
 					</thead>
 					<tbody>
-						<c:forEach items="${boardList}" var="list">
+						<c:forEach items="" var="list">
 							<tr>
-								<td class="text-center"><c:out value="${list.board_no}" /></td>
-								<td><a href="/board/read?board_no=${list.board_no}"><c:out
-											value="${list.board_title}" /></a></td>
-								<td class="text-center"><c:out value="${list.board_writer}" /></td>
-								<td class="text-center"><c:out value="${list.board_count}" /></td>
+								<td class="text-center"><c:out value="" /></td>
+								<td><a href="#"><c:out
+											value="" /></a></td>
+								<td class="text-center"><c:out value="" /></td>
+								<td class="text-center"><c:out value="" /></td>
 								<td class="text-center"><c:out
-										value="${list.board_regdate}" /></td>
+										value="" /></td>
 							</tr>
 						</c:forEach>
 					</tbody>
 				</table>
 				<c:if test="${member != null}">
-					<button type="button" onclick="location.href='/board/create';"
-						class="btn btn-success">글쓰기</button>
+					<a type="button" href="#" class="btn btn-success">글쓰기</a>
 				</c:if>
 			</div>
 		</div>

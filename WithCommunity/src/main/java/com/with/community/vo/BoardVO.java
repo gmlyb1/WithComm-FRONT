@@ -6,6 +6,7 @@ import org.springframework.stereotype.Component;
 public class BoardVO {
 
 	private int board_no;
+	private int board_bgno;
 	private String board_title;
 	private String board_content;
 	private String board_writer;
@@ -14,7 +15,9 @@ public class BoardVO {
 	private int board_hit;
 	private int board_reply_hit;
 	
-	// ÀÌÀü±Û, ´ÙÀ½±Û
+	private int bgnoinsert;
+
+	//ì´ì „ , ë‹¤ìŒê¸€
 	private int next;
 	private int last;
 	private String nexttitle;
@@ -24,6 +27,12 @@ public class BoardVO {
 	}
 	public void setBoard_no(int board_no) {
 		this.board_no = board_no;
+	}
+	public int getBoard_bgno() {
+		return board_bgno;
+	}
+	public void setBoard_bgno(int board_bgno) {
+		this.board_bgno = board_bgno;
 	}
 	public String getBoard_title() {
 		return board_title;
@@ -67,6 +76,12 @@ public class BoardVO {
 	public void setBoard_reply_hit(int board_reply_hit) {
 		this.board_reply_hit = board_reply_hit;
 	}
+	public int getBgnoinsert() {
+		return bgnoinsert;
+	}
+	public void setBgnoinsert(int bgnoinsert) {
+		this.bgnoinsert = bgnoinsert;
+	}
 	public int getNext() {
 		return next;
 	}
@@ -93,9 +108,14 @@ public class BoardVO {
 	}
 	@Override
 	public String toString() {
-		return "boardVO [board_no=" + board_no + ", board_title=" + board_title + ", board_content=" + board_content
-				+ ", board_writer=" + board_writer + ", board_count=" + board_count + ", board_regdate=" + board_regdate
-				+ ", board_hit=" + board_hit + ", board_reply_hit=" + board_reply_hit + ", next=" + next + ", last="
-				+ last + ", nexttitle=" + nexttitle + ", lasttitle=" + lasttitle + "]";
+		return "BoardVO [board_no=" + board_no + ", board_bgno=" + board_bgno + ", board_title=" + board_title
+				+ ", board_content=" + board_content + ", board_writer=" + board_writer + ", board_count=" + board_count
+				+ ", board_regdate=" + board_regdate + ", board_hit=" + board_hit + ", board_reply_hit="
+				+ board_reply_hit + ", bgnoinsert=" + bgnoinsert + ", next=" + next + ", last=" + last + ", nexttitle="
+				+ nexttitle + ", lasttitle=" + lasttitle + "]";
 	}
+
+	
+	
+	
 }

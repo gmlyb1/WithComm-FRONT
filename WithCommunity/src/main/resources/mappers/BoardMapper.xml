@@ -91,4 +91,33 @@
 	]]>
 	</select>
 	
+	<!-- <select id="listPage" resultType="boardVO" parameterType="SearchCriteria">
+		select 
+			board_no
+		,	board_title
+		,	board_content
+		,	board_writer
+		,	board_regdate
+		,	board_hit
+		,	board_reply_hit
+		from
+		(
+			select 
+				board_no
+			,	board_title
+			,	board_writer
+			,	board_regdate
+			,	board_hit
+			,	board_reply_hit
+			ROW_NUMBER() OVER(ORDER BY
+			board_no desc) as rnum
+			from tbl_board
+			where 1=1
+			<include refid="search"></include>
+			and board_bgno = #{board_bgno}
+		) tbl_board
+		where rnum between #{rowStart} and #{rowEnd}
+		order by board_no desc
+	</select>
+	 -->
 </mapper>

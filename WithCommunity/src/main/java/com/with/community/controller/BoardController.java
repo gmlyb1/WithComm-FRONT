@@ -40,7 +40,7 @@ public class BoardController {
 	
 	private static final Logger logger = LoggerFactory.getLogger(BoardController.class);
 	
-	//�Խ��� ���
+	//목록
 		@RequestMapping(value = "/list", method=RequestMethod.GET)
 		public String BoardList(@ModelAttribute("vo") BoardVO vo,HttpServletRequest request,Model model) throws Exception 
 		{
@@ -49,19 +49,19 @@ public class BoardController {
 			if(null != inputFlashMap) {
 				model.addAttribute("msg", (String)inputFlashMap.get("msg"));
 			}
-			//�Խù� ���
+			//리스트 받아서 바인딩.
 			List<BoardVO> boardList = boardService.BoardList();
 			model.addAttribute("boardList", boardList);
 			
 			return "/board/list";
 		}
 		
-		// �Խñ� ��� (GET)
+		//글쓰기
 		@RequestMapping(value = "/create", method= RequestMethod.GET)
 		public void insertBoardGET() {
 		}
 		
-		// �Խñ� ��� (POST)
+		//글쓰기(POST)
 		@RequestMapping(value= "/create" , method = RequestMethod.POST)
 		public String insertBoardPOST(@ModelAttribute("vo") BoardVO vo,HttpServletRequest request ,RedirectAttributes redirect) throws Exception 
 		{
@@ -88,18 +88,19 @@ public class BoardController {
 	}
 		
 		@RequestMapping(value = "/read", method=RequestMethod.GET)
-		public String BoardRead(@RequestParam("board_no") int board_no,BoardVO vo, Model model) throws Exception {
+		public String BoardRead(
+				/* @ModelAttribute("scri") SearchCriteria scri, */@RequestParam("board_no") int board_no,BoardVO vo, Model model) throws Exception {
 			
 			
 			model.addAttribute("read", boardService.BoardRead(vo.getBoard_no()));
-			
+//			model.addAttribute("scri", scri);
 			
 			List<ReplyVO> replyList = replyService.replyList(vo.getBoard_no());
 			model.addAttribute("replyList", replyList);
-			// ���� ��
+			// 이전글
 			model.addAttribute("lastBoardList", boardService.lastBoardList(board_no));
 			
-			// ���� ��
+			// 다음글
 			model.addAttribute("nextBoardList", boardService.nextBoardList(board_no));
 			
 //			System.out.println(vo.getBoard_no());
@@ -108,9 +109,11 @@ public class BoardController {
 		}
 		
 		@RequestMapping(value = "/update" , method= RequestMethod.GET)
-		public String BoardUpdateGET(BoardVO vo, Model model) throws Exception
+		public String BoardUpdateGET(
+				/* @ModelAttribute("scri") SearchCriteria scri, */BoardVO vo, Model model) throws Exception
 		{
 			model.addAttribute("update", boardService.BoardRead(vo.getBoard_no()));
+//			model.addAttribute("scri", scri);
 //			List<Map<String, Object>> fileList = boardService.selectFileList(vo.getBoard_no());
 //			model.addAttribute("file", fileList);
 			
@@ -118,9 +121,9 @@ public class BoardController {
 			return "/board/update";
 		}
 		
-		//�Խñ� ����
+		//수정
 		@RequestMapping(value = "/update", method= RequestMethod.POST)
-		public String BoardUpdatePOST(BoardVO vo,Model model,RedirectAttributes rttr) throws Exception
+		public String BoardUpdatePOST(/*@ModelAttribute("scri") SearchCriteria scri,*/BoardVO vo,Model model,RedirectAttributes rttr) throws Exception
 		{
 			try {
 				boardService.BoardUpdate(vo);
@@ -129,12 +132,18 @@ public class BoardController {
 				rttr.addFlashAttribute("msg", "오류가 발생하였습니다.");
 				logger.error("오류 : " + e);
 			}
+		
+			rttr.addFlashAttribute("bno", vo.getBoard_no());
+//			rttr.addFlashAttribute("page", scri.getPage());
+//			rttr.addFlashAttribute("perPageNum", scri.getPerPageNum());
+//			rttr.addFlashAttribute("searchType", scri.getSearchType());
+//			rttr.addFlashAttribute("keyword", scri.getKeword());
 			
 			return "redirect:/board/list";
 		}
 		
 		
-		//�Խñ� ����
+		//삭제
 		@RequestMapping(value = "/delete", method=RequestMethod.POST)
 		public String BoardDeletePOST(BoardVO vo, RedirectAttributes rttr) throws Exception
 		{

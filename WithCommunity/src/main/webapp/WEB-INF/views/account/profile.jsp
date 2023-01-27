@@ -116,7 +116,7 @@
                           </div>
                           <div class="mb-3 col-md-6">
                             <label for="state" class="form-label">State</label>
-                            <input class="form-control" type="text" id="state" name="state" placeholder="California" />
+                            <input class="form-control" type="text" id="state" name="state" value="${member.state}" readonly />
                           </div>
                           <div class="mb-3 col-md-6">
                             <label for="zipCode" class="form-label">Zip Code</label>

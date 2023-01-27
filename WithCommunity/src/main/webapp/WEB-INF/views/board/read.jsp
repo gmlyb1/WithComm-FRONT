@@ -18,7 +18,9 @@
 		});
 	})
 </script>
-
+<!-- <script type="text/javascript">
+$("#list_btn").on("click", function(){ location.href = "/board/list?page=${scri.page}" +"&perPageNum=${scri.perPageNum}" +"&searchType=${scri.searchType}&keyword=${scri.keyword}"; })
+</script> -->
 <script type="text/javascript">
 	$(document).ready(function() {
 		var formObj = $("form[name='replyForm']")
@@ -120,8 +122,7 @@
 								onclick="location.href='/board/update?board_no=${read.board_no}';">수정</button>
 							<button type="submit" class="btn btn-danger" id="delete_btn">삭제</button>
 						</c:if>
-						<button type="button" onclick="location.href='/board/list';"
-							class="btn btn-primary">목록</button>
+						<button onclick="location.href='/board/list'" type="button" id="list_btn" class="btn btn-primary">목록</button>
 						<br>
 						<hr>
 					</div>
@@ -169,7 +170,11 @@
 					<div>
 						<form method="post" action="/reply/write">
 						<input type="hidden" name="board_no" value="${read.board_no}">
-							<%-- <input type="hidden" id="reply_no" name="reply_no" value="${replyList.board_no}"> --%>
+<%-- 						<input type="hidden" name="page" name="page" value="${scri.page}">
+						<input type="hidden" name="perPageNum" name="perPageNum" value="${scri.perPageNum }">
+						<input type="hidden" name="searchType" name="searchType" value="${scri.searchType }">
+						<input type="hidden" name="keyword" name="keyword" value="${scri.keyword}">+
+ --%>							<%-- <input type="hidden" id="reply_no" name="reply_no" value="${replyList.board_no}"> --%>
 							<p>
 								<label>댓글 작성자:</label> <input type="text" name="reply_writer"
 									value="${member.me_name}" readonly>

@@ -4,14 +4,11 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 
-<script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-<!-- include summernote css/js -->
-<link
-	href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.css"
-	rel="stylesheet">
-<script
-	src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
+<link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.css" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.css" rel="stylesheet">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
 <script type="text/javascript">
 	function _onSubmit() {
 
@@ -38,61 +35,37 @@
 		}
 	}
 </script>
-<script type="text/javascript">
-	$(document)
-			.ready(
-					function() {
-						$('#myEditor')
-								.summernote(
-										{
-											lang : 'ko-KR',
-											height : 300,
-											placeholder : '내용을 입력하세요',
-											toolbar : [
-													[ 'fontname',
-															[ 'fontname' ] ],
-													[ 'fontsize',
-															[ 'fontsize' ] ],
-													[
-															'style',
-															[
-																	'bold',
-																	'italic',
-																	'underline',
-																	'strikethrough',
-																	'clear' ] ],
-													[
-															'color',
-															[ 'forecolor',
-																	'color' ] ],
-													[ 'table', [ 'table' ] ],
-													[
-															'para',
-															[ 'ul', 'ol',
-																	'paragraph' ] ],
-													[ 'height', [ 'height' ] ],
-													[
-															'insert',
-															[ 'picture',
-																	'link',
-																	'video' ] ],
-													[
-															'view',
-															[ 'fullscreen',
-																	'help' ] ] ],
-											fontNames : [ 'Arial',
-													'Arial Black',
-													'Comic Sans MS',
-													'Courier New', '맑은 고딕',
-													'궁서', '굴림체', '굴림', '돋음체',
-													'바탕체' ],
-											fontSizes : [ '8', '9', '10', '11',
-													'12', '14', '16', '18',
-													'20', '22', '24', '28',
-													'30', '36', '50', '72' ]
-										});
-					});
-</script>
+
+
+    <script>
+        $(document).ready(function () {
+
+            $('#myEditor').summernote({
+                lang: 'ko-KR',
+                height: 300,
+                placeholder: '내용을 입력하세요',
+                toolbar: [
+                    ['fontname', ['fontname']],
+                    ['fontsize', ['fontsize']],
+                    ['style', ['bold', 'italic', 'underline', 'strikethrough', 'clear']],
+                    ['color', ['forecolor', 'color']],
+                    ['table', ['table']],
+                    ['para', ['ul', 'ol', 'paragraph']],
+                    ['height', ['height']],
+                    ['insert', ['picture', 'link', 'video']],
+                    ['view', ['fullscreen', 'help']]
+                  ],
+                  fontNames: ['Arial', 'Arial Black', 'Comic Sans MS', 'Courier New', '맑은 고딕', '궁서', '굴림체',
+                    '굴림', '돋음체', '바탕체'],
+                  fontSizes: ['8', '9', '10', '11', '12', '14', '16', '18', '20', '22', '24', '28', '30', '36',
+                    '50', '72']
+               
+                
+            });
+
+
+        });
+    </script>
 <script type="text/javascript">
 	function fn_addFile(){
 		var fileIndex = 1;
@@ -145,9 +118,8 @@
 
 								<tr>
 									<th class="active">내용</th>
-									<td class="form-inline"><textarea id="board_content"
-											name="board_content" cols="100" rows="10"
-											placeholder="내용을 입력해주세요." class="form-control"></textarea></td>
+									<td class="form-inline">
+									<textarea id="board_content" name="board_content" cols="100" rows="10" placeholder="내용을 입력해주세요." class="form-control"></textarea></td>
 								</tr>
 								
 								<tr>
