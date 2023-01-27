@@ -11,12 +11,14 @@
 			me_email
 		,	me_pwd
 		,	me_name
+		,   me_regdate
 		)
 		values
 		(
 			#{me_email}
 		,	#{me_pwd}
 		,	#{me_name}
+		,	current_timestamp()
 		)
 	</insert>
 
@@ -30,5 +32,9 @@
 	</select>
 
 
+	<select id="idChk" resultType="int">
+		select count(*) from tbl_member
+		where me_email = #{me_email}
+	</select>
 
 </mapper>  

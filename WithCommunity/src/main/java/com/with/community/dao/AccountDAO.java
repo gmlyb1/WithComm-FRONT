@@ -4,9 +4,12 @@ import com.with.community.vo.AccountVO;
 
 public interface AccountDAO {
 
-	// È¸¿ø°¡ÀÔ
+	// íšŒì›ê°€ì…
 	public void register(AccountVO vo) throws Exception;
 	
-	//·Î±×ÀÎ
+	//ë¡œê·¸ì¸
 	public AccountVO login(AccountVO vo) throws Exception;
+	
+	//ì•„ì´ë”” ì¤‘ë³µì²´í¬
+	public int idChk(AccountVO vo) throws Exception;
 }

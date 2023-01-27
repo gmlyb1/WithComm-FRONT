@@ -13,22 +13,7 @@
   data-template="vertical-menu-template-free"
 >
 
-<script type="text/javascript">
-	$(document).ready(function() {
-		var msg = "${msg}"
-		if (msg != "") {
-			alert(msg);
-		}
-	});
-</script> 
-<script type="text/javascript">
-	$(document).ready(function() {
-		$("#logoutBtn").on("click", function() {
-			alert("로그아웃을 완료하였습니다.");
-			location.href = "/account/logout"
-		})
-	})
-</script>
+
 
 
   <head>
@@ -64,10 +49,29 @@
 
     <script src="/resources/assets/vendor/js/helpers.js"></script>
     <script src="/resources/assets/js/config.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     
+  	    <script type="text/javascript">
+	$(document).ready(function() {
+		var msg = "${msg}"
+		if (msg != "") {
+			alert(msg);
+		}
+	});
+</script> 
+<!-- <script type="text/javascript">
+	$(document).ready(function() {
+		$("#logoutBtn").on("click", function() {
+			alert("로그아웃을 완료하였습니다.");
+			location.href = "/account/logout"
+		})
+	})
+</script> -->
   </head>
 
   <body>
+  
+
     <!-- Layout wrapper -->
     <div class="layout-wrapper layout-content-navbar">
       <div class="layout-container">
@@ -561,7 +565,7 @@
                       <div class="dropdown-divider"></div>
                     </li>
                     <li>
-                      <a class="dropdown-item" href="/account/logout">
+                      <a class="dropdown-item" href="/account/logout" id="logoutBtn">
                         <i class="bx bx-power-off me-2"></i>
                         <span class="align-middle">Log Out</span>
                       </a>

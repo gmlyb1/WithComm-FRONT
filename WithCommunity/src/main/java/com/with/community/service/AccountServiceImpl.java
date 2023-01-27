@@ -21,6 +21,11 @@ public class AccountServiceImpl implements AccountService {
 	public AccountVO login(AccountVO vo) throws Exception {
 		return accountDAO.login(vo);
 	}
+//	@Override
+	public int idChk(AccountVO vo) throws Exception {
+		int result = accountDAO.idChk(vo);
+		return result;
+	}
 
 
 }

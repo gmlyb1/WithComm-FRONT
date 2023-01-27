@@ -1,6 +1,5 @@
 package com.with.community.controller;
 
-import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -29,12 +28,19 @@ public class AccountController {
 //	@Inject
 //	private BCryptPasswordEncoder passEncoder;
 	
+	@RequestMapping(value="/idChk" , method= RequestMethod.POST)
+	public int idChk(AccountVO vo) throws Exception {
+		int result = accountService.idChk(vo);
+		return result;
+	}
+	
+	
 	@RequestMapping(value="/register", method=RequestMethod.GET)
 	public void registerGET() {
 		
 	}
 	
-	@RequestMapping(value="register", method=RequestMethod.POST)
+	@RequestMapping(value="/register", method=RequestMethod.POST)
 	public String registerPOST(AccountVO vo, Model model, HttpSession sesion, RedirectAttributes rttr)throws Exception
 	{
 		
@@ -42,15 +48,22 @@ public class AccountController {
 //		String pass = passEncoder.encode(inputPass);
 //		vo.setMe_pwd(pass);
 		
+		int result = accountService.idChk(vo);
 		
 		try {
-			accountService.register(vo);
-			rttr.addFlashAttribute("msg", "회원가입을 완료하였습니다.");
+			if(result == 1) {
+				rttr.addFlashAttribute("msg", "이미 존재하는 아이디입니다. 다시 확인해주세요.");
+				return "/account/register";
+			}else if(result == 0) {
+				accountService.register(vo);
+				rttr.addFlashAttribute("msg", "회원가입이 완료되었습니다");
+			}
 		} catch (Exception e) {
-			rttr.addFlashAttribute("msg", "오류가 발생하였습니다.");
-			logger.error("오류 : " + e);
+			rttr.addFlashAttribute("msg", "회원가입 도중 에러가 발생했습니다!");
+			logger.error("에러" + e);
 		}
-		
+//			accountService.register(vo);
+//			rttr.addFlashAttribute("msg", "회원가입을 완료하였습니다.");
 			
 		return "redirect:/home";
 	}
@@ -83,7 +96,13 @@ public class AccountController {
 	@RequestMapping(value = "/logout", method=RequestMethod.GET)
 	public String logout(HttpSession session,RedirectAttributes rttr) {
 		
+		try {
 			session.invalidate();
+			rttr.addFlashAttribute("msg", "로그아웃을 완료하였습니다.");
+		} catch (Exception e) {
+			rttr.addFlashAttribute("msg", "로그아웃에 실패하였습니다.");
+			logger.error(" 에러 " + e);
+		}
 		
 		
 		return "redirect:/home";

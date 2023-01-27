@@ -23,5 +23,11 @@ public class AccountDAOImpl implements AccountDAO{
 		return sqlSession.selectOne("namespace.login", vo);
 	}
 
+//	@Override
+	public int idChk(AccountVO vo) throws Exception {
+		int result = sqlSession.selectOne("namespace.idChk", vo);
+		return result;
+	}
+
 
 }
