@@ -16,8 +16,8 @@
 
 
 <!-- Begin Page Content -->
- <div class="container-fluid">
-<br>
+<div class="container-fluid">
+	<br>
 	<!-- Page Heading -->
 	<h1 class="h3 mb-2 text-gray-800">고객 게시판</h1>
 	<p class="mb-4">
@@ -59,8 +59,8 @@
 						<c:forEach items="${boardList}" var="list">
 							<tr>
 								<td class="text-center"><c:out value="${list.board_no}" /></td>
-								<td><a href="/board/read?board_no=${list.board_no}"><c:out
-											value="${list.board_title}" /></a></td>
+								<td><a href="/board/read?board_no=${list.board_no}">
+								 ${list.board_title}[${list.reply_cnt}]</a></td>
 								<td class="text-center"><c:out value="${list.board_writer}" /></td>
 								<td class="text-center"><c:out value="${list.board_count}" /></td>
 								<td class="text-center"><c:out
@@ -73,6 +73,60 @@
 					<button type="button" onclick="location.href='/board/create';"
 						class="btn btn-success">글쓰기</button>
 				</c:if>
+
+				<!-- 페이징 처리 -->
+				<nav aria-label="Page navigation example">
+					<ul class="pagination justify-content-center">
+
+						<!-- 이전 -->
+						<c:if test="${paging.currentPage eq 1}">
+							<li class="page-item"><a class="page-link no-before"
+								tabindex="-1" aria-disabled="true">이전</a></li>
+						</c:if>
+						<c:if test="${paging.currentPage ne 1}">
+							<c:url var="before" value="/board/list">
+								<c:param name="currentPage" value="${paging.currentPage - 1}" />
+							</c:url>
+
+							<li class="page-item"><a class="page-link" tabindex="-1"
+								href="${before}" aria-disabled="true">이전</a></li>
+						</c:if>
+
+						<!-- 페이지 -->
+						<c:forEach var="page" begin="${paging.startPage}"
+							end="${paging.endPage}">
+							<c:if test="${page eq paging.currentPage }">
+								<li class="page-item"><a
+									class="page-link bg-primary text-light">${page}</a></li>
+							</c:if>
+
+							<c:if test="${page ne paging.currentPage }">
+								<c:url var="pagination" value="/board/list">
+									<c:param name="currentPage" value="${paging.currentPage + 1}" />
+								</c:url>
+
+								<li class="page-item"><a class="page-link"
+									href="${pagination}">${page}</a></li>
+							</c:if>
+						</c:forEach>
+
+						<!-- 다음 -->
+						<c:if test="${paging.currentPage eq paging.maxPage}">
+							<li class="page-item"><a class="page-link no-before"
+								tabindex="-1" aria-disabled="true">다음</a></li>
+						</c:if>
+						<c:if test="${paging.currentPage ne paging.maxPage}">
+							<c:url var="after" value="/board/list">
+								<c:param name="currentPage" value="${paging.currentPage + 1}" />
+							</c:url>
+
+							<li class="page-item"><a class="page-link" tabindex="-1"
+								href="${after}" aria-disabled="true">다음</a></li>
+						</c:if>
+
+					</ul>
+				</nav>
+
 			</div>
 		</div>
 	</div>

@@ -14,6 +14,7 @@ public class BoardVO {
 	private String board_regdate;
 	private int board_hit;
 	private int board_reply_hit;
+	private int reply_cnt;
 	
 	private int bgnoinsert;
 
@@ -76,6 +77,12 @@ public class BoardVO {
 	public void setBoard_reply_hit(int board_reply_hit) {
 		this.board_reply_hit = board_reply_hit;
 	}
+	public int getReply_cnt() {
+		return reply_cnt;
+	}
+	public void setReply_cnt(int reply_cnt) {
+		this.reply_cnt = reply_cnt;
+	}
 	public int getBgnoinsert() {
 		return bgnoinsert;
 	}
@@ -111,10 +118,11 @@ public class BoardVO {
 		return "BoardVO [board_no=" + board_no + ", board_bgno=" + board_bgno + ", board_title=" + board_title
 				+ ", board_content=" + board_content + ", board_writer=" + board_writer + ", board_count=" + board_count
 				+ ", board_regdate=" + board_regdate + ", board_hit=" + board_hit + ", board_reply_hit="
-				+ board_reply_hit + ", bgnoinsert=" + bgnoinsert + ", next=" + next + ", last=" + last + ", nexttitle="
-				+ nexttitle + ", lasttitle=" + lasttitle + "]";
+				+ board_reply_hit + ", reply_cnt=" + reply_cnt + ", bgnoinsert=" + bgnoinsert + ", next=" + next
+				+ ", last=" + last + ", nexttitle=" + nexttitle + ", lasttitle=" + lasttitle + "]";
 	}
-
+	
+	
 	
 	
 	

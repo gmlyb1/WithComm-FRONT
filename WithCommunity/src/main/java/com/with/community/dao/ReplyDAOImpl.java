@@ -6,6 +6,7 @@ import javax.inject.Inject;
 
 import org.apache.ibatis.session.SqlSession;
 
+import com.with.community.vo.BoardVO;
 import com.with.community.vo.ReplyVO;
 
 public class ReplyDAOImpl implements ReplyDAO {
@@ -33,5 +34,10 @@ public class ReplyDAOImpl implements ReplyDAO {
 	@Override
 	public void replyDelete(int reply_no) throws Exception {
 		sqlSession.delete("namespace.replyDelete", reply_no);
+	}
+
+	@Override
+	public void replyUpdate(BoardVO bvo) throws Exception {
+		sqlSession.update("namespace.replyUpdate", bvo);
 	}
 }

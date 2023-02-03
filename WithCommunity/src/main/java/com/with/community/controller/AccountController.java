@@ -11,9 +11,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.with.community.service.AccountService;
+import com.with.community.util.fileUtil;
 import com.with.community.vo.AccountVO;
 
 @Controller
@@ -112,4 +114,14 @@ public class AccountController {
 	public void profileGET() {
 		
 	}
+	
+//	@RequestMapping(value="/updateImg" , method=RequestMethod.POST)
+//	public String updateImg(MultipartHttpServletRequest mpRequest, HttpSession session,String me_id)throws Exception {
+//		
+//		String me_image = fileUtil.updateImg(mpRequest);
+//		
+//		return "/account/profile";
+//	}
+	
+	
 }

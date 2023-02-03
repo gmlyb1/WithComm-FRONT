@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
     
 <%@include file="/WEB-INF/views/include/header.jsp"%>    
     
@@ -62,32 +64,38 @@
                       <form id="formAccountSettings" method="POST" onsubmit="return false">
                         <div class="row">
                           <div class="mb-3 col-md-6">
-                            <label for="firstName" class="form-label">First Name</label>
-                            <input
-                              class="form-control"
-                              type="text"
-                              id="firstName"
-                              name="firstName"
-                              value="John"
-                              autofocus
-                            />
-                          </div>
-                          <div class="mb-3 col-md-6">
-                            <label for="lastName" class="form-label">Last Name</label>
-                            <input class="form-control" type="text" name="lastName" id="lastName" value="Doe" />
-                          </div>
-                          <div class="mb-3 col-md-6">
-                            <label for="email" class="form-label">E-mail</label>
+                            <label for="email" class="form-label">이메일</label>
                             <input
                               class="form-control"
                               type="text"
                               id="email"
                               name="email"
-                              value="john.doe@example.com"
-                              placeholder="john.doe@example.com"
+                              value="${member.me_email}"
+                              placeholder=""
+                              readonly
                             />
                           </div>
                           <div class="mb-3 col-md-6">
+                            <label for="state" class="form-label">회원등급</label>
+                            <input
+                              class="form-control"
+                              type="text"
+                              id="state"
+                              name="state"
+                              value="${member.state}"
+                              autofocus
+                              readonly
+                            />
+                          </div>
+                          <div class="mb-3 col-md-6">
+                            <label for="me_name" class="form-label">닉네임</label>
+                            <input class="form-control" type="text" name="me_name" id="me_name" value="${member.me_name}" readonly />
+                          </div>
+                          <div class="mb-3 col-md-6">
+                            <label for="state" class="form-label">가입일자</label>
+                            <input class="form-control" type="text" id="me_regDate" name="me_regDate" value="<fmt:formatDate value="${member.me_regDate}" pattern = "yyyy-MM-dd"/>"readonly>
+                          </div>
+                          <!-- <div class="mb-3 col-md-6">
                             <label for="organization" class="form-label">Organization</label>
                             <input
                               type="text"
@@ -113,10 +121,6 @@
                           <div class="mb-3 col-md-6">
                             <label for="address" class="form-label">Address</label>
                             <input type="text" class="form-control" id="address" name="address" placeholder="Address" />
-                          </div>
-                          <div class="mb-3 col-md-6">
-                            <label for="state" class="form-label">State</label>
-                            <input class="form-control" type="text" id="state" name="state" value="${member.state}" readonly />
                           </div>
                           <div class="mb-3 col-md-6">
                             <label for="zipCode" class="form-label">Zip Code</label>
@@ -203,7 +207,7 @@
                               <option value="bitcoin">Bitcoin</option>
                             </select>
                           </div>
-                        </div>
+                        </div> -->
                         <div class="mt-2">
                           <button type="submit" class="btn btn-primary me-2">Save changes</button>
                           <button type="reset" class="btn btn-outline-secondary">Cancel</button>

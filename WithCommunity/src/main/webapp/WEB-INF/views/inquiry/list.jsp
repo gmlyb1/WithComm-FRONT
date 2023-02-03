@@ -31,7 +31,7 @@
 			<br>
 			<c:if test="${member == null}">
 				<span style="color: red"><strong> 현재 페이지의 글쓰기,수정,삭제는
-						회원만 이용 가능합니다.</strong></span>
+						<strong style="color:blue">관리자</strong>만 이용 가능합니다.</strong></span>
 			</c:if>
 
 			<%-- <c:if test="${member != null }">
@@ -50,23 +50,23 @@
 						<tr>
 							<th class="text-center">번호</th>
 							<th class="text-center">주제</th>
+							<th class="text-center">내용</th>
 							<th class="text-center">작성자</th>
-							<th class="text-center">조회수</th>
 							<th class="text-center">작성일자</th>
 						</tr>
 					</thead>
 					<tbody>
-						<c:forEach items="" var="list">
+					<c:if test="${member != null || member.adminCk == '1'}"> 
+						<c:forEach items="${inquiryList}" var="list">
 							<tr>
-								<td class="text-center"><c:out value="" /></td>
-								<td><a href="#"><c:out
-											value="" /></a></td>
-								<td class="text-center"><c:out value="" /></td>
-								<td class="text-center"><c:out value="" /></td>
-								<td class="text-center"><c:out
-										value="" /></td>
+								<td class="text-center"><c:out value="${list.inq_no}" /></td>
+								<td><a href="#"><c:out value="${list.inq_title}" /></a></td>
+								<td class="text-center"><c:out value="${list.inq_content}" /></td>
+								<td class="text-center"><c:out value="${list.inq_name}" /></td>
+								<td class="text-center"><c:out value="${list.inq_regdate}" /></td>
 							</tr>
 						</c:forEach>
+					</c:if>
 					</tbody>
 				</table>
 				<c:if test="${member != null}">

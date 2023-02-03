@@ -23,6 +23,8 @@ import org.springframework.web.servlet.support.RequestContextUtils;
 import com.with.community.service.NoticeService;
 import com.with.community.vo.BoardVO;
 import com.with.community.vo.NoticeVO;
+import com.with.community.vo.PageInfo;
+import com.with.community.vo.Pagination;
 import com.with.community.vo.ReplyVO;
 
 @Controller
@@ -35,16 +37,21 @@ public class NoticeController {
 	private static final Logger logger = LoggerFactory.getLogger(NoticeController.class);
 	
 	@RequestMapping(value="/list", method=RequestMethod.GET)
-	public String NoticeList(@ModelAttribute("vo")NoticeVO vo,HttpServletRequest request,Model model) throws Exception {
+	public String NoticeList(@ModelAttribute("vo")NoticeVO vo,HttpServletRequest request,Model model,@RequestParam(value="currenttPage",required = false, defaultValue = "1") int currentPage) throws Exception {
 		
 		Map<String, ?> inputFlashMap = RequestContextUtils.getInputFlashMap(request);
 		
 		if(null != inputFlashMap) {
 			model.addAttribute("msg", (String)inputFlashMap.get("msg"));
 		}
+		// 페이징
+		int listCount = noticeService.getListCount();
+		PageInfo paging = Pagination.getPageInfo(currentPage, listCount);
 		
-		List<NoticeVO> noticeList = noticeService.NoticeList();
+		
+		List<NoticeVO> noticeList = noticeService.NoticeList(paging);
 		model.addAttribute("noticeList", noticeList);
+		model.addAttribute("paging", paging);
 		
 		return "/notice/list";
 	}

@@ -33,24 +33,23 @@ $("#list_btn").on("click", function(){ location.href = "/board/list?page=${scri.
 	})
 </script>
 <script type="text/javascript">
-	function fn_fileDown(fileNo){
+	function fn_fileDown(fileNo) {
 		var formObj = $("form[name='readForm']");
-		$("#FILE_NO").attr("value",fileNo);
-		formObj.attr("action","/board/fileDown");
+		$("#FILE_NO").attr("value", fileNo);
+		formObj.attr("action", "/board/fileDown");
 		formObj.submit();
 	}
-
 </script>
 <script type="text/javascript">
-	function remove_replyNo(data1,data2) {
-		if(!confirm("삭제 하시겠습니까?")) return false;
+	function remove_replyNo(data1, data2) {
+		if (!confirm("삭제 하시겠습니까?"))
+			return false;
 		else {
-			location.href="/reply/delete?reply_no="+data1+"&board_no="+data2;
+			location.href = "/reply/delete?reply_no=" + data1 + "&board_no="
+					+ data2;
 		}
 	}
 </script>
-
-
 
 <div class="row" style="margin-bottom: 20px; margin-left: 1px;">
 	<c:if test="${member == null}">
@@ -76,7 +75,7 @@ $("#list_btn").on("click", function(){ location.href = "/board/list?page=${scri.
 		<div class="panel">
 			<div class="panel-body">
 				<form role="form" method="post" name="readForm">
-				<input type="hidden" id="FILE_NO" name="FILE_NO" value="">
+					<input type="hidden" id="FILE_NO" name="FILE_NO" value="">
 					<input type="hidden" id="board_no" name="board_no"
 						value="${read.board_no}" />
 					<%-- <input type="hidden" id="reply_no" name="reply_no" value="${replyList.board_no}"> --%>
@@ -122,13 +121,14 @@ $("#list_btn").on("click", function(){ location.href = "/board/list?page=${scri.
 								onclick="location.href='/board/update?board_no=${read.board_no}';">수정</button>
 							<button type="submit" class="btn btn-danger" id="delete_btn">삭제</button>
 						</c:if>
-						<button onclick="location.href='/board/list'" type="button" id="list_btn" class="btn btn-primary">목록</button>
+						<button onclick="location.href='/board/list'" type="button"
+							id="list_btn" class="btn btn-primary">목록</button>
 						<br>
 						<hr>
 					</div>
 				</form>
 				<!-- 게시판 끝 -->
-				
+
 				<!-- 댓글 시작 -->
 				<div class="mb-3" style="height: 270px; OVERFLOW-Y: auto;">
 					<table class="table table-striped">
@@ -147,10 +147,12 @@ $("#list_btn").on("click", function(){ location.href = "/board/list?page=${scri.
 										<td style="width: 60%; height: 50px;"><pre
 												style="font-family: arial;">${replyList.reply_content}</pre>
 											<p>
-											<c:if test="${member.me_name == replyList.reply_writer}">
-												<!-- <a class="btn btn-primary" href="">수정</a> / -->
-												<a class="btn btn-danger" href="javascript:remove_replyNo(${replyList.reply_no},${replyList.board_no});">삭제</a>
-											</c:if>
+												<c:if test="${member.me_name == replyList.reply_writer}">
+													<!-- <a class="btn btn-primary" href="">수정</a> / -->
+													<!-- <button type="button" class="btn btn-xs btn-success" data-toggle="modal" data-target="#modifyModal">댓글 수정</button> -->
+													<a class="btn btn-danger"
+														href="javascript:remove_replyNo(${replyList.reply_no},${replyList.board_no});">삭제</a>
+												</c:if>
 											</p></td>
 										<td style="width: 35%; text-align: right;"><fmt:formatDate
 												value="${replyList.reply_regdate}" pattern="yy-MM-dd HH:mm" /></td>
@@ -161,20 +163,22 @@ $("#list_btn").on("click", function(){ location.href = "/board/list?page=${scri.
 						</c:choose>
 					</table>
 				</div>
+
 				<!-- 댓글 끝 -->
 
 
 				<!-- 댓글 작성 시작 -->
-				 <%-- <c:if test="${member.me_grade == '최고관리자' }"> --%>
+				<%-- <c:if test="${member.me_grade == '최고관리자' }"> --%>
 				<c:if test="${member != null }">
 					<div>
 						<form method="post" action="/reply/write">
-						<input type="hidden" name="board_no" value="${read.board_no}">
-<%-- 						<input type="hidden" name="page" name="page" value="${scri.page}">
+							<input type="hidden" name="board_no" value="${read.board_no}">
+							<%-- 						<input type="hidden" name="page" name="page" value="${scri.page}">
 						<input type="hidden" name="perPageNum" name="perPageNum" value="${scri.perPageNum }">
 						<input type="hidden" name="searchType" name="searchType" value="${scri.searchType }">
 						<input type="hidden" name="keyword" name="keyword" value="${scri.keyword}">+
- --%>							<%-- <input type="hidden" id="reply_no" name="reply_no" value="${replyList.board_no}"> --%>
+ --%>
+							<%-- <input type="hidden" id="reply_no" name="reply_no" value="${replyList.board_no}"> --%>
 							<p>
 								<label>댓글 작성자:</label> <input type="text" name="reply_writer"
 									value="${member.me_name}" readonly>
@@ -186,13 +190,17 @@ $("#list_btn").on("click", function(){ location.href = "/board/list?page=${scri.
 							</p>
 
 							<p>
-								
+
 								<button type="submit" class="btn btn-success"
 									style="margin: 55px 0 0 10px;">댓글 작성</button>
 							</p>
 						</form>
 					</div>
 				</c:if>
+
+				<!-- 댓글 수정 -->
+				<!-- 댓글 수정 -->
+
 				<!-- 댓글 작성 끝 -->
 				<div class="my-3 p-3 bg-white rounded shadow-sm">
 					<c:choose>
@@ -202,8 +210,8 @@ $("#list_btn").on("click", function(){ location.href = "/board/list?page=${scri.
 								onclick="location.href='/board/read?board_no=${nextBoardList.board_no}'">
 								<span class="glyphicon glyphicon-menu-up" aria-hidden="true"></span>다음글
 							</button>
-							<a href="/board/read?board_no=${nextBoardList.board_no}" style="color: black">
-								${nextBoardList.board_title} </a>
+							<a href="/board/read?board_no=${nextBoardList.board_no}"
+								style="color: black"> ${nextBoardList.board_title} </a>
 						</c:when>
 
 						<c:when test="${nextBoardList.board_no == null}">
@@ -218,8 +226,8 @@ $("#list_btn").on("click", function(){ location.href = "/board/list?page=${scri.
 								onclick="location.href='/board/read?board_no=${lastBoardList.board_no}'">
 								<span class="glyphicon glyphicon-menu-down" aria-hidden="true"></span>이전글
 							</button>
-							<a href="/board/read?board_no=${lastBoardList.board_no}" style="color: black">
-								${lastBoardList.board_title} </a>
+							<a href="/board/read?board_no=${lastBoardList.board_no}"
+								style="color: black"> ${lastBoardList.board_title} </a>
 						</c:when>
 
 						<c:when test="${lastBoardList.board_no == null}">

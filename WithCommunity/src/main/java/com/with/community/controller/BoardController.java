@@ -6,7 +6,9 @@ import java.util.List;
 import java.util.Map;
 
 import javax.inject.Inject;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,6 +26,8 @@ import org.springframework.web.servlet.support.RequestContextUtils;
 import com.with.community.service.BoardService;
 import com.with.community.service.ReplyService;
 import com.with.community.vo.BoardVO;
+import com.with.community.vo.PageInfo;
+import com.with.community.vo.Pagination;
 import com.with.community.vo.ReplyVO;
 
 
@@ -40,18 +44,24 @@ public class BoardController {
 	
 	private static final Logger logger = LoggerFactory.getLogger(BoardController.class);
 	
-	//목록
+		//목록
 		@RequestMapping(value = "/list", method=RequestMethod.GET)
-		public String BoardList(@ModelAttribute("vo") BoardVO vo,HttpServletRequest request,Model model) throws Exception 
+		public String BoardList(@ModelAttribute("vo") BoardVO vo,HttpServletRequest request,Model model, @RequestParam(value="currenttPage",required = false, defaultValue = "1") int currentPage) throws Exception 
 		{
 			Map<String, ?> inputFlashMap = RequestContextUtils.getInputFlashMap(request);
 			
 			if(null != inputFlashMap) {
 				model.addAttribute("msg", (String)inputFlashMap.get("msg"));
 			}
+			// 페이징
+			int listCount = boardService.getListCount();
+			
+			PageInfo paging = Pagination.getPageInfo(currentPage, listCount);
+			
 			//리스트 받아서 바인딩.
-			List<BoardVO> boardList = boardService.BoardList();
+			List<BoardVO> boardList = boardService.BoardList(paging);
 			model.addAttribute("boardList", boardList);
+			model.addAttribute("paging", paging);
 			
 			return "/board/list";
 		}
@@ -89,11 +99,11 @@ public class BoardController {
 		
 		@RequestMapping(value = "/read", method=RequestMethod.GET)
 		public String BoardRead(
-				/* @ModelAttribute("scri") SearchCriteria scri, */@RequestParam("board_no") int board_no,BoardVO vo, Model model) throws Exception {
+				/* @ModelAttribute("scri") SearchCriteria scri, */@RequestParam("board_no") int board_no,BoardVO vo, Model model,HttpServletRequest request,HttpServletResponse response) throws Exception {
+
 			
-			
+			boardService.updateReplyCount(board_no);
 			model.addAttribute("read", boardService.BoardRead(vo.getBoard_no()));
-//			model.addAttribute("scri", scri);
 			
 			List<ReplyVO> replyList = replyService.replyList(vo.getBoard_no());
 			model.addAttribute("replyList", replyList);

@@ -12,6 +12,11 @@
 		from
 		 tbl_notice
 	</select>
+	
+	<!-- 총 개수 -->
+	<select id="getListCount" resultType="int" parameterType="java.util.List">
+		select count(notice_no) from tbl_notice
+	</select>
 
 	<!--  글 작성 -->
 	<insert id="insertNotice">

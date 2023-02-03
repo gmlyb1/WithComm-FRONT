@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="com.with.community.dao.InquiryDAO">
+
+	<!-- 글 목록 -->
+	<select id="selectInquiryList" resultType="InquiryVO" parameterType="InquiryVO">
+	select
+		a.inq_no
+	,	a.inq_title
+	,	a.inq_content
+	,	a.inq_name
+	,	a.inq_regdate
+	,	b.me_name		
+	from
+	 soft.tbl_inquiry a inner join soft.tbl_member b
+	 on a.inq_name = b.me_name
+	 where a.inq_no = 1;
+	</select>
+
+</mapper>
