@@ -11,7 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.with.community.dao.NoticeDAO;
 import com.with.community.vo.BoardVO;
 import com.with.community.vo.NoticeVO;
-import com.with.community.vo.PageInfo;
+import com.with.community.vo.PageVO;
 
 @Service
 public class NoticeServiceImpl implements NoticeService {
@@ -25,8 +25,8 @@ public class NoticeServiceImpl implements NoticeService {
 	}
 
 	@Override
-	public List<NoticeVO> NoticeList(PageInfo paging) throws Exception {
-		return noticeDAO.NoticeList(paging);
+	public List<NoticeVO> NoticeList() throws Exception {
+		return noticeDAO.NoticeList();
 	}
 	
 	@Transactional(isolation = Isolation.READ_COMMITTED)
@@ -64,6 +64,16 @@ public class NoticeServiceImpl implements NoticeService {
 	@Override
 	public int getListCount() throws Exception {
 		return noticeDAO.getListCount();
+	}
+
+	@Override
+	public List<NoticeVO> selectNoticeImportant(NoticeVO vo) throws Exception {
+		return noticeDAO.selectNoticeImportant(vo);
+	}
+
+	@Override
+	public List<NoticeVO> HomeNoticeList() throws Exception {
+		return noticeDAO.HomeNoticeList();
 	}
 	
 

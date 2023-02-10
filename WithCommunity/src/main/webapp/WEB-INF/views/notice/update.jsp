@@ -10,6 +10,30 @@
 	src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
 <script type="text/javascript">
+function YnCheck(obj) {
+	var checked = obj.checked;
+	if(checked) {
+		obj.value = 1;
+	}else {
+		obj.value = 2;
+	}
+	
+	var isfixed = "${data.isFixed}";
+	if(isFixed == 1) {
+		${"#isFixed"}.prop("checked",true);
+	}else {
+		$("#isFixed").prop("checked",false);
+	}
+	
+	// 체크박스 value값 설정
+	if($("#isFixed").is(':checked')==true) {
+		data.set("isFixed",1);
+	}else {
+		data.set("isFixed",0);
+	}
+};
+</script>
+<script type="text/javascript">
 	$(document).ready(function() {
 
 		$(".cancel_btn").on("click", function() {
@@ -23,6 +47,27 @@
 			return false;
 		}
 	}
+</script>
+<script type="text/javascript">
+$("#isFixed").click(function () {
+	  let chekObj = document.getElementsByClassName("isFixed");
+	  let lenth = chekObj.length;
+	  let checked = 0;
+	  let isFixed;
+
+	  for (i = 0; i < lenth; i++) {
+	    if (chekObj[i].checked === true) {
+	      checked += 1;
+	      isFixed = chekObj[i].getAttribute("id");
+	      console.log(isFixed);
+	    }
+	  }
+
+	  if (checked >= 2){
+	    alert("체크 해제 후 한 가지만 선택해 주세요");
+	    return false;
+	  }
+	});
 </script>
 <script type="text/javascript">
 	function fn_addFile() {
@@ -100,40 +145,22 @@
 										<textarea id="notice_content" name="notice_content" cols="130"
 											rows="20"><c:out value="${update.notice_content}" /></textarea>
 								</tr>
+								<tr>
+									<td>
+									<input type="checkbox" id="isFixed" name="isFixed" onchange="YnCheck(this);" <%-- value='${FixedUpdate.isFixed} --%>>
+									
+										 <label for="isFixed">상단 고정</label>
+									</td>
+								</tr>
 							</tbody>
 						</table>
 					</div>
-					<!-- 첨부파일 -->
-					<td id="fileIndex"><c:forEach var="file" items="${file}"
-							varStatus="var">
-							<div>
-								<input type="hidden" id="FILE_NO" name="FILE_NO_${var.index}"
-									value="${file.FILE_NO }"> <input type="hidden"
-									id="FILE_NAME" name="FILE_NAME" value="FILE_NO_${var.index}">
-								<a href="#" id="fileName" onclick="return false;">${file.ORG_FILE_NAME}</a>(${file.FILE_SIZE}kb)
-								<button id="fileDel"
-									onclick="fn_del('${file.FILE_NO}','FILE_NO_${var.index}');"
-									type="button">삭제</button>
-								<br>
-							</div>
-						</c:forEach></td>
-					</tr>
-
-					</tbody>
-					</table>
-			</div>
-			<div style="margin-left: 1px;">
-				<!-- <button type="button" id="update_btn" class="btn btn-primary">수정</button>
-				<button type="button" id="cancel_btn" class="btn btn-primary">취소</button>
-				<button type="button" id="fileAdd_btn" class="btn btn-primary">파일추가</button> -->
-
-				<!-- 첨부파일 -->
 
 
-				<div style="margin-left: 1px;">
-					<button type="submit" class="btn btn-primary">수정</button>
-					<a href="/notice/list" class="btn btn-danger">취소</a>
-				</div>
+					<div style="margin-left: 1px;">
+						<button type="submit" class="btn btn-primary">수정</button>
+						<a href="/notice/list" class="btn btn-danger">취소</a>
+					</div>
 				</form>
 			</div>
 		</div>

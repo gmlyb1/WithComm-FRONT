@@ -10,7 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.with.community.dao.BoardDAO;
 import com.with.community.vo.BoardVO;
-import com.with.community.vo.PageInfo;
+import com.with.community.vo.PageVO;
 
 @Service
 public class BoardServiceImpl implements BoardService {
@@ -36,8 +36,8 @@ public class BoardServiceImpl implements BoardService {
 	}
 
 	@Override
-	public List<BoardVO> BoardList(PageInfo paging) throws Exception {
-		return boardDAO.BoardList(paging);
+	public List<BoardVO> BoardList(BoardVO vo) throws Exception {
+		return boardDAO.BoardList(vo);
 	}
 
 	@Transactional(isolation = Isolation.READ_COMMITTED)
@@ -63,13 +63,18 @@ public class BoardServiceImpl implements BoardService {
 	}
 
 	@Override
-	public int getListCount() throws Exception {
-		return boardDAO.getListCount();
+	public int getListCount(BoardVO vo) throws Exception {
+		return boardDAO.getListCount(vo);
 	}
 
 	@Override
 	public void updateReplyCount(int board_no) throws Exception {
 		boardDAO.updateReplyCount(board_no);
+	}
+
+	@Override
+	public List<BoardVO> HomeBoardList() throws Exception {
+		return boardDAO.HomeBoardList();
 	}
 
 }

@@ -149,20 +149,30 @@
 								<h5 class="card-header m-0 me-2 pb-3">공지사항</h5>
 								<table>
 									<thead>
-										<tr>
-											<th>1</th>
-											<th>2</th>
-											<th>3</th>
-											<th>4</th>
-										</tr>
-
-										<tr>
-											<td>a</td>
-											<td>b</td>
-											<td>c</td>
-											<td>d</td>
-										</tr>
+											<tr>
+									<th class="text-center">번호</th>
+									<th class="text-center">주제</th>
+									<th class="text-center">작성자</th>
+									<th class="text-center">조회수</th>
+									<th class="text-center">작성일자</th>
+								</tr>
 									</thead>
+									<tbody>
+										<c:forEach items="${HomeNoticeList}" var="nlist">
+											<tr>
+												<td class="text-center"><c:out
+														value="${nlist.notice_no}" /></td>
+												<td><a href="/notice/read?notice_no=${nlist.notice_no}"><c:out
+															value="${nlist.notice_title}" /></a></td>
+												<td class="text-center"><c:out
+														value="${nlist.notice_writer}" /></td>
+												<td class="text-center"><c:out
+														value="${nlist.notice_count}" /></td>
+												<td class="text-center"><c:out
+														value="${nlist.notice_regdate}" /></td>
+											</tr>
+										</c:forEach>
+									</tbody>
 								</table>
 							</div>
 						</div>
@@ -266,19 +276,29 @@
 								<table>
 									<thead>
 										<tr>
-											<th>1</th>
-											<th>2</th>
-											<th>3</th>
-											<th>4</th>
-										</tr>
-
-										<tr>
-											<td>a</td>
-											<td>b</td>
-											<td>c</td>
-											<td>d</td>
+											<th class="text-center">번호</th>
+											<th class="text-center">주제</th>
+											<th class="text-center">작성자</th>
+											<th class="text-center">조회수</th>
+											<th class="text-center">작성일자</th>
 										</tr>
 									</thead>
+									<tbody>
+										<c:forEach items="${HomeBoardList}" var="blist">
+											<tr>
+												<td class="text-center"><c:out
+														value="${blist.board_no}" /></td>
+												<td><a href="/board/read?board_no=${blist.board_no}"><c:out
+															value="${blist.board_title}" /></a></td>
+												<td class="text-center"><c:out
+														value="${blist.board_writer}" /></td>
+												<td class="text-center"><c:out
+														value="${blist.board_count}" /></td>
+												<td class="text-center"><c:out
+														value="${blist.board_regdate}" /></td>
+											</tr>
+										</c:forEach>
+									</tbody>
 								</table>
 							</div>
 						</div>

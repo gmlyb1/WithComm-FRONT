@@ -1,6 +1,7 @@
 package com.with.community.vo;
 
 import java.sql.Date;
+import java.sql.Timestamp;
 
 public class ReplyVO {
 	
@@ -8,8 +9,7 @@ public class ReplyVO {
 	private int reply_no;
 	private String reply_content;
 	private String reply_writer;
-	private Date reply_regdate;
-
+	private Timestamp reply_regdate;
 	public int getBoard_no() {
 		return board_no;
 	}
@@ -34,16 +34,17 @@ public class ReplyVO {
 	public void setReply_writer(String reply_writer) {
 		this.reply_writer = reply_writer;
 	}
-	public Date getReply_regdate() {
+	public Timestamp getReply_regdate() {
 		return reply_regdate;
 	}
-	public void setReply_regdate(Date reply_regdate) {
+	public void setReply_regdate(Timestamp reply_regdate) {
 		this.reply_regdate = reply_regdate;
 	}
-	
 	@Override
 	public String toString() {
-		return "replyVO [board_no=" + board_no + ", reply_no=" + reply_no + ", reply_content=" + reply_content
+		return "ReplyVO [board_no=" + board_no + ", reply_no=" + reply_no + ", reply_content=" + reply_content
 				+ ", reply_writer=" + reply_writer + ", reply_regdate=" + reply_regdate + "]";
 	}
+
+	
 }

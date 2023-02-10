@@ -23,7 +23,7 @@ import org.springframework.web.servlet.support.RequestContextUtils;
 import com.with.community.service.NoticeService;
 import com.with.community.vo.BoardVO;
 import com.with.community.vo.NoticeVO;
-import com.with.community.vo.PageInfo;
+import com.with.community.vo.PageVO;
 import com.with.community.vo.Pagination;
 import com.with.community.vo.ReplyVO;
 
@@ -46,12 +46,16 @@ public class NoticeController {
 		}
 		// 페이징
 		int listCount = noticeService.getListCount();
-		PageInfo paging = Pagination.getPageInfo(currentPage, listCount);
+		vo.setIsFixed(vo.getIsFixed());
 		
-		
-		List<NoticeVO> noticeList = noticeService.NoticeList(paging);
+		List<NoticeVO> noticeList = noticeService.NoticeList();
 		model.addAttribute("noticeList", noticeList);
-		model.addAttribute("paging", paging);
+		model.addAttribute("FixedList", noticeService.selectNoticeImportant(vo));
+//		if(vo.getIsFixed() > 0 ) {
+//			List<NoticeVO> ImportantList =  noticeService.selectNoticeImportant(vo);
+//			model.addAttribute("ImportantList", ImportantList);
+//		}
+		
 		
 		return "/notice/list";
 	}
@@ -61,18 +65,18 @@ public class NoticeController {
 			public void insertNoticeGET() {
 			}
 			
-			// �Խñ� ��� (POST)
+			// 글쓰기 (POST)
 			@RequestMapping(value= "/create" , method = RequestMethod.POST)
 			public String insertNoticePOST(@ModelAttribute("vo") NoticeVO vo,HttpServletRequest request ,RedirectAttributes redirect) throws Exception 
 			{
 				
 			try {
 				SimpleDateFormat format1= new SimpleDateFormat("yyyy-MM-dd");
-				
-				Date time = new Date();
-				
-				String time1 = format1.format(time);
-				vo.setNotice_regdate(time1);
+//				
+//				Date time = new Date();
+//				
+//				String time1 = format1.format(time);
+//				vo.setNotice_regdate(time1);
 				
 				noticeService.insertNotice(vo);
 				
@@ -103,9 +107,10 @@ public class NoticeController {
 			
 			
 			@RequestMapping(value = "/update" , method= RequestMethod.GET)
-			public String NoticeUpdateGET(NoticeVO vo, Model model) throws Exception
+			public String NoticeUpdateGET(NoticeVO vo, Model model,HttpServletRequest request) throws Exception
 			{
 				model.addAttribute("update", noticeService.NoticeRead(vo.getNotice_no()));
+				model.addAttribute("FixedUpdate", noticeService.selectNoticeImportant(vo));
 //				List<Map<String, Object>> fileList = boardService.selectFileList(vo.getBoard_no());
 //				model.addAttribute("file", fileList);
 				

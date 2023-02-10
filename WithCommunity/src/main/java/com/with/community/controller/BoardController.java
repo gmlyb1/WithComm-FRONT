@@ -26,7 +26,7 @@ import org.springframework.web.servlet.support.RequestContextUtils;
 import com.with.community.service.BoardService;
 import com.with.community.service.ReplyService;
 import com.with.community.vo.BoardVO;
-import com.with.community.vo.PageInfo;
+import com.with.community.vo.PageVO;
 import com.with.community.vo.Pagination;
 import com.with.community.vo.ReplyVO;
 
@@ -54,14 +54,30 @@ public class BoardController {
 				model.addAttribute("msg", (String)inputFlashMap.get("msg"));
 			}
 			// 페이징
-			int listCount = boardService.getListCount();
+			Pagination pagination = new Pagination();
+			pagination.setCurrentPageNo(vo.getPageIndex());
+			pagination.setRecordCountPerPage(vo.getPageUnit());
+			pagination.setPageSize(vo.getPageSize());
 			
-			PageInfo paging = Pagination.getPageInfo(currentPage, listCount);
+			vo.setFirstIndex(pagination.getFirstRecordIndex());
+			vo.setRecordCountPerPage(pagination.getRecordCountPerPage());
 			
 			//리스트 받아서 바인딩.
-			List<BoardVO> boardList = boardService.BoardList(paging);
+			List<BoardVO> boardList = boardService.BoardList(vo);
+			int totCnt = boardService.getListCount(vo);
+			
+			vo.setEndDate(pagination.getLastPageNoOnPageList());
+			vo.setStartDate(pagination.getFirstPageNoOnPageList());
+			vo.setPrev(pagination.getXprev());
+			vo.setNext(pagination.getXnext());
+			vo.setRealEnd(pagination.getRealEnd());
+			
 			model.addAttribute("boardList", boardList);
-			model.addAttribute("paging", paging);
+			model.addAttribute("totCnt", totCnt);
+			model.addAttribute("totalPageCnt", (int)Math.ceil(totCnt/(double)vo.getPageUnit()));
+			model.addAttribute("pagination", pagination);
+			
+			
 			
 			return "/board/list";
 		}
@@ -77,12 +93,12 @@ public class BoardController {
 		{
 			
 		try {
-			SimpleDateFormat format1= new SimpleDateFormat("yyyy-MM-dd");
-			
-			Date time = new Date();
-			
-			String time1 = format1.format(time);
-			vo.setBoard_regdate(time1);
+//			SimpleDateFormat format1= new SimpleDateFormat("yyyy-MM-dd");
+//			
+//			Date time = new Date();
+//			
+//			String time1 = format1.format(time);
+//			vo.setBoard_regdate(time1);
 			
 			boardService.insertBoard(vo);
 			

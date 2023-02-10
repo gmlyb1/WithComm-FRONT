@@ -135,7 +135,7 @@
                   </g>
                 </svg>
               </span>
-              <span class="app-brand-text demo menu-text fw-bolder ms-2">Sneat</span>
+              <span class="app-brand-text demo menu-text fw-bolder ms-2">WithComm</span>
             </a>
 
             <a href="javascript:void(0);" class="layout-menu-toggle menu-link text-large ms-auto d-block d-xl-none">
@@ -158,7 +158,7 @@
             <li class="menu-item">
               <a href="javascript:void(0);" class="menu-link menu-toggle">
                 <i class="menu-icon tf-icons bx bx-layout"></i>
-                <div data-i18n="Layouts">Layouts</div>
+                <div data-i18n="Layouts">레이아웃</div>
               </a>
 
               <ul class="menu-sub">
@@ -219,7 +219,7 @@
             <li class="menu-item">
               <a href="javascript:void(0);" class="menu-link menu-toggle">
                 <i class="menu-icon tf-icons bx bx-lock-open-alt"></i>
-                <div data-i18n="Authentications">Authentications</div>
+                <div data-i18n="Authentications">자료게시판</div>
               </a>
               <ul class="menu-sub">
                 <li class="menu-item">
@@ -242,7 +242,7 @@
             <li class="menu-item">
               <a href="javascript:void(0);" class="menu-link menu-toggle">
                 <i class="menu-icon tf-icons bx bx-cube-alt"></i>
-                <div data-i18n="Misc">Misc</div>
+                <div data-i18n="Misc">지식인</div>
               </a>
               <ul class="menu-sub">
                 <li class="menu-item">
@@ -263,14 +263,14 @@
             <li class="menu-item">
               <a href="cards-basic.html" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-collection"></i>
-                <div data-i18n="Basic">Cards</div>
+                <div data-i18n="Basic">구인/구직</div>
               </a>
             </li>
             <!-- User interface -->
             <li class="menu-item">
               <a href="javascript:void(0)" class="menu-link menu-toggle">
                 <i class="menu-icon tf-icons bx bx-box"></i>
-                <div data-i18n="User interface">User interface</div>
+                <div data-i18n="User interface">이벤트</div>
               </a>
               <ul class="menu-sub">
                 <li class="menu-item">
@@ -372,7 +372,7 @@
             </li>
 
             <!-- Extended components -->
-            <li class="menu-item">
+            <!-- <li class="menu-item">
               <a href="javascript:void(0)" class="menu-link menu-toggle">
                 <i class="menu-icon tf-icons bx bx-copy"></i>
                 <div data-i18n="Extended UI">Extended UI</div>
@@ -398,9 +398,9 @@
               </a>
             </li>
 
-            <!-- Forms & Tables -->
+            Forms & Tables
             <li class="menu-header small text-uppercase"><span class="menu-header-text">Forms &amp; Tables</span></li>
-            <!-- Forms -->
+            Forms
             <li class="menu-item">
               <a href="javascript:void(0);" class="menu-link menu-toggle">
                 <i class="menu-icon tf-icons bx bx-detail"></i>
@@ -436,12 +436,12 @@
                   </a>
                 </li>
               </ul>
-            </li>
+            </li> -->
             <!-- Tables -->
             <li class="menu-item">
               <a href="tables-basic.html" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-table"></i>
-                <div data-i18n="Tables">Tables</div>
+                <div data-i18n="Tables">달력</div>
               </a>
             </li>
             <!-- Misc -->
@@ -453,7 +453,7 @@
                 class="menu-link"
               >
                 <i class="menu-icon tf-icons bx bx-support"></i>
-                <div data-i18n="Support">Support</div>
+                <div data-i18n="Support">운영진 상담</div>
               </a>
             </li>
             <li class="menu-item">
@@ -463,7 +463,7 @@
                 class="menu-link"
               >
                 <i class="menu-icon tf-icons bx bx-file"></i>
-                <div data-i18n="Documentation">Documentation</div>
+                <div data-i18n="Documentation">파일게시판</div>
               </a>
             </li>
           </ul>
@@ -519,6 +519,7 @@
                   <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown">
                     <div class="avatar avatar-online">
                       <img src="/resources/assets/img/avatars/1.png" alt class="w-px-40 h-auto rounded-circle" />
+                      <%-- <img src="/resources/assets/img/${member.me_image}" alt class="w-px-40 h-auto rounded-circle" /> --%>
                     </div>
                   </a>
                   <ul class="dropdown-menu dropdown-menu-end">

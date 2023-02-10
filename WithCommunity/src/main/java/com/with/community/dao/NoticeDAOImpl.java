@@ -8,7 +8,7 @@ import org.apache.ibatis.session.RowBounds;
 import org.apache.ibatis.session.SqlSession;
 
 import com.with.community.vo.NoticeVO;
-import com.with.community.vo.PageInfo;
+import com.with.community.vo.PageVO;
 
 public class NoticeDAOImpl implements NoticeDAO {
 	
@@ -23,13 +23,10 @@ public class NoticeDAOImpl implements NoticeDAO {
 	}
 
 	@Override
-	public List<NoticeVO> NoticeList(PageInfo paging) throws Exception {
+	public List<NoticeVO> NoticeList() throws Exception {
 		
-		int offset = (paging.getCurrentPage() - 1) * paging.getBoardLimit();
 		
-		RowBounds rowBounds = new RowBounds(offset, paging.getBoardLimit());
-		
-		return (List)sqlSession.selectList("namespace.NoticeList",null,rowBounds);
+		return sqlSession.selectList("namespace.NoticeList");
 	}
 
 	@Override
@@ -66,6 +63,16 @@ public class NoticeDAOImpl implements NoticeDAO {
 	@Override
 	public int getListCount() throws Exception {
 		return sqlSession.selectOne("namespace.getListCount");
+	}
+
+	@Override
+	public List<NoticeVO> selectNoticeImportant(NoticeVO vo) throws Exception {
+		return sqlSession.selectList("namespace.selectNoticeImportant", vo);
+	}
+
+	@Override
+	public List<NoticeVO> HomeNoticeList() throws Exception {
+		return sqlSession.selectList("namespace.HomeNoticeList");
 	}
 
 

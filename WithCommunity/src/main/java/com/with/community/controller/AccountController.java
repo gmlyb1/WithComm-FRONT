@@ -15,7 +15,6 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.with.community.service.AccountService;
-import com.with.community.util.fileUtil;
 import com.with.community.vo.AccountVO;
 
 @Controller

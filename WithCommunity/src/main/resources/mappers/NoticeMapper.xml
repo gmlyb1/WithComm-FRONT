@@ -17,7 +17,13 @@
 	<select id="getListCount" resultType="int" parameterType="java.util.List">
 		select count(notice_no) from tbl_notice
 	</select>
-
+	
+	 <select id="selectNoticeImportant" resultType="NoticeVO" parameterType="NoticeVO">
+		select * from tbl_notice where isFixed = '1'
+	</select>
+	
+	
+	
 	<!--  글 작성 -->
 	<insert id="insertNotice">
   		insert
@@ -30,6 +36,8 @@
 		 ,	notice_writer
 		 ,	notice_count
 		 ,	notice_regdate
+		 ,	notice_updateDate
+		 ,	isFixed
 		)
 		values
 		(
@@ -38,7 +46,9 @@
 		,   #{notice_content}
 		,	#{notice_writer}
 		,	#{notice_count}
-		,	#{notice_regdate}
+		,	now()
+		,	now()
+		,	#{isFixed}
 		)
 	</insert>
 	
@@ -52,11 +62,19 @@
 	
 	</select>
 	
+	<!-- 메인페이지 바인딩  -->
+	<select id="HomeNoticeList" resultType="noticeVO" parameterType="noticeVO">
+	select * 
+		from tbl_notice 
+		order by notice_regdate desc LIMIT 7;
+	</select>
+	
 	<!-- 게시글 수정 -->
 	<update id="NoticeUpdate" parameterType="NoticeVO">
 		update tbl_notice
 			set notice_title = #{notice_title},	
-				notice_content = #{notice_content}
+				notice_content = #{notice_content},
+				isFixed = #{isFixed}
 		where notice_no = #{notice_no}
 	</update>
 	

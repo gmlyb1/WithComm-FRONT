@@ -39,59 +39,28 @@
 	}
 </script>
 <script type="text/javascript">
-	$(document)
-			.ready(
-					function() {
-						$('#myEditor')
-								.summernote(
-										{
-											lang : 'ko-KR',
-											height : 300,
-											placeholder : '내용을 입력하세요',
-											toolbar : [
-													[ 'fontname',
-															[ 'fontname' ] ],
-													[ 'fontsize',
-															[ 'fontsize' ] ],
-													[
-															'style',
-															[
-																	'bold',
-																	'italic',
-																	'underline',
-																	'strikethrough',
-																	'clear' ] ],
-													[
-															'color',
-															[ 'forecolor',
-																	'color' ] ],
-													[ 'table', [ 'table' ] ],
-													[
-															'para',
-															[ 'ul', 'ol',
-																	'paragraph' ] ],
-													[ 'height', [ 'height' ] ],
-													[
-															'insert',
-															[ 'picture',
-																	'link',
-																	'video' ] ],
-													[
-															'view',
-															[ 'fullscreen',
-																	'help' ] ] ],
-											fontNames : [ 'Arial',
-													'Arial Black',
-													'Comic Sans MS',
-													'Courier New', '맑은 고딕',
-													'궁서', '굴림체', '굴림', '돋음체',
-													'바탕체' ],
-											fontSizes : [ '8', '9', '10', '11',
-													'12', '14', '16', '18',
-													'20', '22', '24', '28',
-													'30', '36', '50', '72' ]
-										});
-					});
+function YnCheck(obj) {
+	var checked = obj.checked;
+	if(checked) {
+		obj.value = 1;
+	}else {
+		obj.value = 2;
+	}
+	
+	var isfixed = "${data.isFixed}";
+	if(isFixed == 1) {
+		${"#isFixed"}.prop("checked",true);
+	}else {
+		$("#isFixed").prop("checked",false);
+	}
+	
+	// 체크박스 value값 설정
+	if($("#isFixed").is(':checked')==true) {
+		data.set("isFixed",1);
+	}else {
+		data.set("isFixed",0);
+	}
+};
 </script>
 <script type="text/javascript">
 	function fn_addFile(){
@@ -151,12 +120,9 @@
 								</tr>
 								
 								<tr>
-									<td id="fileIndex">
-									<input type="file" name="file" />
-								<div>  
-			 						<button id="fileAdd_btn" class="btn btn-primary" type="button">파일추가+</button>
-								</div>
-									</td>
+									 <td>
+										<input type="checkbox" id="isFixed" name="isFixed" onchange="YnCheck(this);"><label for="isFixed">상단 고정</label>								
+									</td> 
 								</tr>
 
 							</tbody>

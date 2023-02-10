@@ -5,12 +5,39 @@
   
 <mapper namespace="com.with.community.dao.BoardDAO">
 
+	<sql id="boardtWhere" >
+	where 
+		1=1
+	<if test="searchKeyword != null and searchKeyword != ''">
+		<![CDATA[ 
+		 AND 
+			( 
+			board_title like concat('%',#{searchKeyword},'%') OR
+		    board_content like concat('%',#{searchKeyword},'%') 
+			 )  
+		 ]]> 
+	</if>
+</sql>
+
+	<select id="HomeBoardList" resultType="boardVO" parameterType="boardVO">
+	select * 
+		from tbl_board 
+		order by board_regdate desc LIMIT 7;
+	</select>
+
 	<!-- 글 목록 -->
 	<select id="BoardList" resultType="BoardVO" parameterType="BoardVO">
+	<![CDATA[
 		select
 		 *
 		from
 		 tbl_board
+		 ]]>
+<!-- <include refid="boardtWhere"/> -->
+<![CDATA[			
+	Order by board_no asc
+	LIMIT #{recordCountPerPage} OFFSET #{firstIndex}
+]]>	
 	</select>
 
 	<!--  글 작성 -->
@@ -99,8 +126,11 @@
 	</select>
 	
 	<!-- 총 개수 -->
-	<select id="getListCount" resultType="int" parameterType="java.util.List">
-		select count(board_no) from tbl_board
+	<select id="getListCount" resultType="java.lang.Integer" parameterType="boardVO">
+		select count(*) from tbl_board
+		<!-- <![CDATA[
+		<include refid="boardtWhere"/>
+		]]> -->
 	</select>
 	<!-- <select id="listPage" resultType="boardVO" parameterType="SearchCriteria">
 		select 

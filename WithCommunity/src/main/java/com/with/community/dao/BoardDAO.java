@@ -3,7 +3,7 @@ package com.with.community.dao;
 import java.util.List;
 
 import com.with.community.vo.BoardVO;
-import com.with.community.vo.PageInfo;
+import com.with.community.vo.PageVO;
 
 public interface BoardDAO {
 
@@ -13,7 +13,7 @@ public interface BoardDAO {
 
 	public void insertBoard(BoardVO vo) throws Exception;
 
-	public List<BoardVO> BoardList(PageInfo paging) throws Exception;
+	public List<BoardVO> BoardList(BoardVO vo) throws Exception;
 
 	public BoardVO BoardRead(int board_no) throws Exception;
 
@@ -23,7 +23,9 @@ public interface BoardDAO {
 
 	public void BoardHit(int board_no) throws Exception;
 	
-	public int getListCount() throws Exception;
+	public int getListCount(BoardVO vo) throws Exception;
 	
 	public void updateReplyCount(int board_no) throws Exception;
+	
+	public List<BoardVO> HomeBoardList() throws Exception;
 }

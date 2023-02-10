@@ -3,7 +3,7 @@ package com.with.community.dao;
 import java.util.List;
 
 import com.with.community.vo.NoticeVO;
-import com.with.community.vo.PageInfo;
+import com.with.community.vo.PageVO;
 
 public interface NoticeDAO {
 
@@ -13,7 +13,7 @@ public interface NoticeDAO {
 	
 	public void insertNotice(NoticeVO vo) throws Exception;
 	
-	public List<NoticeVO> NoticeList(PageInfo paging) throws Exception;
+	public List<NoticeVO> NoticeList() throws Exception;
 	
 	public NoticeVO NoticeRead(int notice_no) throws Exception;
 	
@@ -24,4 +24,8 @@ public interface NoticeDAO {
 	public void NoticeHit(int notice_no) throws Exception;
 	
 	public int getListCount() throws Exception;
+	
+	public List<NoticeVO> HomeNoticeList() throws Exception;
+	
+	public List<NoticeVO> selectNoticeImportant(NoticeVO vo) throws Exception;
 }
