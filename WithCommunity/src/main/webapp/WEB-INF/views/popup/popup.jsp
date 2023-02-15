@@ -68,8 +68,8 @@ font-size:16px; font-weight:600; width: 40px; height : 30px;color:black; float: 
     <div class="layerBox">
         <h4 class="title text-center"> 공지사항</h4>
         <div class="cont">
-            <p>
-	<img src="" width=350 height=500 usemap="#popup" alt="event page">
+            <p width="350" height="500">안녕하세요 운영자입니다. 현재 개발중이니 조금만 기다려 주세요.
+	<!-- <img src="" width=350 height=500 usemap="#popup" alt="event page"> -->
             </p>
         </div>
           <form name="pop_form">

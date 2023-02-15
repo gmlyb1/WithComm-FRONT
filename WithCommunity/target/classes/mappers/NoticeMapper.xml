@@ -74,6 +74,7 @@
 		update tbl_notice
 			set notice_title = #{notice_title},	
 				notice_content = #{notice_content},
+				notice_updateDate = CURRENT_TIMESTAMP(),
 				isFixed = #{isFixed}
 		where notice_no = #{notice_no}
 	</update>

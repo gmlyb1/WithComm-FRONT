@@ -53,6 +53,7 @@
 							<th class="text-center">작성자</th>
 							<th class="text-center">조회수</th>
 							<th class="text-center">작성일자</th>
+							<th class="text-center">수정일자</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -66,8 +67,10 @@
 												value="${FixedList.notice_writer}" /></strong></td>
 									<td class="text-center"><strong><c:out
 												value="${FixedList.notice_count}" /></strong></td>
-									<td class="text-center"><strong><fmt:formatDate pattern="yyyy-MM-dd hh:mm"
+									<td class="text-center"><strong><fmt:formatDate pattern="yyyy-MM-dd"
 												value="${FixedList.notice_regdate}" /></strong></td>
+									<td class="text-center"><strong><fmt:formatDate pattern="yyyy-MM-dd"
+												value="${FixedList.notice_updateDate}" /></strong></td>
 								</tr>
 							</c:forEach>
 							<c:forEach items="${noticeList}" var="list">
@@ -79,13 +82,14 @@
 											value="${list.notice_writer}" /></td>
 									<td class="text-center"><c:out
 											value="${list.notice_count}" /></td>
-									<td class="text-center"><fmt:formatDate pattern="yyyy-MM-dd hh:mm"
+									<td class="text-center"><fmt:formatDate pattern="yyyy-MM-dd"
 											value="${list.notice_regdate}" /></td>
+									<td class="text-center"><fmt:formatDate pattern="yyyy-MM-dd"
+											value="${list.notice_updateDate}" /></td>
 								</tr>
 							</c:forEach>
-						
 					</tbody>
-				</table>
+				</table><br>
 				<c:if test="${member.adminCk == 1}">
 					<button type="button" onclick="location.href='/notice/create';"
 						class="btn btn-success">글쓰기</button>

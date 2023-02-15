@@ -51,22 +51,6 @@
     <script src="/resources/assets/js/config.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     
-  	    <script type="text/javascript">
-	$(document).ready(function() {
-		var msg = "${msg}"
-		if (msg != "") {
-			alert(msg);
-		}
-	});
-</script> 
-<!-- <script type="text/javascript">
-	$(document).ready(function() {
-		$("#logoutBtn").on("click", function() {
-			alert("로그아웃을 완료하였습니다.");
-			location.href = "/account/logout"
-		})
-	})
-</script> -->
   </head>
 
   <body>
@@ -575,7 +559,7 @@
                 </li>
                 </c:if>
                 <c:if test="${member == null }">
-                	<a href="/account/login" class="btn btn-primary">로그인</a>
+                	<a href="/account/login" class="btn btn-primary">로그인</a>&nbsp;
                 	<a href="/account/register" class="btn btn-success">회원가입</a>
                 </c:if>
                 <!--/ User -->

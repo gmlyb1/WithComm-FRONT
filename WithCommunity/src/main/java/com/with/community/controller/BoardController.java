@@ -46,36 +46,22 @@ public class BoardController {
 	
 		//목록
 		@RequestMapping(value = "/list", method=RequestMethod.GET)
-		public String BoardList(@ModelAttribute("vo") BoardVO vo,HttpServletRequest request,Model model, @RequestParam(value="currenttPage",required = false, defaultValue = "1") int currentPage) throws Exception 
+		public String BoardList(@ModelAttribute("vo") BoardVO vo,HttpServletRequest request,Model model, @RequestParam(value="currentPage",required = false, defaultValue = "1") int currentPage) throws Exception 
 		{
 			Map<String, ?> inputFlashMap = RequestContextUtils.getInputFlashMap(request);
 			
 			if(null != inputFlashMap) {
 				model.addAttribute("msg", (String)inputFlashMap.get("msg"));
 			}
-			// 페이징
-			Pagination pagination = new Pagination();
-			pagination.setCurrentPageNo(vo.getPageIndex());
-			pagination.setRecordCountPerPage(vo.getPageUnit());
-			pagination.setPageSize(vo.getPageSize());
 			
-			vo.setFirstIndex(pagination.getFirstRecordIndex());
-			vo.setRecordCountPerPage(pagination.getRecordCountPerPage());
 			
 			//리스트 받아서 바인딩.
 			List<BoardVO> boardList = boardService.BoardList(vo);
 			int totCnt = boardService.getListCount(vo);
 			
-			vo.setEndDate(pagination.getLastPageNoOnPageList());
-			vo.setStartDate(pagination.getFirstPageNoOnPageList());
-			vo.setPrev(pagination.getXprev());
-			vo.setNext(pagination.getXnext());
-			vo.setRealEnd(pagination.getRealEnd());
 			
 			model.addAttribute("boardList", boardList);
 			model.addAttribute("totCnt", totCnt);
-			model.addAttribute("totalPageCnt", (int)Math.ceil(totCnt/(double)vo.getPageUnit()));
-			model.addAttribute("pagination", pagination);
 			
 			
 			
@@ -155,7 +141,7 @@ public class BoardController {
 				boardService.BoardUpdate(vo);
 				rttr.addFlashAttribute("msg", "글 수정을 완료하였습니다.");
 			}catch (Exception e) {
-				rttr.addFlashAttribute("msg", "오류가 발생하였습니다.");
+				e.printStackTrace();
 				logger.error("오류 : " + e);
 			}
 		

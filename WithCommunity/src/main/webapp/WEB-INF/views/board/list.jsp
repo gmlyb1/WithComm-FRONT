@@ -73,6 +73,7 @@ function fn_search(){
 							<th class="text-center">작성자</th>
 							<th class="text-center">조회수</th>
 							<th class="text-center">작성일자</th>
+							<th class="text-center">수정일자</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -83,19 +84,21 @@ function fn_search(){
 										${list.board_title}[${list.reply_cnt}]</a></td>
 								<td class="text-center"><c:out value="${list.board_writer}" /></td>
 								<td class="text-center"><c:out value="${list.board_count}" /></td>
-								<td class="text-center"><c:out
-										value="${list.board_regdate}" /></td>
+								<td class="text-center"><fmt:formatDate pattern="yyyy-MM-dd"
+											value="${list.board_regdate}" /></td>
+								<td class="text-center"><fmt:formatDate pattern="yyyy-MM-dd"
+											value="${list.board_updateDate}" /></td>
 							</tr>
 						</c:forEach>
 					</tbody>
-				</table>
+				</table><br>
 				<c:if test="${member != null}">
 					<button type="button" onclick="location.href='/board/create';"
 						class="btn btn-success">글쓰기</button>
 				</c:if>
 
 				<!-- Paging[s] -->
-				<form method="get" id="listForm" action="/board/list">
+				<%-- <form method="get" id="listForm" action="/board/list">
 					<ul class="pagination">
 						<c:if test="${vo.prev}">
 							<li class="paginate_button page-item previous"
@@ -124,7 +127,7 @@ function fn_search(){
 						</c:if>
 					</ul>
 					<!-- Paging[e] -->
-				</form>
+				</form> --%>
 			</div>
 		</div>
 	</div>

@@ -136,23 +136,7 @@ $("#update_btn").on("click", function(){
 						</table>
 					</div>
 					<!-- 첨부파일 -->
-					<td id="fileIndex"><c:forEach var="file" items="${file}"
-							varStatus="var">
-							<div>
-								<input type="hidden" id="FILE_NO" name="FILE_NO_${var.index}"
-									value="${file.FILE_NO }"> <input type="hidden"
-									id="FILE_NAME" name="FILE_NAME" value="FILE_NO_${var.index}">
-								<a href="#" id="fileName" onclick="return false;">${file.ORG_FILE_NAME}</a>(${file.FILE_SIZE}kb)
-								<button id="fileDel"
-									onclick="fn_del('${file.FILE_NO}','FILE_NO_${var.index}');"
-									type="button">삭제</button>
-								<br>
-							</div>
-						</c:forEach></td>
-					</tr>
 
-					</tbody>
-					</table>
 			</div>
 			<div style="margin-left: 1px;">
 				<!-- <button type="button" id="update_btn" class="btn btn-primary">수정</button>
@@ -170,6 +154,5 @@ $("#update_btn").on("click", function(){
 			</div>
 		</div>
 	</div>
-</div>
 
 <%@include file="../include/footer.jsp"%>
