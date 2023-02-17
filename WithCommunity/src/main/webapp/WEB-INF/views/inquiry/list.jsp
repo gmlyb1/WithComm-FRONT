@@ -50,22 +50,26 @@
 						<tr>
 							<th class="text-center">번호</th>
 							<th class="text-center">주제</th>
-							<th class="text-center">내용</th>
 							<th class="text-center">작성자</th>
 							<th class="text-center">작성일자</th>
 						</tr>
 					</thead>
 					<tbody>
-					<c:if test="${member != null || member.adminCk == '1'}"> 
+					<c:if test="${member != null && member.adminCk == 1 && member.me_name == inquiry.inq_name}"> 
 						<c:forEach items="${inquiryList}" var="list">
 							<tr>
 								<td class="text-center"><c:out value="${list.inq_no}" /></td>
-								<td><a href="#"><c:out value="${list.inq_title}" /></a></td>
-								<td class="text-center"><c:out value="${list.inq_content}" /></td>
+								<td><a href="/inquiry/detail?inq_no=${list.inq_no}"><c:out value="${list.inq_title}" /></a></td>
 								<td class="text-center"><c:out value="${list.inq_name}" /></td>
 								<td class="text-center"><c:out value="${list.inq_regdate}" /></td>
 							</tr>
 						</c:forEach>
+					</c:if>
+					
+					<c:if test="${member == null && member.adminCk != 1 }">
+						<tr> 
+							<td colspan="4" class="text-center">비밀글 입니다.</td>
+						</tr>
 					</c:if>
 					</tbody>
 				</table>

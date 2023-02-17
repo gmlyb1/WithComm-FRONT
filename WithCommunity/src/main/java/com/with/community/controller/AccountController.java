@@ -122,5 +122,13 @@ public class AccountController {
 //		return "/account/profile";
 //	}
 	
+	@RequestMapping(value="/alram", method=RequestMethod.GET)
+	public void AlramGET() {
+		
+	}
 	
+	@RequestMapping(value="/IndNotice", method=RequestMethod.GET)
+	public void IndNoticeGET() {
+		
+	}
 }

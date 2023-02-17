@@ -19,4 +19,9 @@ public class InquiryServiceImpl implements InquiryService {
 	public List<InquiryVO> selectInquiryList() throws Exception {
 		return inquiryDAO.selectInquiryList();
 	}
+
+	@Override
+	public InquiryVO selectInquiryDetail(int inq_no) throws Exception {
+		return inquiryDAO.selectInquiryDetail(inq_no);
+	}
 }

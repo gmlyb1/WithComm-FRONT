@@ -6,16 +6,16 @@
 <%@include file="/WEB-INF/views/include/header.jsp"%>    
     
 <div class="container-xxl flex-grow-1 container-p-y">
-              <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Account Settings /</span> Account</h4>
+              <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Account Settings /</span> Individual Notice</h4>
 
               <div class="row">
                 <div class="col-md-12">
                   <ul class="nav nav-pills flex-column flex-md-row mb-3">
                     <li class="nav-item">
-                      <a class="nav-link active" href="javascript:void(0);"><i class="bx bx-user me-1"></i> 계정</a>
+                      <a class="nav-link" href="/account/profile"><i class="bx bx-user me-1"></i> 계정</a>
                     </li>
                     <li class="nav-item">
-                      <a class="nav-link" href="/account/IndNotice"
+                      <a class="nav-link active" href="/account/IndNotice"
                         ><i class="bx bx-bell me-1"></i> 계정공지</a
                       >
                     </li>

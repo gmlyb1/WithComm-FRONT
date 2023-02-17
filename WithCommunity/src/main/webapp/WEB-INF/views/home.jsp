@@ -132,21 +132,21 @@
 						</div>
 					</div>
 				</div>
-				<!-- Total Revenue -->
+				<!-- Total Revenue 공지사항 -->
 				<div class="col-12 col-lg-8 order-2 order-md-3 order-lg-2 mb-4">
 					<div class="card">
 						<div class="row row-bordered g-0">
 							<div class="col-md-12">
 								<h5 class="card-header m-0 me-2 pb-3">공지사항</h5>
-								<table>
+								<table class="col-md-12">
 									<thead>
-											<tr>
-									<th class="text-center">번호</th>
-									<th class="text-center">주제</th>
-									<th class="text-center">작성자</th>
-									<th class="text-center">조회수</th>
-									<th class="text-center">작성일자</th>
-								</tr>
+										<tr>
+											<th class="text-center">번호</th>
+											<th class="text-center">주제</th>
+											<th class="text-center">작성자</th>
+											<th class="text-center">조회수</th>
+											<th class="text-center">작성일자</th>
+										</tr>
 									</thead>
 									<tbody>
 										<c:forEach items="${HomeNoticeList}" var="nlist">
@@ -264,7 +264,7 @@
 						<div class="row row-bordered g-0">
 							<div class="col-md-12">
 								<h5 class="card-header m-0 me-2 pb-3">자유게시판</h5>
-								<table>
+								<table class="col-md-12">
 									<thead>
 										<tr>
 											<th class="text-center">번호</th>
@@ -442,26 +442,5 @@
 	<div class="layout-overlay layout-menu-toggle"></div>
 	<!-- / Layout wrapper -->
 	<%@include file="/WEB-INF/views/include/footer.jsp"%>
-	<!-- Core JS -->
-	<!-- build:js assets/vendor/js/core.js -->
-	<!--     <script src="/resources/assets/vendor/libs/jquery/jquery.js"></script>
-    <script src="/resources/assets/vendor/libs/popper/popper.js"></script>
-    <script src="/resources/assets/vendor/js/bootstrap.js"></script>
-    <script src="/resources/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js"></script>
-
-    <script src="/resources/assets/vendor/js/menu.js"></script>
-    endbuild
-
-    Vendors JS
-    <script src="/resources/assets/vendor/libs/apex-charts/apexcharts.js"></script>
-
-    Main JS
-    <script src="/resources/assets/js/main.js"></script>
-
-    Page JS
-    <script src="/resources/assets/js/dashboards-analytics.js"></script>
-
-    Place this tag in your head or just before your close body tag.
-    <script async defer src="https://buttons.github.io/buttons.js"></script> -->
 </body>
 </html>

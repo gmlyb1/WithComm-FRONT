@@ -193,34 +193,34 @@
                     <div data-i18n="Notifications">자유게시판</div>
                   </a>
                 </li>
-                <li class="menu-item">
+                <!-- <li class="menu-item">
                   <a href="/inquiry/list" class="menu-link">
                     <div data-i18n="Connections">1:1 문의</div>
                   </a>
-                </li>
+                </li> -->
               </ul>
             </li>
             <li class="menu-item">
               <a href="javascript:void(0);" class="menu-link menu-toggle">
                 <i class="menu-icon tf-icons bx bx-lock-open-alt"></i>
-                <div data-i18n="Authentications">자료게시판</div>
+                <div data-i18n="Authentications">사회생활</div>
               </a>
               <ul class="menu-sub">
                 <li class="menu-item">
                   <a href="auth-login-basic.html" class="menu-link" target="_blank">
-                    <div data-i18n="Basic">Login</div>
+                    <div data-i18n="Basic">사회생활 꿀팁</div>
                   </a>
                 </li>
                 <li class="menu-item">
                   <a href="auth-register-basic.html" class="menu-link" target="_blank">
-                    <div data-i18n="Basic">Register</div>
+                    <div data-i18n="Basic">업무 꿀팁</div>
                   </a>
                 </li>
-                <li class="menu-item">
+                <!-- <li class="menu-item">
                   <a href="auth-forgot-password-basic.html" class="menu-link" target="_blank">
                     <div data-i18n="Basic">Forgot Password</div>
                   </a>
-                </li>
+                </li> -->
               </ul>
             </li>
             <li class="menu-item">
@@ -231,12 +231,12 @@
               <ul class="menu-sub">
                 <li class="menu-item">
                   <a href="pages-misc-error.html" class="menu-link">
-                    <div data-i18n="Error">Error</div>
+                    <div data-i18n="Error">개발 공유</div>
                   </a>
                 </li>
                 <li class="menu-item">
                   <a href="pages-misc-under-maintenance.html" class="menu-link">
-                    <div data-i18n="Under Maintenance">Under Maintenance</div>
+                    <div data-i18n="Under Maintenance">공유해요 코드</div>
                   </a>
                 </li>
               </ul>
@@ -267,7 +267,7 @@
                     <div data-i18n="Alerts">Alerts</div>
                   </a>
                 </li>
-                <li class="menu-item">
+                <!-- <li class="menu-item">
                   <a href="ui-badges.html" class="menu-link">
                     <div data-i18n="Badges">Badges</div>
                   </a>
@@ -351,7 +351,7 @@
                   <a href="ui-typography.html" class="menu-link">
                     <div data-i18n="Typography">Typography</div>
                   </a>
-                </li>
+                </li> -->
               </ul>
             </li>
 

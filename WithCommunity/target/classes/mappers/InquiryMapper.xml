@@ -7,17 +7,15 @@
 
 	<!-- 글 목록 -->
 	<select id="selectInquiryList" resultType="InquiryVO" parameterType="InquiryVO">
-	select
-		a.inq_no
-	,	a.inq_title
-	,	a.inq_content
-	,	a.inq_name
-	,	a.inq_regdate
-	,	b.me_name		
-	from
-	 soft.tbl_inquiry a inner join soft.tbl_member b
-	 on a.inq_name = b.me_name
-	 where a.inq_no = 1;
+	select * from tbl_inquiry
 	</select>
 
+	<!-- 게시글 조회 -->
+	<select id="selectInquiryDetail" parameterType="int" resultType="InquiryVO">
+		select
+		 *
+		from 
+		 tbl_inquiry
+		where inq_no = #{inq_no}
+	</select>
 </mapper>

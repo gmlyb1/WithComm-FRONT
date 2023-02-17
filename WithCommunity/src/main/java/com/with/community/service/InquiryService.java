@@ -9,4 +9,5 @@ public interface InquiryService {
 	// 1:1문의
 	public List<InquiryVO> selectInquiryList() throws Exception;
 	
+	public InquiryVO selectInquiryDetail(int inq_no) throws Exception;
 }
