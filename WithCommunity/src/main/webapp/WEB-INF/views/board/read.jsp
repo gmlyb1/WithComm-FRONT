@@ -50,7 +50,14 @@ $("#list_btn").on("click", function(){ location.href = "/board/list?page=${scri.
 		}
 	}
 </script>
-
+<script type="text/javascript">
+	$(document).ready(function() {
+		var msg = "${msg}"
+		if (msg != "") {
+			alert(msg);
+		}
+	});
+</script>
 <div class="row" style="margin-bottom: 20px; margin-left: 1px;">
 	<c:if test="${member == null}">
 		<span style="color: red" class="text-center"><strong>
@@ -147,7 +154,7 @@ $("#list_btn").on("click", function(){ location.href = "/board/list?page=${scri.
 										<td style="width: 60%; height: 50px;"><pre
 												style="font-family: arial;">${replyList.reply_content}</pre>
 											<p>
-												<c:if test="${member.me_name == replyList.reply_writer}">
+												<c:if test="${member.adminCk == 1  || member.me_name == replyList.reply_writer}">
 													<!-- <a class="btn btn-primary" href="">수정</a> / -->
 													<!-- <button type="button" class="btn btn-xs btn-success" data-toggle="modal" data-target="#modifyModal">댓글 수정</button> -->
 													<a class="btn btn-danger"

@@ -45,11 +45,10 @@
 						<div class="d-flex align-items-end row">
 							<div class="col-sm-7">
 								<div class="card-body">
-									<h5 class="card-title text-primary">Congratulations John!
-										ð</h5>
+									<h5 class="card-title text-primary"> 위드컴에 오신것을 환영합니다!</h5>
 									<p class="mb-4">
-										You have done <span class="fw-bold">72%</span> more sales
-										today. Check your new badge in your profile.
+										이곳은 <span class="fw-bold">전 세계 개발자들의</span> 여러가지의 이야기를
+										공유하기 위한 커뮤니티입니다.
 									</p>
 
 									<a href="javascript:;" class="btn btn-sm btn-outline-primary">View

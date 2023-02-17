@@ -46,7 +46,7 @@
     <link rel="stylesheet" href="/resources/assets/css/demo.css" />
     <link rel="stylesheet" href="/resources/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css" />
     <link rel="stylesheet" href="/resources/assets/vendor/libs/apex-charts/apex-charts.css" />
-
+	
     <script src="/resources/assets/vendor/js/helpers.js"></script>
     <script src="/resources/assets/js/config.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
@@ -178,181 +178,38 @@
               <span class="menu-header-text">Pages</span>
             </li>
             <li class="menu-item">
-              <a href="javascript:void(0);" class="menu-link menu-toggle">
+              <a href="/notice/list" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-dock-top"></i>
-                <div data-i18n="Account Settings">게시판</div>
+                <div data-i18n="Basic">공지사항</div>
               </a>
-              <ul class="menu-sub">
-                <li class="menu-item">
-                  <a href="/notice/list" class="menu-link">
-                    <div data-i18n="Account">공지사항</div>
-                  </a>
-                </li>
-                <li class="menu-item">
-                  <a href="/board/list" class="menu-link">
-                    <div data-i18n="Notifications">자유게시판</div>
-                  </a>
-                </li>
-                <!-- <li class="menu-item">
-                  <a href="/inquiry/list" class="menu-link">
-                    <div data-i18n="Connections">1:1 문의</div>
-                  </a>
-                </li> -->
-              </ul>
+            </li>
+           <li class="menu-item">
+              <a href="/board/list" class="menu-link">
+                <i class="bx bx-globe"></i>
+                <div data-i18n="Basic">&nbsp;&nbsp;&nbsp;&nbsp;자유 게시판</div>
+              </a>
             </li>
             <li class="menu-item">
-              <a href="javascript:void(0);" class="menu-link menu-toggle">
-                <i class="menu-icon tf-icons bx bx-lock-open-alt"></i>
-                <div data-i18n="Authentications">사회생활</div>
-              </a>
-              <ul class="menu-sub">
-                <li class="menu-item">
-                  <a href="auth-login-basic.html" class="menu-link" target="_blank">
-                    <div data-i18n="Basic">사회생활 꿀팁</div>
-                  </a>
-                </li>
-                <li class="menu-item">
-                  <a href="auth-register-basic.html" class="menu-link" target="_blank">
-                    <div data-i18n="Basic">업무 꿀팁</div>
-                  </a>
-                </li>
-                <!-- <li class="menu-item">
-                  <a href="auth-forgot-password-basic.html" class="menu-link" target="_blank">
-                    <div data-i18n="Basic">Forgot Password</div>
-                  </a>
-                </li> -->
-              </ul>
-            </li>
-            <li class="menu-item">
-              <a href="javascript:void(0);" class="menu-link menu-toggle">
+              <a href="cards-basic.html" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-cube-alt"></i>
-                <div data-i18n="Misc">지식인</div>
+                <div data-i18n="Basic">지식인</div>
               </a>
-              <ul class="menu-sub">
-                <li class="menu-item">
-                  <a href="pages-misc-error.html" class="menu-link">
-                    <div data-i18n="Error">개발 공유</div>
-                  </a>
-                </li>
-                <li class="menu-item">
-                  <a href="pages-misc-under-maintenance.html" class="menu-link">
-                    <div data-i18n="Under Maintenance">공유해요 코드</div>
-                  </a>
-                </li>
-              </ul>
             </li>
             <!-- Components -->
             <li class="menu-header small text-uppercase"><span class="menu-header-text">Components</span></li>
             <!-- Cards -->
             <li class="menu-item">
               <a href="cards-basic.html" class="menu-link">
-                <i class="menu-icon tf-icons bx bx-collection"></i>
-                <div data-i18n="Basic">구인/구직</div>
+                <i class="bx bxs-user-check"></i>&nbsp;
+                <div data-i18n="Basic">&nbsp;&nbsp;&nbsp;&nbsp;구인/구직</div>
               </a>
             </li>
             <!-- User interface -->
             <li class="menu-item">
-              <a href="javascript:void(0)" class="menu-link menu-toggle">
-                <i class="menu-icon tf-icons bx bx-box"></i>
-                <div data-i18n="User interface">이벤트</div>
+              <a href="cards-basic.html" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-collection"></i>
+                <div data-i18n="Basic">이벤트</div>
               </a>
-              <ul class="menu-sub">
-                <li class="menu-item">
-                  <a href="ui-accordion.html" class="menu-link">
-                    <div data-i18n="Accordion">Accordion</div>
-                  </a>
-                </li>
-                <li class="menu-item">
-                  <a href="ui-alerts.html" class="menu-link">
-                    <div data-i18n="Alerts">Alerts</div>
-                  </a>
-                </li>
-                <!-- <li class="menu-item">
-                  <a href="ui-badges.html" class="menu-link">
-                    <div data-i18n="Badges">Badges</div>
-                  </a>
-                </li>
-                <li class="menu-item">
-                  <a href="ui-buttons.html" class="menu-link">
-                    <div data-i18n="Buttons">Buttons</div>
-                  </a>
-                </li>
-                <li class="menu-item">
-                  <a href="ui-carousel.html" class="menu-link">
-                    <div data-i18n="Carousel">Carousel</div>
-                  </a>
-                </li>
-                <li class="menu-item">
-                  <a href="ui-collapse.html" class="menu-link">
-                    <div data-i18n="Collapse">Collapse</div>
-                  </a>
-                </li>
-                <li class="menu-item">
-                  <a href="ui-dropdowns.html" class="menu-link">
-                    <div data-i18n="Dropdowns">Dropdowns</div>
-                  </a>
-                </li>
-                <li class="menu-item">
-                  <a href="ui-footer.html" class="menu-link">
-                    <div data-i18n="Footer">Footer</div>
-                  </a>
-                </li>
-                <li class="menu-item">
-                  <a href="ui-list-groups.html" class="menu-link">
-                    <div data-i18n="List Groups">List groups</div>
-                  </a>
-                </li>
-                <li class="menu-item">
-                  <a href="ui-modals.html" class="menu-link">
-                    <div data-i18n="Modals">Modals</div>
-                  </a>
-                </li>
-                <li class="menu-item">
-                  <a href="ui-navbar.html" class="menu-link">
-                    <div data-i18n="Navbar">Navbar</div>
-                  </a>
-                </li>
-                <li class="menu-item">
-                  <a href="ui-offcanvas.html" class="menu-link">
-                    <div data-i18n="Offcanvas">Offcanvas</div>
-                  </a>
-                </li>
-                <li class="menu-item">
-                  <a href="ui-pagination-breadcrumbs.html" class="menu-link">
-                    <div data-i18n="Pagination &amp; Breadcrumbs">Pagination &amp; Breadcrumbs</div>
-                  </a>
-                </li>
-                <li class="menu-item">
-                  <a href="ui-progress.html" class="menu-link">
-                    <div data-i18n="Progress">Progress</div>
-                  </a>
-                </li>
-                <li class="menu-item">
-                  <a href="ui-spinners.html" class="menu-link">
-                    <div data-i18n="Spinners">Spinners</div>
-                  </a>
-                </li>
-                <li class="menu-item">
-                  <a href="ui-tabs-pills.html" class="menu-link">
-                    <div data-i18n="Tabs &amp; Pills">Tabs &amp; Pills</div>
-                  </a>
-                </li>
-                <li class="menu-item">
-                  <a href="ui-toasts.html" class="menu-link">
-                    <div data-i18n="Toasts">Toasts</div>
-                  </a>
-                </li>
-                <li class="menu-item">
-                  <a href="ui-tooltips-popovers.html" class="menu-link">
-                    <div data-i18n="Tooltips & Popovers">Tooltips &amp; popovers</div>
-                  </a>
-                </li>
-                <li class="menu-item">
-                  <a href="ui-typography.html" class="menu-link">
-                    <div data-i18n="Typography">Typography</div>
-                  </a>
-                </li> -->
-              </ul>
             </li>
 
             <!-- Extended components -->
