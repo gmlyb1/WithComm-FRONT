@@ -22,7 +22,7 @@
 	<select id="HomeBoardList" resultType="boardVO" parameterType="boardVO">
 	select * 
 		from tbl_board 
-		order by board_regdate desc LIMIT 12;
+		order by board_no asc LIMIT 10;
 	</select>
 
 	<!-- 글 목록 -->
