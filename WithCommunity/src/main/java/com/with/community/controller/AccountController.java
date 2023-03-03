@@ -1,11 +1,13 @@
 package com.with.community.controller;
 
+import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,6 +17,7 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.with.community.service.AccountService;
+import com.with.community.util.FileUtils;
 import com.with.community.vo.AccountVO;
 
 @Controller
@@ -23,6 +26,9 @@ public class AccountController {
 	
 	@Autowired
 	private AccountService accountService;
+	
+	@Autowired(required = false)
+	private FileUtils fileUtil;
 	
 	private final static Logger logger = LoggerFactory.getLogger(AccountController.class);
 //	@Autowired
@@ -56,6 +62,8 @@ public class AccountController {
 				rttr.addFlashAttribute("msg", "이미 존재하는 아이디입니다. 다시 확인해주세요.");
 				return "/account/register";
 			}else if(result == 0) {
+				String hashedPw = BCrypt.hashpw(vo.getMe_pwd(), BCrypt.gensalt());
+				vo.setMe_pwd(hashedPw);
 				accountService.register(vo);
 				rttr.addFlashAttribute("msg", "회원가입이 완료되었습니다");
 			}
@@ -75,7 +83,7 @@ public class AccountController {
 	}
 	
 	@RequestMapping(value="/login", method=RequestMethod.POST)
-	public String loginPOST(AccountVO vo, HttpServletRequest request, RedirectAttributes rttr) throws Exception
+	public String loginPOST(Model model,AccountVO vo, HttpServletRequest request, RedirectAttributes rttr) throws Exception
 	{
 	
 			HttpSession session = request.getSession();
@@ -114,13 +122,20 @@ public class AccountController {
 		
 	}
 	
-//	@RequestMapping(value="/updateImg" , method=RequestMethod.POST)
-//	public String updateImg(MultipartHttpServletRequest mpRequest, HttpSession session,String me_id)throws Exception {
-//		
-//		String me_image = fileUtil.updateImg(mpRequest);
-//		
-//		return "/account/profile";
-//	}
+	@RequestMapping(value="/updateImg" , method=RequestMethod.POST)
+	public String updateImg(MultipartHttpServletRequest mpRequest, HttpSession session,String me_id)throws Exception {
+		
+		String me_image = fileUtil.updateImg(mpRequest);
+		
+		AccountVO accountVO = (AccountVO) session.getAttribute("login");
+		
+		accountService.updateImg(me_image,me_id);
+		
+		accountVO.setMe_image(me_image);
+		session.setAttribute("login", accountVO);
+		
+		return "/account/profile";
+	}
 	
 	@RequestMapping(value="/alram", method=RequestMethod.GET)
 	public void AlramGET() {
