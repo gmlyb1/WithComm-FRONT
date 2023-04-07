@@ -19,26 +19,26 @@
 	</if>
 </sql>
 
-	<select id="HomeBoardList" resultType="boardVO" parameterType="boardVO">
+	<select id="HomeBoardList" resultType="BoardVO" parameterType="BoardVO">
 	select * 
 		from tbl_board 
-		order by board_no asc LIMIT 10;
+		order by board_no asc
+		 LIMIT 10;
 	</select>
 
 	<!-- 글 목록 -->
 	<select id="BoardList" resultType="BoardVO" parameterType="BoardVO">
-	<![CDATA[
 		select
 		 *
 		from
 		 tbl_board
-		 ]]>
-<!-- <include refid="boardtWhere"/> -->
-<![CDATA[			
-	Order by board_no asc
-	LIMIT #{recordCountPerPage} OFFSET #{firstIndex}
-]]>	
+		ORDER BY BOARD_NO DESC
 	</select>
+
+	<!-- <select id="BoardListCri" resultType="BoardVO">
+		select * from tbl_board
+		limit #{pageStart},#{pageSize}
+	</select> -->
 
 	<!--  글 작성 -->
 	<insert id="insertBoard">
@@ -60,7 +60,7 @@
 		,   #{board_content}
 		,	#{board_writer}
 		,	#{board_count}
-		,	#{board_regdate}
+		,	now()
 		)
 	</insert>
 	
@@ -104,7 +104,7 @@
 		where board_no = #{board_no}
 	</update>
 	
-	<select id="lastBoardList" parameterType="int" resultType="boardVO">
+	<select id="lastBoardList" parameterType="int" resultType="BoardVO">
 	 <![CDATA[
 	SELECT 
 		board_no
@@ -115,7 +115,7 @@
 	]]>
 	</select>
 	
-	<select id="nextBoardList" parameterType="int" resultType="boardVO">
+	<select id="nextBoardList" parameterType="int" resultType="BoardVO">
 	 <![CDATA[
 	SELECT 
 		board_no
@@ -127,39 +127,9 @@
 	</select>
 	
 	<!-- 총 개수 -->
-	<select id="getListCount" resultType="java.lang.Integer" parameterType="boardVO">
-		select count(*) from tbl_board
-		<!-- <![CDATA[
-		<include refid="boardtWhere"/>
-		]]> -->
+	<select id="getListCount" resultType="int" parameterType="BoardVO">
+		select count(board_no)
+		 from tbl_board
+		 where board_no > 0
 	</select>
-	<!-- <select id="listPage" resultType="boardVO" parameterType="SearchCriteria">
-		select 
-			board_no
-		,	board_title
-		,	board_content
-		,	board_writer
-		,	board_regdate
-		,	board_hit
-		,	board_reply_hit
-		from
-		(
-			select 
-				board_no
-			,	board_title
-			,	board_writer
-			,	board_regdate
-			,	board_hit
-			,	board_reply_hit
-			ROW_NUMBER() OVER(ORDER BY
-			board_no desc) as rnum
-			from tbl_board
-			where 1=1
-			<include refid="search"></include>
-			and board_bgno = #{board_bgno}
-		) tbl_board
-		where rnum between #{rowStart} and #{rowEnd}
-		order by board_no desc
-	</select>
-	 -->
 </mapper>

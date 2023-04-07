@@ -4,6 +4,16 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
   
 <mapper namespace="com.with.community.dao.AccountDAO">
+	
+	<resultMap type="com.with.community.vo.AccountVO" id="AccountVOResultMap">
+		<result property="me_id" column="me_id"/>
+		<result property="me_pwd" column="me_pwd"/>
+		<result property="me_name" column="me_name"/>
+		<result property="me_email" column="me_email"/>
+		<result property="me_image" column="me_image"/>
+	</resultMap>
+		
+	
 
 	<insert id="register">
 		insert into tbl_member
@@ -22,6 +32,10 @@
 		)
 	</insert>
 
+	<update id="updateImg">
+	update tbl_member set me_image = #{me_image} where me_id = #{me_id}
+	</update>
+
 	<select id="login" resultType="AccountVO">
 		select 
 		   *
@@ -31,6 +45,17 @@
 		and me_pwd = #{me_pwd}
 	</select>
 
+	<update id="keepLogin">
+		update tbl_member
+		set session_key = #{sessionId},
+		session_limit = #{sessionLimit}
+		where me_id = #{me_id}
+	
+	</update>
+	
+	<select id="check" resultMap="AccountVOResultMap">
+		select * from tbl_member where session_key = #{value}
+	</select>
 
 	<select id="idChk" resultType="int">
 		select count(*) from tbl_member

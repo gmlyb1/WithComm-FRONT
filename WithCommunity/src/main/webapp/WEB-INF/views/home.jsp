@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ page import="java.util.Date"%>
 <%@ page import="java.text.SimpleDateFormat"%>
 <%@ page session="true"%>
@@ -152,14 +153,14 @@
 											<tr>
 												<td class="text-center"><c:out
 														value="${nlist.notice_no}" /></td>
-												<td><a href="/notice/read?notice_no=${nlist.notice_no}"><c:out
-															value="${nlist.notice_title}" /></a></td>
+												<td><strong><a href="/notice/read?notice_no=${nlist.notice_no}"><c:out
+															value="${nlist.notice_title}" /></a></strong></td>
 												<td class="text-center"><c:out
 														value="${nlist.notice_writer}" /></td>
 												<td class="text-center"><c:out
 														value="${nlist.notice_count}" /></td>
-												<td class="text-center"><c:out
-														value="${nlist.notice_regdate}" /></td>
+												<td class="text-center"><fmt:formatDate
+											pattern="yyyy-MM-dd" value="${nlist.notice_regdate}" /></td>
 											</tr>
 										</c:forEach>
 									</tbody>
@@ -278,14 +279,14 @@
 											<tr>
 												<td class="text-center"><c:out
 														value="${blist.board_no}" /></td>
-												<td><a href="/board/read?board_no=${blist.board_no}"><c:out
-															value="${blist.board_title}" /></a></td>
+												<td><strong><a href="/board/read?board_no=${blist.board_no}"><c:out
+															value="${blist.board_title}" /></a></strong></td>
 												<td class="text-center"><c:out
 														value="${blist.board_writer}" /></td>
 												<td class="text-center"><c:out
 														value="${blist.board_count}" /></td>
-												<td class="text-center"><c:out
-														value="${blist.board_regdate}" /></td>
+												<td class="text-center"><fmt:formatDate
+											pattern="yyyy-MM-dd" value="${blist.board_regdate}" /></td>
 											</tr>
 										</c:forEach>
 									</tbody>
@@ -301,7 +302,7 @@
 					<div class="card h-100">
 						<div
 							class="card-header d-flex align-items-center justify-content-between">
-							<h5 class="card-title m-0 me-2">Transactions</h5>
+							<h5 class="card-title m-0 me-2">회원 리스트</h5>
 							<div class="dropdown">
 								<button class="btn p-0" type="button" id="transactionID"
 									data-bs-toggle="dropdown" aria-haspopup="true"

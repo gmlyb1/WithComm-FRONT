@@ -5,7 +5,7 @@ import java.sql.Timestamp;
 import org.springframework.stereotype.Component;
 
 @Component
-public class BoardVO extends PageVO{
+public class BoardVO{
 
 	private int board_no;
 	private int board_bgno;

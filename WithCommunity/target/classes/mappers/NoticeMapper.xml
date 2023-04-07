@@ -36,7 +36,6 @@
 		 ,	notice_writer
 		 ,	notice_count
 		 ,	notice_regdate
-		 ,	notice_updateDate
 		 ,	isFixed
 		)
 		values
@@ -46,7 +45,6 @@
 		,   #{notice_content}
 		,	#{notice_writer}
 		,	#{notice_count}
-		,	now()
 		,	now()
 		,	#{isFixed}
 		)

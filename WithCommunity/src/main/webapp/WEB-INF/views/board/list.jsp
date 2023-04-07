@@ -13,28 +13,6 @@
 		}
 	});
 </script>
-<script type="text/javascript">
-$(document).ready(function() {
-	
-	var thisIndex = "${vo.pageIndex}"
-	$(".pagination li a").each(function(){
-		var idx = $(this).parent().index();
-		var thistitle = $(this).attr("title");
-		if(thistitle == thisIndex){
-			$(".pagination").find("li").eq(idx).addClass("active");
-		}
-	});
-
-	});
-</script>
-<script type="text/javascript">
-function fn_search(){
-	$("#pageIndex").val("1");
-	$("#listForm").submit();
-	return false;
-}
-
-</script>
 <!-- Begin Page Content -->
 <div class="container-fluid">
 	<br>
@@ -62,76 +40,49 @@ function fn_search(){
 					onClick="window.location.reload()">
 			</form>
 		</div>
+
 		<div class="card-body">
 			<div class="table-responsive">
-				<table class="table table-bordered" id="dataTable" width="100%"
-					cellspacing="0">
-					<thead>
-						<tr>
-							<th class="text-center">번호</th>
-							<th class="text-center">주제</th>
-							<th class="text-center">작성자</th>
-							<th class="text-center">조회수</th>
-							<th class="text-center">작성일자</th>
-							<th class="text-center">수정일자</th>
-						</tr>
-					</thead>
-					<tbody>
-						<c:forEach items="${boardList}" var="list">
+				<form method="get" id="listForm" action="/board/list">
+					<table class="table table-bordered" id="dataTable" width="100%"
+						cellspacing="0">
+						<thead>
 							<tr>
-								<td class="text-center"><c:out value="${list.board_no}" /></td>
-								<td><a href="/board/read?board_no=${list.board_no}">
-										${list.board_title}[${list.reply_cnt}]</a></td>
-								<td class="text-center"><c:out value="${list.board_writer}" /></td>
-								<td class="text-center"><c:out value="${list.board_count}" /></td>
-								<td class="text-center"><fmt:formatDate pattern="yyyy-MM-dd"
-											value="${list.board_regdate}" /></td>
-								<td class="text-center"><fmt:formatDate pattern="yyyy-MM-dd"
-											value="${list.board_updateDate}" /></td>
+								<th class="text-center">번호</th>
+								<th class="text-center">주제</th>
+								<th class="text-center">작성자</th>
+								<th class="text-center">조회수</th>
+								<th class="text-center">작성일자</th>
+								<th class="text-center">수정일자</th>
 							</tr>
-						</c:forEach>
-					</tbody>
-				</table><br>
-				<c:if test="${member != null}">
-					<button type="button" onclick="location.href='/board/create';"
-						class="btn btn-success">글쓰기</button>
-				</c:if>
+						</thead>
+						<tbody>
+							<c:forEach items="${boardList}" var="list">
+								<tr>
+									<td class="text-center"><c:out value="${list.board_no}" /></td>
+									<td><a href="/board/read?board_no=${list.board_no}">
+											${list.board_title}[${list.reply_cnt}]</a></td>
+									<td class="text-center"><c:out
+											value="${list.board_writer}" /></td>
+									<td class="text-center"><c:out value="${list.board_count}" /></td>
+									<td class="text-center"><fmt:formatDate
+											pattern="yyyy-MM-dd" value="${list.board_regdate}" /></td>
+									<td class="text-center"><fmt:formatDate
+											pattern="yyyy-MM-dd" value="${list.board_updateDate}" /></td>
+								</tr>
+							</c:forEach>
+						</tbody>
+					</table>
+					<br>
+					<c:if test="${member != null}">
+						<button type="button" onclick="location.href='/board/create';"
+							class="btn btn-success">글쓰기</button>
+					</c:if>
 
-				<!-- Paging[s] -->
-				<%-- <form method="get" id="listForm" action="/board/list">
-					<ul class="pagination">
-						<c:if test="${vo.prev}">
-							<li class="paginate_button page-item previous"
-								id="dataTable_previous"><a href="javascript:void(0);"
-								onclick="fn_go_page(${vo.startDate - 1}); return false;"
-								aria-controls="dataTable" data-dt-idx="0" tabindex="0"
-								class="page-link">Previous</a></li>
-						</c:if>
-
-						<c:forEach var="num" begin="${vo.startDate}"
-							end="${vo.endDate}">
-							<li class="paginate_button page-item"><a
-								href="javascript:void(0);"
-								onclick="fn_go_page(${num}); return false;"
-								aria-controls="dataTable" data-dt-idx="0" tabindex="0"
-								class="page-link" title="${num}">${num}</a></li>
-						</c:forEach>
-
-						<c:if test="${vo.next}">
-							<li class="paginate_button page-item next" id="dataTable_next">
-								<a href="javascript:void(0);"
-								onclick="fn_go_page(${vo.endDate + 1}); return false;"
-								aria-controls="dataTable" data-dt-idx="0" tabindex="0"
-								class="page-link">Next</a>
-							</li>
-						</c:if>
-					</ul>
-					<!-- Paging[e] -->
-				</form> --%>
+				</form>
 			</div>
 		</div>
 	</div>
-
 </div>
 <!-- /.container-fluid -->
 

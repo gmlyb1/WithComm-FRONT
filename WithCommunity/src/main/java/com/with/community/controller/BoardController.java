@@ -26,8 +26,6 @@ import org.springframework.web.servlet.support.RequestContextUtils;
 import com.with.community.service.BoardService;
 import com.with.community.service.ReplyService;
 import com.with.community.vo.BoardVO;
-import com.with.community.vo.PageVO;
-import com.with.community.vo.Pagination;
 import com.with.community.vo.ReplyVO;
 
 
@@ -46,7 +44,7 @@ public class BoardController {
 	
 		//목록
 		@RequestMapping(value = "/list", method=RequestMethod.GET)
-		public String BoardList(@ModelAttribute("vo") BoardVO vo,HttpServletRequest request,Model model, @RequestParam(value="currentPage",required = false, defaultValue = "1") int currentPage) throws Exception 
+		public String BoardList(@ModelAttribute("vo") BoardVO vo,@RequestParam(defaultValue = "1")int pageNum,HttpServletRequest request,Model model) throws Exception 
 		{
 			Map<String, ?> inputFlashMap = RequestContextUtils.getInputFlashMap(request);
 			
@@ -56,9 +54,8 @@ public class BoardController {
 			
 			
 			//리스트 받아서 바인딩.
-			List<BoardVO> boardList = boardService.BoardList(vo);
-			int totCnt = boardService.getListCount(vo);
-			
+			List<BoardVO> boardList = boardService.BoardList();
+			int totCnt = boardService.getListCount();
 			
 			model.addAttribute("boardList", boardList);
 			model.addAttribute("totCnt", totCnt);

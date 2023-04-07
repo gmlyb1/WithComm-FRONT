@@ -10,43 +10,22 @@
 	src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
 <script type="text/javascript">
-function YnCheck(obj) {
-	var checked = obj.checked;
-	if(checked) {
-		obj.value = 1;
-	}else {
-		obj.value = 2;
-	}
-	
-	var isfixed = "${data.isFixed}";
-	if(isFixed == 1) {
-		${"#isFixed"}.prop("checked",true);
-	}else {
-		$("#isFixed").prop("checked",false);
-	}
-	
-	// 체크박스 value값 설정
-	if($("#isFixed").is(':checked')==true) {
-		data.set("isFixed",1);
-	}else {
-		data.set("isFixed",0);
-	}
+var isFixed = ${update.isFixed};
+
+function YnCheck(cb) {
+	if (cb.checked) {
+	    document.updateForm.isFixed.checked = true;
+	  } else {
+	    document.updateForm.isFixed.checked = false;
+	  }
+}
+
+// 페이지 로드 후, 체크박스의 체크 여부에 따라 isFixed 변수와 isFixed 필드를 초기화합니다.
+window.onload = function() {
+    var checkbox = document.getElementById('isFixed');
+    checkbox.checked = isFixed;
+    document.updateForm.isFixed.value = isFixed ? true : false;
 };
-</script>
-<script type="text/javascript">
-	$(document).ready(function() {
-
-		$(".cancel_btn").on("click", function() {
-			event.preventDefault();
-			location.href = "/board/list";
-		})
-	})
-
-	function _onSubmit() {
-		if (!confirm("수정 하시겠습니까?")) {
-			return false;
-		}
-	}
 </script>
 <script type="text/javascript">
 $("#isFixed").click(function () {
@@ -69,37 +48,6 @@ $("#isFixed").click(function () {
 	  }
 	});
 </script>
-<script type="text/javascript">
-	function fn_addFile() {
-		var fileIndex = 1;
-		$("#fileAdd_btn")
-				.on(
-						"click",
-						function() {
-							$("#fileIndex")
-									.append(
-											"<div><input type='file' style='float:left;' name='file_"
-													+ (fileIndex++)
-													+ "'>"
-													+ "</button>"
-													+ "<button type='button' style='float:right;' id='fileDelBtn'>"
-													+ "삭제" + "</button></div>");
-						});
-		$(document).on("click", "#fileDelBtn", function() {
-			$(this).parent().remove();
-
-		});
-	}
-	var fileNoArry = new Array();
-	var fileNameArry = new Array();
-	function fn_del(value, name) {
-
-		fileNoArry.push(value);
-		fileNameArry.push(name);
-		$("#fileNoDel").attr("value", fileNoArry);
-		$("#fileNameDel").attr("value", fileNameArry);
-	}
-</script>
 
 
 <%@include file="../include/header.jsp"%>
@@ -114,7 +62,7 @@ $("#isFixed").click(function () {
 	<div id="contAreaBox">
 		<div class="panel">
 			<div class="panel-body">
-				<form action="/notice/update" role="form" method="post"
+				<form action="/notice/update" role="form" method="post" id="updateForm"
 					name="updateForm" onsubmit="return _onSubmit();">
 					<input type="hidden" name="notice_no" value="${update.notice_no}"
 						readonly="readonly" /> <input type="hidden" id="fileNoDel"
@@ -147,10 +95,9 @@ $("#isFixed").click(function () {
 								</tr>
 								<tr>
 									<td>
-									<input type="checkbox" id="isFixed" name="isFixed" onchange="YnCheck(this);" <%-- value='${FixedUpdate.isFixed} --%>>
-									
-										 <label for="isFixed">상단 고정</label>
-									</td>
+										<input type="checkbox" id="isFixed" name="isFixed" onchange="YnCheck(this);"/>
+								    	<label for="isFixed">상단 고정</label>
+								    </td>
 								</tr>
 							</tbody>
 						</table>

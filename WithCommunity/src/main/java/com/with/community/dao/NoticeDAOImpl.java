@@ -8,7 +8,6 @@ import org.apache.ibatis.session.RowBounds;
 import org.apache.ibatis.session.SqlSession;
 
 import com.with.community.vo.NoticeVO;
-import com.with.community.vo.PageVO;
 
 public class NoticeDAOImpl implements NoticeDAO {
 	

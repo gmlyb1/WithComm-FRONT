@@ -47,11 +47,11 @@ function YnCheck(obj) {
 		obj.value = 2;
 	}
 	
-	var isfixed = "${data.isFixed}";
+	var isFixed = "${data.isFixed}";
 	if(isFixed == 1) {
-		${"#isFixed"}.prop("checked",true);
-	}else {
-		$("#isFixed").prop("checked",false);
+	    $("#isFixed").prop("checked", true);
+	} else {
+	    $("#isFixed").prop("checked", false);
 	}
 	
 	// 체크박스 value값 설정

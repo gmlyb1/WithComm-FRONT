@@ -193,7 +193,7 @@ $(document).ready(function() {
                 </div>
                 <div class="mb-3">
                   <div class="form-check">
-                    <input class="form-check-input" type="checkbox" id="remember-me" />
+                    <input class="form-check-input" type="checkbox" id="remember-me" name="useCookie"/>
                     <label class="form-check-label" for="remember-me"> Remember Me </label>
                   </div>
                 </div>

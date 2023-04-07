@@ -51,6 +51,41 @@ $("#list_btn").on("click", function(){ location.href = "/board/list?page=${scri.
 	}
 </script>
 <script type="text/javascript">
+$(".modalModBtn").on("click", function () {
+
+    // 댓글 선택자
+    var reply = $(this).parent().parent();
+    // 댓글번호
+    var reply_no = reply.find("#reply_no").val();
+    // 수정한 댓글내용
+    var reply_content = reply.find("#reply_content").val();
+
+    // AJAX통신 : PUT
+    $.ajax({
+        type : "put",
+        url : "${path}/replies/" + reply_no,
+        headers : {
+            "Content-type" : "application/json",
+            "X-HTTP-Method-Override" : "PUT"
+        },
+        data : JSON.stringify(
+            {reply_text : reply_text}
+        ),
+        dataType : "text",
+        success : function (result) {
+            console.log("result : " + result);
+            if (result == "modSuccess") {
+                alert("댓글 수정 완료!");
+                $("#modifyModal").modal("hide"); // Modal 닫기
+                getReplies(); // 댓글 목록 갱신
+            }
+        }
+    });
+
+});
+
+</script>
+<script type="text/javascript">
 	$(document).ready(function() {
 		var msg = "${msg}"
 		if (msg != "") {
@@ -154,9 +189,10 @@ $("#list_btn").on("click", function(){ location.href = "/board/list?page=${scri.
 										<td style="width: 60%; height: 50px;"><pre
 												style="font-family: arial;">${replyList.reply_content}</pre>
 											<p>
-												<c:if test="${member.adminCk == 1  || member.me_name == replyList.reply_writer}">
+												<c:if
+													test="${member.adminCk == 1  || member.me_name == replyList.reply_writer}">
 													<!-- <a class="btn btn-primary" href="">수정</a> / -->
-													<!-- <button type="button" class="btn btn-xs btn-success" data-toggle="modal" data-target="#modifyModal">댓글 수정</button> -->
+										<!-- <button type="button" class="btn btn-xs btn-success" data-toggle="modal" data-target="#modifyModal">댓글 수정</button> -->
 													<a class="btn btn-danger"
 														href="javascript:remove_replyNo(${replyList.reply_no},${replyList.board_no});">삭제</a>
 												</c:if>
@@ -206,49 +242,80 @@ $("#list_btn").on("click", function(){ location.href = "/board/list?page=${scri.
 				</c:if>
 
 				<!-- 댓글 수정 -->
-				<!-- 댓글 수정 -->
+				<!-- <div class="modal fade" id="modifyModal" role="dialog">
+					<div class="modal-dialog">
+						<div class="modal-content">
+							<div class="modal-header">
+								<button type="button" class="close" data-dismiss="modal">&times;</button>
+								<h4 class="modal-title">댓글 수정창</h4>
+							</div>
+							<div class="modal-body">
+								<div class="form-group">
+									<label for="reply_no">댓글 번호</label> <input class="form-control"
+										id="reply_no" name="reply_no" readonly>
+								</div>
+								<div class="form-group">
+									<label for="reply_writer">댓글 작성자</label> <input
+										class="form-control" id="reply_writer" name="reply_writer"
+										readonly>
+								</div>
+								<div class="form-group">
+									<label for="reply_text">댓글 내용</label> <input
+										class="form-control" id="reply_content" name="reply_content"
+										placeholder="댓글 내용을 입력해주세요">
+								</div>
+							</div>
+							<div class="modal-footer">
+								<button type="button" class="btn btn-default pull-left"
+									data-dismiss="modal">닫기</button>
+								<button type="button" class="btn btn-success modalModBtn">수정</button>
+								<button type="button" class="btn btn-danger modalDelBtn">삭제</button>
+							</div>
+						</div>
+					</div> -->
+					<!-- 댓글 수정 -->
 
-				<!-- 댓글 작성 끝 -->
-				<div class="my-3 p-3 bg-white rounded shadow-sm">
-					<c:choose>
-						<c:when test="${nextBoardList.board_no != null}">
+					<!-- 댓글 작성 끝 -->
+					<div class="my-3 p-3 bg-white rounded shadow-sm">
+						<c:choose>
+							<c:when test="${nextBoardList.board_no != null}">
 
-							<button type="button" class="btn btn-warning mr-3 mb-3"
-								onclick="location.href='/board/read?board_no=${nextBoardList.board_no}'">
-								<span class="glyphicon glyphicon-menu-up" aria-hidden="true"></span>다음글
-							</button>
-							<a href="/board/read?board_no=${nextBoardList.board_no}"
-								style="color: black"> ${nextBoardList.board_title} </a>
-						</c:when>
+								<button type="button" class="btn btn-warning mr-3 mb-3"
+									onclick="location.href='/board/read?board_no=${nextBoardList.board_no}'">
+									<span class="glyphicon glyphicon-menu-up" aria-hidden="true"></span>다음글
+								</button>
+								<a href="/board/read?board_no=${nextBoardList.board_no}"
+									style="color: black"> ${nextBoardList.board_title} </a>
+							</c:when>
 
-						<c:when test="${nextBoardList.board_no == null}">
-							<button type="button" class="btn btn-warning mr-3 mb-3" disabled>다음글이
-								없습니다</button>
-						</c:when>
-					</c:choose>
-					<br />
-					<c:choose>
-						<c:when test="${lastBoardList.board_no != null}">
-							<button type="button" class="btn btn-info mr-3 "
-								onclick="location.href='/board/read?board_no=${lastBoardList.board_no}'">
-								<span class="glyphicon glyphicon-menu-down" aria-hidden="true"></span>이전글
-							</button>
-							<a href="/board/read?board_no=${lastBoardList.board_no}"
-								style="color: black"> ${lastBoardList.board_title} </a>
-						</c:when>
+							<c:when test="${nextBoardList.board_no == null}">
+								<button type="button" class="btn btn-warning mr-3 mb-3" disabled>다음글이
+									없습니다</button>
+							</c:when>
+						</c:choose>
+						<br />
+						<c:choose>
+							<c:when test="${lastBoardList.board_no != null}">
+								<button type="button" class="btn btn-info mr-3 "
+									onclick="location.href='/board/read?board_no=${lastBoardList.board_no}'">
+									<span class="glyphicon glyphicon-menu-down" aria-hidden="true"></span>이전글
+								</button>
+								<a href="/board/read?board_no=${lastBoardList.board_no}"
+									style="color: black"> ${lastBoardList.board_title} </a>
+							</c:when>
 
-						<c:when test="${lastBoardList.board_no == null}">
-							<button type="button" class="btn btn-info mr-3" disabled>이전글이
-								없습니다</button>
-						</c:when>
-					</c:choose>
+							<c:when test="${lastBoardList.board_no == null}">
+								<button type="button" class="btn btn-info mr-3" disabled>이전글이
+									없습니다</button>
+							</c:when>
+						</c:choose>
 
+					</div>
 				</div>
 			</div>
 		</div>
 	</div>
-</div>
 
 
 
-<%@include file="../include/footer.jsp"%>
+	<%@include file="../include/footer.jsp"%>

@@ -3,7 +3,6 @@ package com.with.community.dao;
 import java.util.List;
 
 import com.with.community.vo.NoticeVO;
-import com.with.community.vo.PageVO;
 
 public interface NoticeDAO {
 

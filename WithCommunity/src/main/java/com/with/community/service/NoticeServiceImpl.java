@@ -11,7 +11,6 @@ import org.springframework.transaction.annotation.Transactional;
 import com.with.community.dao.NoticeDAO;
 import com.with.community.vo.BoardVO;
 import com.with.community.vo.NoticeVO;
-import com.with.community.vo.PageVO;
 
 @Service
 public class NoticeServiceImpl implements NoticeService {

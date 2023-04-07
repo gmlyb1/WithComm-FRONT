@@ -3,7 +3,6 @@ package com.with.community.service;
 import java.util.List;
 
 import com.with.community.vo.BoardVO;
-import com.with.community.vo.PageVO;
 
 public interface BoardService {
 
@@ -13,7 +12,7 @@ public interface BoardService {
 
 	public void insertBoard(BoardVO vo) throws Exception;
 
-	public List<BoardVO> BoardList(BoardVO vo) throws Exception;
+	public List<BoardVO> BoardList() throws Exception;
 
 	public BoardVO BoardRead(int board_no) throws Exception;
 
@@ -23,7 +22,7 @@ public interface BoardService {
 
 	public void BoardHit(int board_no) throws Exception;
 	
-	public int getListCount(BoardVO vo) throws Exception;
+	public int getListCount() throws Exception;
 	
 	public void updateReplyCount(int board_no) throws Exception;
 	

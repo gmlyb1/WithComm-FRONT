@@ -10,7 +10,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.with.community.dao.BoardDAO;
 import com.with.community.vo.BoardVO;
-import com.with.community.vo.PageVO;
 
 @Service
 public class BoardServiceImpl implements BoardService {
@@ -36,8 +35,8 @@ public class BoardServiceImpl implements BoardService {
 	}
 
 	@Override
-	public List<BoardVO> BoardList(BoardVO vo) throws Exception {
-		return boardDAO.BoardList(vo);
+	public List<BoardVO> BoardList() throws Exception {
+		return boardDAO.BoardList();
 	}
 
 	@Transactional(isolation = Isolation.READ_COMMITTED)
@@ -63,8 +62,8 @@ public class BoardServiceImpl implements BoardService {
 	}
 
 	@Override
-	public int getListCount(BoardVO vo) throws Exception {
-		return boardDAO.getListCount(vo);
+	public int getListCount() throws Exception {
+		return boardDAO.getListCount();
 	}
 
 	@Override

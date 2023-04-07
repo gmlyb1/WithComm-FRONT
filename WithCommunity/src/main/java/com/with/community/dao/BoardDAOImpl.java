@@ -8,7 +8,6 @@ import org.apache.ibatis.session.RowBounds;
 import org.apache.ibatis.session.SqlSession;
 
 import com.with.community.vo.BoardVO;
-import com.with.community.vo.PageVO;
 
 public class BoardDAOImpl implements BoardDAO {
 	
@@ -23,10 +22,10 @@ public class BoardDAOImpl implements BoardDAO {
 	}
 
 	@Override
-	public List<BoardVO> BoardList(BoardVO vo) throws Exception {
+	public List<BoardVO> BoardList() throws Exception {
 		
 		
-		return sqlSession.selectList("namespace.BoardList",vo);
+		return sqlSession.selectList("namespace.BoardList");
 	}
 
 	@Override
@@ -62,8 +61,8 @@ public class BoardDAOImpl implements BoardDAO {
 	}
 
 	@Override
-	public int getListCount(BoardVO vo) throws Exception {
-		return sqlSession.selectOne("namespace.getListCount",vo);
+	public int getListCount() throws Exception {
+		return sqlSession.selectOne("namespace.getListCount");
 	}
 
 	@Override
@@ -76,4 +75,5 @@ public class BoardDAOImpl implements BoardDAO {
 	public List<BoardVO> HomeBoardList() throws Exception {
 		return sqlSession.selectList("namespace.HomeBoardList");
 	}
+
 }

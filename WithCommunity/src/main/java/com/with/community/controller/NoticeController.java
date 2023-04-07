@@ -23,8 +23,6 @@ import org.springframework.web.servlet.support.RequestContextUtils;
 import com.with.community.service.NoticeService;
 import com.with.community.vo.BoardVO;
 import com.with.community.vo.NoticeVO;
-import com.with.community.vo.PageVO;
-import com.with.community.vo.Pagination;
 import com.with.community.vo.ReplyVO;
 
 @Controller
@@ -60,7 +58,6 @@ public class NoticeController {
 		return "/notice/list";
 	}
 	
-	// �Խñ� ��� (GET)
 			@RequestMapping(value = "/create", method= RequestMethod.GET)
 			public void insertNoticeGET() {
 			}
@@ -114,11 +111,12 @@ public class NoticeController {
 //				List<Map<String, Object>> fileList = boardService.selectFileList(vo.getBoard_no());
 //				model.addAttribute("file", fileList);
 				
+						
 				
 				return "/notice/update";
 			}
 			
-			//�Խñ� ����
+			// 공지사항 수정
 			@RequestMapping(value = "/update", method= RequestMethod.POST)
 			public String NoticeUpdatePOST(NoticeVO vo,Model model,RedirectAttributes rttr) throws Exception
 			{
@@ -130,12 +128,13 @@ public class NoticeController {
 					logger.error("오류 : " + e);
 				}
 				
+				
 				return "redirect:/notice/list";
 			}
 			
-			//�Խñ� ����
+			// 공지사항 삭제
 			@RequestMapping(value = "/delete", method=RequestMethod.POST)
-			public String NoticeDeletePOST(NoticeVO vo, RedirectAttributes rttr) throws Exception
+			public String NoticeDeletePOST(NoticeVO vo, RedirectAttributes rttr,Model model) throws Exception
 			{
 				
 				try {
@@ -147,6 +146,7 @@ public class NoticeController {
 				logger.error("오류 : " + e);
 				}
 				
+				model.addAttribute("data", vo);
 				
 				return "redirect:/notice/list";
 			}
