@@ -82,6 +82,8 @@ public class AccountController {
 		
 	}
 	
+	
+	
 	@RequestMapping(value="/login", method=RequestMethod.POST)
 	public String loginPOST(Model model,AccountVO vo, HttpServletRequest request, RedirectAttributes rttr) throws Exception
 	{
@@ -95,12 +97,17 @@ public class AccountController {
 				rttr.addFlashAttribute("msg", "아이디 혹은 비밀번호를 다시 한번 확인해주세요!");
 				return "redirect:/account/login";
 			
-			} else {
+			}else if(login.getState().equals("대기중")) {
+				session.setAttribute("member", null);
+				rttr.addFlashAttribute("msg", "승인되지 않은 회원입니다. 관리자에게 문의해 주시기 바랍니다.");
+				return "redirect:/account/login";
+				
+			}else {
 				session.setAttribute("member", login);
 				rttr.addFlashAttribute("msg", "로그인에 성공하였습니다.");
 				return "redirect:/home";
+			}
 	}
-}
 	
 	@RequestMapping(value = "/logout", method=RequestMethod.GET)
 	public String logout(HttpSession session,RedirectAttributes rttr) {
