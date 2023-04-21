@@ -15,7 +15,7 @@
 		
 	
 
-	<insert id="register">
+	<insert id="register" parameterType="AccountVO">
 		insert into tbl_member
 		(
 			me_email
@@ -61,5 +61,14 @@
 		select count(*) from tbl_member
 		where me_email = #{me_email}
 	</select>
+	
+	<select id="selectHomeList" parameterType="AccountVO" resultType="AccountVO">
+		select * from tbl_member limit 6
+	</select>
+	
+	<!-- 회원 탈퇴 -->
+	<delete id="deleteAccount" parameterType="String">
+		delete from tbl_member where me_id = #{me_id}
+	</delete>
 
 </mapper>  

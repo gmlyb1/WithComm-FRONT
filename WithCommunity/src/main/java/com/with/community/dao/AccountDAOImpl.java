@@ -2,11 +2,13 @@ package com.with.community.dao;
 
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.inject.Inject;
 
 import org.apache.ibatis.session.SqlSession;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import com.with.community.vo.AccountVO;
 
@@ -19,6 +21,9 @@ public class AccountDAOImpl implements AccountDAO{
 
 	@Override
 	public void register(AccountVO vo) throws Exception {
+		
+		String hashedPw = new BCryptPasswordEncoder().encode(vo.getMe_pwd());
+		
 		sqlSession.insert("namespace.register", vo);
 	}
 
@@ -53,6 +58,16 @@ public class AccountDAOImpl implements AccountDAO{
 	@Override
 	public AccountVO checkUserWithSessionKey(String value) throws Exception {
 		return sqlSession.selectOne("namespace.checkUserWithSessionKey", value);
+	}
+
+	@Override
+	public List<AccountVO> selectHomeList(AccountVO vo) throws Exception {
+		return sqlSession.selectList("namespace.selectHomeList",vo);
+	}
+
+	@Override
+	public int deleteAccount(String me_id) throws Exception {
+		return sqlSession.delete("namespace.deleteAccount",me_id);
 	}
 
 

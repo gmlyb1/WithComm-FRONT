@@ -5,7 +5,33 @@
     
 <%@include file="/WEB-INF/views/include/header.jsp"%>    
 
+<script type="text/javascript">
+	$(document).ready(function() {
+		//회원 탈퇴
+		$("#delBtn").click(function() {
+			var memberId = $(this).data("member-id");
 
+			if (confirm("회원 탈퇴 하시겠습니까?")) {
+				$.ajax({
+					url : "/account/delete",
+					type : "POST",
+					data : {
+						me_id : memberId,
+					},
+					success : function(data) {
+						alert("회원탈퇴가 성공적으로 처리되었습니다.");
+						location.href = "/home";
+					},
+					error : function(error) {
+						console.log(error);
+						alert("요청 처리 중 오류가 발생하였습니다."+error);
+					}
+				});
+			}
+		});
+	});
+
+</script>
 
 <div class="container-xxl flex-grow-1 container-p-y">
               <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Account Settings /</span> Account</h4>
@@ -125,10 +151,10 @@
                             id="accountActivation"
                           />
                           <label class="form-check-label" for="accountActivation"
-                            >I confirm my account deactivation</label
+                            >회원 탈퇴에 동의합니다.</label
                           >
                         </div>
-                        <button type="submit" class="btn btn-danger deactivate-account">Deactivate Account</button>
+                        <button id="delBtn" data-member-id="${member.me_id}" type="button" class="btn btn-danger deactivate-account">회원 탈퇴</button>
                       </form>
                     </div>
                   </div>

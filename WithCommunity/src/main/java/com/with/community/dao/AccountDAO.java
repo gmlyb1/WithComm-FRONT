@@ -1,6 +1,7 @@
 package com.with.community.dao;
 
 import java.util.Date;
+import java.util.List;
 
 import com.with.community.vo.AccountVO;
 
@@ -24,4 +25,7 @@ public interface AccountDAO {
 	// 세션 키 검증
 	public AccountVO checkUserWithSessionKey(String value) throws Exception;
 	
+	public List<AccountVO> selectHomeList(AccountVO vo) throws Exception;
+	
+	public int deleteAccount(String me_id) throws Exception;
 }

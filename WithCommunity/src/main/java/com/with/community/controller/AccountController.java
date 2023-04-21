@@ -62,7 +62,7 @@ public class AccountController {
 				rttr.addFlashAttribute("msg", "이미 존재하는 아이디입니다. 다시 확인해주세요.");
 				return "/account/register";
 			}else if(result == 0) {
-				String hashedPw = BCrypt.hashpw(vo.getMe_pwd(), BCrypt.gensalt());
+				String hashedPw = new BCryptPasswordEncoder().encode(vo.getMe_pwd());
 				vo.setMe_pwd(hashedPw);
 				accountService.register(vo);
 				rttr.addFlashAttribute("msg", "회원가입이 완료되었습니다");
@@ -142,6 +142,20 @@ public class AccountController {
 		session.setAttribute("login", accountVO);
 		
 		return "/account/profile";
+	}
+	
+	@RequestMapping(value="/delete" , method=RequestMethod.POST) 
+	public String deleteAccount(HttpSession session,HttpServletRequest request, String me_id, RedirectAttributes rttr)
+	{
+		
+		try {
+			accountService.deleteAccount(me_id);
+			session.invalidate();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return "redirect:/account/login";
 	}
 	
 	@RequestMapping(value="/alram", method=RequestMethod.GET)

@@ -1,6 +1,7 @@
 package com.with.community.service;
 
 import java.util.Date;
+import java.util.List;
 
 import javax.inject.Inject;
 
@@ -39,6 +40,14 @@ public class AccountServiceImpl implements AccountService {
 	@Override
 	public AccountVO checkUserWithSessionKey(String value) throws Exception {
 		return accountDAO.checkUserWithSessionKey(value);
+	}
+	@Override
+	public List<AccountVO> selectHomeList(AccountVO vo) throws Exception {
+		return accountDAO.selectHomeList(vo);
+	}
+	@Override
+	public int deleteAccount(String me_id) throws Exception {
+		return accountDAO.deleteAccount(me_id);
 	}
 
 
