@@ -9,6 +9,12 @@
 	$(document).ready(function() {
 		//회원 탈퇴
 		$("#delBtn").click(function() {
+			
+			if(!$("#accountActivation").prop("checked")) {
+		        alert("동의란에 체크해 주십시오.");
+		        return;
+		    }
+			
 			var memberId = $(this).data("member-id");
 
 			if (confirm("회원 탈퇴 하시겠습니까?")) {
