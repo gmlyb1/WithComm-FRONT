@@ -42,42 +42,51 @@
   	    <script type="text/javascript">
 	$(document).ready(function() {
 		var msg = "${msg}"
+		var emailInput = $("#me_email");
+		
 		if (msg != "") {
 			alert(msg);
 		}
+		
+		$("#submit").on("click", function(){
+			var email = emailInput.val();
+			
+			if(email === ""){
+				alert("아이디를 입력해주세요.");
+				//$("#me_email").focus();
+				emailInput.focus();
+				return false;
+			}
+			
+			if(email.substr(email.length - 9) !== "@with.com") {
+				alert("올바른 아이디 형식을 입력해 주세요.");
+				//$("#me_email").focus();
+				emailInput.focus();
+				return false;
+			}
+			
+			if($("#me_pwd").val() === ""){
+				alert("비밀번호를 입력해주세요.");
+				$("#me_pwd").focus();
+				return false;
+			}
+			if($("#me_name").val() === ""){
+				alert("닉네임을 입력해주세요.");
+				$("#me_name").focus();
+				return false;
+			}
+		});
+		
+		//체크박스에 동의하지 않을경우는 회원가입  처리 되지 않도록 처리.
+		$("#formAuthentication").on("submit",function() {
+			if(!$("#terms-conditions").prop("checked")) {
+				alert("위드컴 회원가입 규칙에 동의해 주세요.");
+				return false;
+			}
+		})
+		//끝
 	});
 </script> 
-	<script type="text/javascript">
-		$(document).ready(function(){
-			// 취소
-			$(".cencle").on("click", function(){
-				
-				location.href = "/login";
-						    
-			})
-		
-			$("#submit").on("click", function(){
-				if($("#me_email").val()==""){
-					alert("아이디를 입력해주세요.");
-					$("#me_email").focus();
-					return false;
-				}
-				if($("#me_pwd").val()==""){
-					alert("비밀번호를 입력해주세요.");
-					$("#me_pwd").focus();
-					return false;
-				}
-				if($("#me_name").val()==""){
-					alert("닉네임을 입력해주세요.");
-					$("#me_name").focus();
-					return false;
-				}
-			});
-			
-				
-			
-		})
-	</script>
 	<body>
 		 <!-- Content -->
 
@@ -145,7 +154,7 @@
                       </g>
                     </svg>
                   </span>
-                  <span class="app-brand-text demo text-body fw-bolder">Sneat</span>
+                  <span class="app-brand-text demo text-body fw-bolder">withComm</span>
                 </a>
               </div>
               <!-- /Logo -->
@@ -175,8 +184,8 @@
                   <div class="form-check">
                     <input class="form-check-input" type="checkbox" id="terms-conditions" name="terms" />
                     <label class="form-check-label" for="terms-conditions">
-                      I agree to
-                      <a href="javascript:void(0);">privacy policy & terms</a>
+                      위드컴 회원가입 규칙에 동의하고, 회원가입 하시겠습니까?
+                      <!-- <a href="javascript:void(0);">privacy policy & terms</a> -->
                     </label>
                   </div>
                 </div>
