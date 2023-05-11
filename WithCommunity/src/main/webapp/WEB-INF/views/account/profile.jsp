@@ -7,6 +7,31 @@
 
 <script type="text/javascript">
 	$(document).ready(function() {
+		
+		// 프로필 사진 수정
+		$("#upload").change(function() {
+        var form = new FormData();
+        var file = $("#upload")[0].files[0];
+        form.append("file", file);
+        form.append("me_id", $("#me_id").val());
+        $.ajax({
+            url: "/account/updateImg",
+            type: "POST",
+            data: form,
+            processData: false,
+            contentType: false,
+            success: function(data) {
+                alert("사진이 성공적으로 업로드되었습니다.");
+                location.reload();
+            },
+            error: function(error) {
+                console.log(error);
+                alert("요청 처리 중 오류가 발생하였습니다.");
+            }
+        });
+    });
+		
+		
 		//회원 탈퇴
 		$("#delBtn").click(function() {
 			
@@ -84,6 +109,7 @@
                               class="account-file-input"
                               hidden
                               accept="image/png, image/jpeg"
+                              onchange="document.getElementById('submitBtn').disabled = false;"
                             />
                           </label>
                           <button type="button" class="btn btn-outline-secondary account-image-reset mb-4">
@@ -131,14 +157,14 @@
                             <input class="form-control" type="text" id="me_regDate" name="me_regDate" value="<fmt:formatDate value="${member.me_regDate}" pattern = "yyyy-MM-dd"/>"readonly>
                           </div>
                         <div class="mt-2">
-                          <button type="submit" class="btn btn-primary me-2">Save changes</button>
+                          <button id="submitBtn" type="submit" class="btn btn-primary me-2">Save changes</button>
                           <button type="reset" class="btn btn-outline-secondary">Cancel</button>
                         </div>
                     </div>
                    </div>
-                  </form>
-                    <!-- /Account -->
                   </div>
+                 </form>
+                    <!-- /Account -->
                   <div class="card">
                     <h5 class="card-header">Delete Account</h5>
                     <div class="card-body">

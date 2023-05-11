@@ -50,7 +50,16 @@
     <script src="/resources/assets/vendor/js/helpers.js"></script>
     <script src="/resources/assets/js/config.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script type="text/javascript">
+    	$(document).ready(function() {
+    		$('.menu-item').click(function() {
+    			  $('.menu-item').removeClass('active');
+    			  $(this).addClass('active');
+    			});
+    	});
     
+    
+    </script>
   </head>
 
   <body>
@@ -385,22 +394,22 @@
                     <li>
                       <a class="dropdown-item" href="/account/profile">
                         <i class="bx bx-user me-2"></i>
-                        <span class="align-middle">My Profile</span>
-                      </a>
-                    </li>
-                    <li>
-                      <a class="dropdown-item" href="#">
-                        <i class="bx bx-cog me-2"></i>
-                        <span class="align-middle">Settings</span>
+                        <span class="align-middle">나의 프로필</span>
                       </a>
                     </li>
                     <li>
                       <a class="dropdown-item" href="#">
                         <span class="d-flex align-items-center align-middle">
                           <i class="flex-shrink-0 bx bx-credit-card me-2"></i>
-                          <span class="flex-grow-1 align-middle">Billing</span>
+                          <span class="flex-grow-1 align-middle">&nbsp;1:1문의</span>
                           <span class="flex-shrink-0 badge badge-center rounded-pill bg-danger w-px-20 h-px-20">4</span>
                         </span>
+                      </a>
+                    </li>
+                    <li>
+                      <a class="dropdown-item" href="#">
+                        <i class="bx bx-cog me-2"></i>
+                        <span class="align-middle">준비중</span>
                       </a>
                     </li>
                     <li>

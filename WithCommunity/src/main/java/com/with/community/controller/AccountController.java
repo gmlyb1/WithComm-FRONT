@@ -99,7 +99,12 @@ public class AccountController {
 			
 			}else if(login.getState().equals("승인대기중")) {
 				session.setAttribute("member", null);
-				rttr.addFlashAttribute("msg", "승인되지 않은 회원입니다. 관리자에게 문의해 주시기 바랍니다.");
+				rttr.addFlashAttribute("msg", "승인되지 않은 회원입니다.\n 관리자에게 문의해 주시기 바랍니다.");
+				return "redirect:/account/login";
+			
+			}else if(login.getState().equals("활동중지")) {
+				session.setAttribute("member", null);
+				rttr.addFlashAttribute("msg", "본 아이디는 관리자에 의해 중지된 아이디입니다.");
 				return "redirect:/account/login";
 				
 			}else {
