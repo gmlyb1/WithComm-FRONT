@@ -15,7 +15,7 @@
 	
 	<!-- 총 개수 -->
 	<select id="getListCount" resultType="int" parameterType="java.util.List">
-		select count(notice_no) from tbl_notice
+		select count(*) from tbl_notice
 	</select>
 	
 	 <select id="selectNoticeImportant" resultType="NoticeVO" parameterType="NoticeVO">

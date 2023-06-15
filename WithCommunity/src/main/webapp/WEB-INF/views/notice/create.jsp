@@ -4,15 +4,12 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 
-<script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <!-- include summernote css/js -->
-<link
-	href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.css"
-	rel="stylesheet">
-<script
-	src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
+<link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
 <script type="text/javascript">
+$(document).ready(function() {
 	function _onSubmit() {
 
 		if ($("#notice_writer").val() == "") {
@@ -37,47 +34,37 @@
 			return false;
 		}
 	}
-</script>
-<script type="text/javascript">
-function YnCheck(obj) {
-	var checked = obj.checked;
-	if(checked) {
-		obj.value = 1;
-	}else {
-		obj.value = 2;
-	}
 	
-	var isFixed = "${data.isFixed}";
-	if(isFixed == 1) {
-	    $("#isFixed").prop("checked", true);
-	} else {
-	    $("#isFixed").prop("checked", false);
-	}
-	
-	// 체크박스 value값 설정
-	if($("#isFixed").is(':checked')==true) {
-		data.set("isFixed",1);
-	}else {
-		data.set("isFixed",0);
-	}
-};
-</script>
-<script type="text/javascript">
-	function fn_addFile(){
-		var fileIndex = 1;
-		$(".fileAdd_btn").on("click",function(){
-			$("#fileIndex").append("<div><input type='file' style='float:left;' name='file_"+(fileIndex++)+"'>"+"</button>"+"<button type='button' style='float:right;' id='fileDelBtn'>"+"삭제"+"</button></div>")
-		});
+	function YnCheck(obj) {
+		var checked = obj.checked;
+		if(checked) {
+			obj.value = 1;
+		}else {
+			obj.value = 2;
+		}
 		
-		$(document).on("click","#fileDelBtn", function(){
-			$(this).parent().remove();
-		});
-	}
+		var isFixed = "${data.isFixed}";
+		if(isFixed == 1) {
+		    $("#isFixed").prop("checked", true);
+		} else {
+		    $("#isFixed").prop("checked", false);
+		}
+		
+		// 체크박스 value값 설정
+		if($("#isFixed").is(':checked')==true) {
+			data.set("isFixed",1);
+		}else {
+			data.set("isFixed",0);
+		}
+	};
+//끝
+});
 </script>
+
 
 
 <%@include file="../include/header.jsp"%>
-
+<br>
 <div class="row" style="margin-bottom: 20px; margin-left: 1px;">
 	<div class="col-lg-12">
 		<h1 class="page-header">글작성</h1>
@@ -118,13 +105,11 @@ function YnCheck(obj) {
 											name="notice_content" cols="100" rows="10"
 											placeholder="내용을 입력해주세요." class="form-control"></textarea></td>
 								</tr>
-								
 								<tr>
 									 <td>
 										<input type="checkbox" id="isFixed" name="isFixed" onchange="YnCheck(this);"><label for="isFixed">상단 고정</label>								
 									</td> 
 								</tr>
-
 							</tbody>
 						</table>
 					</div>

@@ -37,44 +37,69 @@
     <script src="/resources/assets/vendor/js/helpers.js"></script>
     <script src="/resources/assets/js/config.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-<!-- <script type="text/javascript">
-	$(document).ready(function() {
-		$("#LoginBtn").click(function() {
-			var me_email = $("#me_email").val();
-			var me_pwd = $("#me_pwd").val();
-			
-			if (document.frm.me_email.value == "") {
-				alert("이메일을 입력해 주세요.");
-				return false;
-			}
-			if (document.frm.me_pwd.value == "") {
-				alert("비밀번호를 입력해 주세요.");
-				return false;
-			}
-				
-			if (me_email != "" && me_pwd != "") {
-				return "/account/login";
-			}
-			
-		});
-	});
-</script> -->
+
 <script type="text/javascript">
-		$(document).ready(function(){
-			$("#submit").on("click", function(){
-				if($("#me_email").val()==""){
-					alert("아이디를 입력해주세요.");
-					$("#me_email").focus();
-					return false;
-				}
-				if($("#me_pwd").val()==""){
-					alert("비밀번호를 입력해주세요.");
-					$("#me_pwd").focus();
-					return false;
-				}
-			});
-		})
-	</script>
+//쿠키 이름 정하기
+const COOKIE_NAME = "rememberMe";
+
+// 로그인 정보 저장하기
+function setCookie(name, value, days) {
+    let expires = "";
+    if (days) {
+        const date = new Date();
+        date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+        expires = "; expires=" + date.toUTCString();
+    }
+    document.cookie = name + "=" + (value || "")  + expires + "; path=/";
+}
+
+// Remember Me 체크 박스에 따라 쿠키 값 저장하기
+const rememberMe = document.querySelector('#remember-me');
+if (rememberMe) {
+    rememberMe.addEventListener('change', function() {
+        if(this.checked) {
+            setCookie(COOKIE_NAME, "true", 7); // 쿠키 유효기간은 7일로 설정
+        } else {
+            setCookie(COOKIE_NAME, "false", -1);
+        }
+    });
+}
+
+// 쿠키 값 가져오기
+function getCookie(name) {
+    const nameEQ = name + "=";
+    const ca = document.cookie.split(';');
+    for(let i = 0; i < ca.length; i++) {
+        let c = ca[i];
+        while (c.charAt(0) == ' ') c = c.substring(1, c.length);
+        if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length, c.length);
+    }
+    return null;
+}
+
+// Remember Me 체크 박스 상태 설정하기
+const useCookie = getCookie(COOKIE_NAME);
+if (useCookie === "true") {
+    document.querySelector('#remember-me').setAttribute('checked', true);
+}
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){
+	$("#submit").on("click", function(){
+		if($("#me_email").val()==""){
+			alert("아이디를 입력해주세요.");
+			$("#me_email").focus();
+			return false;
+		}
+		if($("#me_pwd").val()==""){
+			alert("비밀번호를 입력해주세요.");
+			$("#me_pwd").focus();
+			return false;
+		}
+	});
+})
+</script>
 <script type="text/javascript">
 $(document).ready(function() {
 	var msg = "${msg}"
@@ -153,11 +178,11 @@ $(document).ready(function() {
                       </g>
                     </svg>
                   </span>
-                  <span class="app-brand-text demo text-body fw-bolder">Sneat</span>
+                  <span class="app-brand-text demo text-body fw-bolder">WithComm</span>
                 </a>
               </div>
               <!-- /Logo -->
-              <h4 class="mb-2">Welcome to Sneat! 👋</h4>
+              <h4 class="mb-2">Welcome to WithComm! 👋</h4>
               <p class="mb-4">Please sign-in to your account and start the adventure</p>
 
               <form id="formAuthentication" name="frm" class="mb-3" action="/account/login" method="POST">

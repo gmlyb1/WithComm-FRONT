@@ -27,7 +27,7 @@
 	<!-- DataTales Example -->
 	<div class="card shadow mb-4">
 		<div class="card-header py-3">
-			<h6 class="m-0 font-weight-bold text-primary">공지사항 리스트</h6>
+			<h6 class="m-0 font-weight-bold text-primary"><Strong>공지사항 리스트</Strong></h6>
 			<br>
 			<c:if test="${member == null}">
 				<span style="color: red"><strong> 현재 페이지의 글쓰기,수정,삭제는

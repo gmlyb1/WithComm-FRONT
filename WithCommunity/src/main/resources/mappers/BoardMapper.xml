@@ -130,6 +130,5 @@
 	<select id="getListCount" resultType="int" parameterType="BoardVO">
 		select count(board_no)
 		 from tbl_board
-		 where board_no > 0
 	</select>
 </mapper>

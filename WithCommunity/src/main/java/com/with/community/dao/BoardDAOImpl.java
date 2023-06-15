@@ -23,8 +23,6 @@ public class BoardDAOImpl implements BoardDAO {
 
 	@Override
 	public List<BoardVO> BoardList() throws Exception {
-		
-		
 		return sqlSession.selectList("namespace.BoardList");
 	}
 

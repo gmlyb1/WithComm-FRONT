@@ -42,6 +42,7 @@ public class BoardServiceImpl implements BoardService {
 	@Transactional(isolation = Isolation.READ_COMMITTED)
 	@Override
 	public BoardVO BoardRead(int board_no) throws Exception {
+		
 		boardDAO.BoardHit(board_no);
 		return boardDAO.BoardRead(board_no);
 	}

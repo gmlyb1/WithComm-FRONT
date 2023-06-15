@@ -3,6 +3,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%@include file="../include/header.jsp"%>
+
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script type="text/javascript">
@@ -74,11 +75,17 @@
 						</tbody>
 					</table>
 					<br>
+
+<%-- 					<div>
+						<c:forEach begin="1" end="${pageNum}" var="num">
+							<span> <a href="/board/list?num=${num}">${num}</a>
+							</span>
+						</c:forEach>
+					</div> --%>
 					<c:if test="${member != null}">
 						<button type="button" onclick="location.href='/board/create';"
 							class="btn btn-success">글쓰기</button>
 					</c:if>
-
 				</form>
 			</div>
 		</div>
