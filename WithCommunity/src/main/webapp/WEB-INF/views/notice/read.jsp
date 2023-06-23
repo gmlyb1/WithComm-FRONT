@@ -12,9 +12,11 @@
 
 		//삭제
 		$("#delete_btn").on("click", function() {
+			if(confirm("정말 삭제하시겠습니까?")){
 			formObj.attr("action", "/notice/delete");
 			formObj.attr("method", "post");
 			formObj.submit();
+			}
 		});
 	})
 </script>
