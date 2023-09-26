@@ -13,19 +13,8 @@
   data-template="vertical-menu-template-free"
 >
 
-
-
-
   <head>
   
-      <html
-  lang="ko"
-  class="light-style layout-menu-fixed"
-  dir="ltr"
-  data-theme="theme-default"
-  data-assets-path="/resources/assets/"
-  data-template="vertical-menu-template-free"
->
     <meta charset="utf-8" />
     <meta
       name="viewport"
@@ -50,16 +39,30 @@
     <script src="/resources/assets/vendor/js/helpers.js"></script>
     <script src="/resources/assets/js/config.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script type="text/javascript">
-    	$(document).ready(function() {
-    		$('.menu-item').click(function() {
-    			  $('.menu-item').removeClass('active');
-    			  $(this).addClass('active');
-    			});
-    	});
-    
-    
-    </script>
+ 	<script type="text/javascript">
+ 		$(document).ready(function() {
+	 			var path = window.location.pathname;
+	 			
+	 			$(".menu-item").click(function() {
+	 				$(".menu-item").removeClass("active");
+	 		
+	 			$(this).addClass("active");	
+ 			});
+	 			
+	 			$(".menu-item a").each(function() {
+	 				var href = $(this).attr("href");
+	 			      if (path === href) {
+	 			        $(this).closest(".menu-item").addClass("active");
+	 			      } else if (path.startsWith(href) && href !== "/") {
+	 			        // Handle cases where the URL path starts with the menu item's URL
+	 			        $(this).closest(".menu-item").addClass("active");
+	 				}
+	 			
+	 			});
+ 		});
+ 	</script>
+ 
+ 
   </head>
 
   <body>
@@ -141,7 +144,7 @@
 
           <ul class="menu-inner py-1">
             <!-- Dashboard -->
-            <li class="menu-item active">
+            <li class="menu-item">
               <a href="index.html" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-home-circle"></i>
                 <div data-i18n="Analytics">대시보드</div>
@@ -170,7 +173,7 @@
             </li>
             
             <li class="menu-item">
-              <a href="cards-basic.html" class="menu-link">
+              <a href="#" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-cube-alt"></i>
                 <div data-i18n="Basic">지식인</div>
               </a>
@@ -203,7 +206,7 @@
               </a>
             </li>
             <!-- Misc -->
-            <li class="menu-header small text-uppercase"><span class="menu-header-text">Misc</span></li>
+            <!-- <li class="menu-header small text-uppercase"><span class="menu-header-text">Misc</span></li>
             <li class="menu-item">
               <a href="#" target="_blank" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-support"></i>
@@ -215,7 +218,7 @@
                 <i class="menu-icon tf-icons bx bx-file"></i>
                 <div data-i18n="Documentation">파일 게시판</div>
               </a>
-            </li>
+            </li> -->
           </ul>
         </aside>
         <!-- / Menu -->
@@ -249,74 +252,82 @@
               </div>
               <!-- /Search -->
 
-              <ul class="navbar-nav flex-row align-items-center ms-auto">
-
-                <!-- User -->
-                <c:if test="${member != null }">
-                <li class="nav-item navbar-dropdown dropdown-user dropdown">
-                  <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown">
-                    <div class="avatar avatar-online">
-                      <img src="/resources/assets/img/avatars/1.png" alt class="w-px-40 h-auto rounded-circle" />
-                      <%-- <img src="/resources/assets/img/${member.me_image}" alt class="w-px-40 h-auto rounded-circle" /> --%>
-                    </div>
-                  </a>
-                  <ul class="dropdown-menu dropdown-menu-end">
-                    <li>
-                      <a class="dropdown-item" href="#">
-                        <div class="d-flex">
-                          <div class="flex-shrink-0 me-3">
-                            <div class="avatar avatar-online">
-                              <img src="/resources/assets/img/avatars/1.png" alt class="w-px-40 h-auto rounded-circle" />
-                            </div>
-                          </div>
-                          <div class="flex-grow-1">
-                            <span class="fw-semibold d-block">${member.me_name}</span>
-                            <small class="text-muted">${member.state}</small>
-                          </div>
-                        </div>
-                      </a>
-                    </li>
-                    <li>
-                      <div class="dropdown-divider"></div>
-                    </li>
-                    <li>
-                      <a class="dropdown-item" href="/account/profile">
-                        <i class="bx bx-user me-2"></i>
-                        <span class="align-middle">나의 프로필</span>
-                      </a>
-                    </li>
-                    <li>
-                      <a class="dropdown-item" href="#">
-                        <span class="d-flex align-items-center align-middle">
-                          <i class="flex-shrink-0 bx bx-credit-card me-2"></i>
-                          <span class="flex-grow-1 align-middle">&nbsp;1:1문의</span>
-                          <span class="flex-shrink-0 badge badge-center rounded-pill bg-danger w-px-20 h-px-20">4</span>
-                        </span>
-                      </a>
-                    </li>
-                    <li>
-                      <a class="dropdown-item" href="#">
-                        <i class="bx bx-cog me-2"></i>
-                        <span class="align-middle">준비중</span>
-                      </a>
-                    </li>
-                    <li>
-                      <div class="dropdown-divider"></div>
-                    </li>
-                    <li>
-                      <a class="dropdown-item" href="/account/logout" id="logoutBtn">
-                        <i class="bx bx-power-off me-2"></i>
-                        <span class="align-middle">Log Out</span>
-                      </a>
-                    </li>
-                  </ul>
-                </li>
-                </c:if>
-                <c:if test="${member == null }">
-                	<a href="/account/login" class="btn btn-primary">로그인</a>&nbsp;
-                	<a href="/account/register" class="btn btn-success">회원가입</a>
-                </c:if>
-                <!--/ User -->
-              </ul>
+             <ul class="navbar-nav flex-row align-items-center ms-auto">
+				    <!-- User -->
+				    <c:if test="${member != null}">
+				        <li class="nav-item navbar-dropdown dropdown-user dropdown">
+				            <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown">
+				                <div class="avatar avatar-online">
+				                    <img src="/resources/assets/img/avatars/1.png" alt class="w-px-40 h-auto rounded-circle" />
+				                </div>
+				            </a>
+				            <ul class="dropdown-menu dropdown-menu-end">
+				                <li>
+				                    <a class="dropdown-item" href="#">
+				                        <div class="d-flex">
+				                            <div class="flex-shrink-0 me-3">
+				                                <div class="avatar avatar-online">
+				                                    <img src="/resources/assets/img/avatars/1.png" alt class="w-px-40 h-auto rounded-circle" />
+				                                </div>
+				                            </div>
+				                            <div class="flex-grow-1">
+				                                <span class="fw-semibold d-block">${member.me_name}</span>
+				                                <small class="text-muted">${member.state}</small>
+				                            </div>
+				                        </div>
+				                    </a>
+				                </li>
+				                <li>
+				                    <div class="dropdown-divider"></div>
+				                </li>
+				                <li>
+				                    <a class="dropdown-item" href="/account/profile">
+				                        <i class="bx bx-user me-2"></i>
+				                        <span class="align-middle">나의 프로필</span>
+				                    </a>
+				                </li>
+				                <li>
+				                    <a class="dropdown-item" href="#">
+				                        <span class="d-flex align-items-center align-middle">
+				                            <i class="flex-shrink-0 bx bx-credit-card me-2"></i>
+				                            <span class="flex-grow-1 align-middle">&nbsp;1:1문의</span>
+				                            <span class="flex-shrink-0 badge badge-center rounded-pill bg-danger w-px-20 h-px-20">4</span>
+				                        </span>
+				                    </a>
+				                </li>
+				                <li>
+				                    <a class="dropdown-item" href="#">
+				                        <i class="bx bx-cog me-2"></i>
+				                        <span class="align-middle">준비중</span>
+				                    </a>
+				                </li>
+				                <li>
+				                    <div class="dropdown-divider"></div>
+				                </li>
+				                <li>
+				                    <a class="dropdown-item" href="/account/logout" id="logoutBtn">
+				                        <i class="bx bx-power-off me-2"></i>
+				                        <span class="align-middle">Log Out</span>
+				                    </a>
+				                </li>
+				                <li>
+				                    <div class="dropdown-divider"></div>
+				                </li>
+				            </ul>
+				        </li>
+				        <li class="nav-item">
+				            <span class="nav-link" style="color: black;"><strong>${member.me_name}</strong>님, 환영합니다!</span>
+				        </li>
+				    </c:if>
+				    <c:if test="${member == null}">
+				        <li class="nav-item">
+				            <a href="/account/login" class="btn btn-primary" style="color: white; font-weight: bold;">로그인</a>&nbsp;
+				        </li>
+				        <li class="nav-item">
+				            <a href="/account/register" class="btn btn-success" style="color: white; font-weight: bold;">회원가입</a>
+				        </li>
+				    </c:if>
+				    <!--/ User -->
+				</ul>
             </div>
           </nav>
