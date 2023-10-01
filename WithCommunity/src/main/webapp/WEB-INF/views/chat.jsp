@@ -3,6 +3,12 @@
 <!DOCTYPE html>
 <html>
 <head>
+<!-- 부트스트랩 CSS 파일 -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+<!-- 부트스트랩 JavaScript 파일 (Popper.js 및 jQuery 포함) -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
+
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <style type="text/css">
 	.container {
@@ -148,6 +154,11 @@ $(document).ready(function() {
 		$('#msg').val('');
 		$('#msg').attr('disabled', true);
 	});
+	
+	//채팅방 나가기 
+	$('#exit').click(function(){
+		location.href = "/home";		
+	});
 });
 
 
@@ -157,26 +168,36 @@ $(document).ready(function() {
 </head>
 <body>
 
-	<div class="container">
-		<h1 class="page-header">Chat</h1>		
-		
-		<table class="table table-bordered">
-			<tr>
-				<td><input type="text" name="user" id="user" class="form-control" value="${member.me_name}" readonly></td>
-				<td>
-					<button type="button" class="btn btn-default" id="btnConnect">연결</button>
-					<button type="button" class="btn btn-default" id="btnDisconnect" disabled>종료</button>
-				</td>
-			</tr>
-			<tr>
-				<td colspan="2"><div id="list"></div></td>
-			</tr>
-			<tr>
-				<td colspan="2"><input type="text" name="msg" id="msg" placeholder="대화 내용을 입력하세요." class="form-control" disabled></td>
-			</tr>
-		</table>
-		
-	</div>
+<div class="container">
+    <h1 class="page-header">Chat</h1>
+    <table class="table table-bordered">
+        <tr>
+            <td>
+                <div class="input-group">
+                    <input type="text" name="user" id="user" class="form-control" value="${member.me_name}" readonly>
+                    <span class="input-group-btn">
+                        <button type="button" class="btn btn-success" id="btnConnect">연결</button>
+                        <button type="button" class="btn btn-danger" id="btnDisconnect" disabled>종료</button>
+                    </span>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <div id="list" style="min-height: 200px; max-height: 400px; overflow-y: auto;"></div>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <div class="input-group">
+                    <input type="text" name="msg" id="msg" placeholder="대화 내용을 입력하세요." class="form-control" disabled>
+                </div>
+            </td>
+        </tr>
+    </table>
+    <button id="exit" class="btn btn-danger">채팅방 나가기</button>
+</div>
+
 
 </body>
 </html>
