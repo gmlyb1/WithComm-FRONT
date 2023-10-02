@@ -39,9 +39,12 @@
     <script src="/resources/assets/vendor/js/helpers.js"></script>
     <script src="/resources/assets/js/config.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <!-- socket lib -->
+    <script src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
  	<script type="text/javascript">
  		$(document).ready(function() {
 	 			var path = window.location.pathname;
+	 			
 	 			
 	 			$(".menu-item").click(function() {
 	 				$(".menu-item").removeClass("active");
@@ -61,6 +64,51 @@
 	 			});
  		});
  	</script>
+ 	<script type="text/javascript">
+var socket = null;
+$(document).ready(function(){
+if(${login != null}){
+connectWs();
+}
+})
+
+
+//소켓
+
+
+function connectWs(){
+console.log("tttttt")
+var ws = new SockJS("/alram");
+socket = ws;
+
+	ws.onopen = function() {
+ console.log('open');
+ 
+ };
+
+	ws.onmessage = function(event) {
+		console.log("onmessage"+event.data);
+		let $socketAlert = $('div#socketAlert');
+		$socketAlert.html(event.data)
+		$socketAlert.css('display', 'block');
+		
+		setTimeout(function(){
+			$socketAlert.css('display','none');
+			
+		}, 5000);
+};
+
+	ws.onclose = function() {
+	    console.log('close');
+ };
+ 
+ 
+ 
+
+};
+
+//소켓끝
+</script>
  
  
   </head>
@@ -205,6 +253,14 @@
                 <div data-i18n="Tables">달력</div>
               </a>
             </li>
+            
+             <!-- Tables -->
+            <li class="menu-item">
+              <a href="/inquiry/list" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-table"></i>
+                <div data-i18n="Tables">운영자 상담</div>
+              </a>
+            </li>
             <!-- Misc -->
             <!-- <li class="menu-header small text-uppercase"><span class="menu-header-text">Misc</span></li>
             <li class="menu-item">
@@ -287,7 +343,7 @@
 				                    </a>
 				                </li>
 				                <li>
-				                    <a class="dropdown-item" href="#">
+				                    <a class="dropdown-item" href="/inquiry/list">
 				                        <span class="d-flex align-items-center align-middle">
 				                            <i class="flex-shrink-0 bx bx-credit-card me-2"></i>
 				                            <span class="flex-grow-1 align-middle">&nbsp;1:1문의</span>

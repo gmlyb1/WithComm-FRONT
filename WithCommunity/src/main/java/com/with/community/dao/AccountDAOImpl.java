@@ -70,5 +70,10 @@ public class AccountDAOImpl implements AccountDAO{
 		return sqlSession.delete("namespace.deleteAccount",me_id);
 	}
 
+	@Override
+	public void pwdUdt(AccountVO vo) throws Exception {
+		sqlSession.update("namespace.pwdUdt",vo);
+	}
+
 
 }

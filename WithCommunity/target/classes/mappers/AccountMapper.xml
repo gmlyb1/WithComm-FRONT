@@ -70,5 +70,11 @@
 	<delete id="deleteAccount" parameterType="String">
 		delete from tbl_member where me_id = #{me_id}
 	</delete>
+	
+	<!-- 비밀번호 변경 -->
+	<update id="pwdUdt">
+		update tbl_member set me_pwd = #{me_pwd}
+		where me_id = #{me_id}
+	</update>
 
 </mapper>  

@@ -24,4 +24,10 @@ public class InquiryServiceImpl implements InquiryService {
 	public InquiryVO selectInquiryDetail(int inq_no) throws Exception {
 		return inquiryDAO.selectInquiryDetail(inq_no);
 	}
+
+	// 글작성
+	@Override
+	public void insertInquiry(InquiryVO vo) throws Exception {
+		inquiryDAO.insertInquiry(vo);
+	}
 }

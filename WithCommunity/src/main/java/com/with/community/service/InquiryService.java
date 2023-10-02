@@ -10,4 +10,7 @@ public interface InquiryService {
 	public List<InquiryVO> selectInquiryList() throws Exception;
 	
 	public InquiryVO selectInquiryDetail(int inq_no) throws Exception;
+	
+	// 글 작성
+	public void insertInquiry(InquiryVO vo) throws Exception;
 }

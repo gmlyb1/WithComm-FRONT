@@ -33,15 +33,6 @@
 	})
 </script>
 <script type="text/javascript">
-	function fn_fileDown(fileNo){
-		var formObj = $("form[name='readForm']");
-		$("#FILE_NO").attr("value",fileNo);
-		formObj.attr("action","/notice/fileDown");
-		formObj.submit();
-	}
-
-</script>
-<script type="text/javascript">
 	function remove_replyNo(data1,data2) {
 		if(!confirm("삭제 하시겠습니까?")) return false;
 		else {
@@ -80,41 +71,39 @@
 					<input type="hidden" id="notice_no" name="notice_no"
 						value="${read.notice_no}" />
 					<%-- <input type="hidden" id="reply_no" name="reply_no" value="${replyList.board_no}"> --%>
-					<!-- 게시판 글보기  -->
-					<div class="container">
-						<div class="row">
-							<table class="table table-striped"
-								style="text-align: center; border: 1px solid #dddddd">
-								<thead>
-									<tr>
-										<th colspan="2"
-											style="background-color: #eeeeee; text-align: center;">게시판
-											글 보기</th>
-									</tr>
-								</thead>
-
-								<tbody>
-									<tr>
-										<td style="width: 20%">글 제목</td>
-										<td colspan="2">${read.notice_title}</td>
-									</tr>
-									<tr>
-										<td>작성자</td>
-										<td colspan="2">${read.notice_writer}</td>
-									</tr>
-									<tr>
-										<td>작성일자</td>
-										<td colspan="2">${read.notice_regdate}</td>
-									</tr>
-									<tr>
-										<td>내용</td>
-										<td colspan="2" style="height: 200px; text-align: left;">${read.notice_content}</td>
-									</tr>
-
-								</tbody>
-							</table>
-						</div>
+					<div class="container-fluid">
+					    <div class="row">
+					        <div class="col-lg-12">
+					            <div class="card shadow-sm">
+					                <div class="card-body">
+					                    <h5 class="card-title text-center mb-4">게시판 글 보기</h5>
+					                    <table class="table table-borderless">
+					                        <tbody>
+					                            <tr>
+					                                <td style="width: 20%"><strong>글 제목</strong></td>
+					                                <td>${read.notice_title}</td>
+					                            </tr>
+					                            <tr>
+					                                <td><strong>작성자</strong></td>
+					                                <td>${read.notice_writer}</td>
+					                            </tr>
+					                            <tr>
+					                                <td><strong>작성일자</strong></td>
+					                                <td>${read.notice_regdate}</td>
+					                            </tr>
+					                            <tr>
+					                                <td><strong>내용</strong></td>
+					                                <td style="text-align: left;">${read.notice_content}</td>
+					                            </tr>
+					                        </tbody>
+					                    </table>
+					                </div>
+					            </div>
+					        </div>
+					    </div>
 					</div>
+
+					<br>
 					<!-- 게시판 글보기  -->
 					<div style="margin-left: 1px;">
 						<c:if test="${member.me_name == read.notice_writer}">
@@ -131,12 +120,12 @@
 				<!-- 게시판 끝 -->
 				
 				<!-- 첨부파일 -->
-				<span>파일 목록</span>
+					<%-- <span>파일 목록</span>
 					<div class="form-group" style="border: 1px solid #dbdbdb;">
 						<c:forEach var="file" items="${file}">
 							<a href="#" onclick="fn_fileDown('${file.FILE_NO}'); return false;">${file.ORG_FILE_NAME}</a>(${file.FILE_SIZE}kb)<br>
 						</c:forEach>
-					</div>
+					</div> --%>
 				
 				<!-- 댓글 작성 끝 -->
 				<div class="my-3 p-3 bg-white rounded shadow-sm">

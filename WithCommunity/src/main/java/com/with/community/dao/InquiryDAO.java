@@ -11,4 +11,7 @@ public interface InquiryDAO {
 	public List<InquiryVO> selectInquiryList() throws Exception;
 	
 	public InquiryVO selectInquiryDetail(int inq_no) throws Exception;
+	
+	//글쓰기
+	public void insertInquiry(InquiryVO vo) throws Exception;
 }

@@ -11,11 +11,12 @@
 		 *
 		from
 		 tbl_notice
+		where useYn = 1
 	</select>
 	
 	<!-- 총 개수 -->
 	<select id="getListCount" resultType="int" parameterType="java.util.List">
-		select count(notice_no) from tbl_notice
+		select count(*) from tbl_notice
 	</select>
 	
 	 <select id="selectNoticeImportant" resultType="NoticeVO" parameterType="NoticeVO">
@@ -78,11 +79,11 @@
 	</update>
 	
 	<!-- 게시글 삭제 -->
-	<delete id="NoticeDelete" parameterType="int">
-		delete 
-		  from tbl_notice
+	<update id="NoticeDelete" parameterType="int">
+		update tbl_notice
+		set useYn = 0
 		where notice_no = #{notice_no}
-	</delete>
+	</update>
 
 	<!-- 조회수 -->
 	<update id="NoticeHit" parameterType="int">

@@ -24,11 +24,7 @@
 				formObj.submit();
 			}
 		});
-		//끝
-	});
-</script>
-<script type="text/javascript">
-	$(document).ready(function() {
+		
 		var formObj = $("form[name='replyForm']")
 		$(".replyWriteBtn").on("click", function() {
 			var formObj = $("form[name='replyForm']");
@@ -36,9 +32,9 @@
 			formObj.attr("method", "post");
 			formObj.submit();
 		});
-	})
-</script>
-<script type="text/javascript">
+		//끝
+	});
+	
 	function remove_replyNo(data1, data2) {
 		if (!confirm("삭제 하시겠습니까?"))
 			return false;
@@ -48,6 +44,23 @@
 		}
 	}
 </script>
+<style type="text/css">
+ .comment-form {
+        display: flex;
+        align-items: center;
+        margin-bottom: 15px;
+    }
+    .comment-form label {
+        flex-shrink: 0;
+        margin-right: 10px;
+    }
+    .comment-form input[type="text"] {
+        flex-grow: 1;
+        padding: 5px 10px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+    }
+</style>
 
 <div class="row" style="margin-bottom: 20px; margin-left: 1px;">
 	<c:if test="${member == null}">
@@ -78,40 +91,36 @@
 						value="${read.board_no}" />
 					<%-- <input type="hidden" id="reply_no" name="reply_no" value="${replyList.board_no}"> --%>
 					<!-- 게시판 글보기  -->
-					<div class="container">
-						<div class="row">
-							<table class="table table-striped"
-								style="text-align: center; border: 1px solid #dddddd">
-								<thead>
-									<tr>
-										<th colspan="2"
-											style="background-color: #eeeeee; text-align: center;">게시판
-											글 보기</th>
-									</tr>
-								</thead>
-
-								<tbody>
-									<tr>
-										<td style="width: 20%">글 제목</td>
-										<td colspan="2">${read.board_title}</td>
-									</tr>
-									<tr>
-										<td>작성자</td>
-										<td colspan="2">${read.board_writer}</td>
-									</tr>
-									<tr>
-										<td>작성일자</td>
-										<td colspan="2">${read.board_regdate}</td>
-									</tr>
-									<tr>
-										<td>내용</td>
-										<td colspan="2" style="height: 200px; text-align: left;">${read.board_content}</td>
-									</tr>
-
-								</tbody>
-							</table>
-						</div>
+					<div class="container-fluid">
+					    <div class="row">
+					        <div class="col-lg-12">
+					            <div class="card shadow-sm">
+					                <div class="card-body">
+					                    <h5 class="card-title">게시판 글 보기</h5>
+					                    <hr>
+					                    <div class="mb-3">
+					                        <strong>글 제목:</strong>
+					                        <p>${read.board_title}</p>
+					                    </div>
+					                    <div class="mb-3">
+					                        <strong>작성자:</strong>
+					                        <p>${read.board_writer}</p>
+					                    </div>
+					                    <div class="mb-3">
+					                        <strong>작성일자:</strong>
+					                        <p>${read.board_regdate}</p>
+					                    </div>
+					                    <div class="mb-3">
+					                        <strong>내용:</strong>
+					                        <p>${read.board_content}</p>
+					                    </div>
+					                </div>
+					            </div>
+					        </div>
+					    </div>
 					</div>
+					<br>
+					
 					<!-- 게시판 글보기  -->
 					<div style="margin-left: 1px;">
 						<c:if test="${member.me_name == read.board_writer}">
@@ -139,7 +148,7 @@
 							<c:otherwise>
 								<c:forEach items="${replyList}" var="replyList">
 									<tr style="width: 100%;">
-										<td style="font-weight: bold;" colspan="3">${replyList.reply_writer}</td>
+										<td style="font-weight: bold;" colspan="3">${replyList.reply_writer}(${member.state})</td>
 									</tr>
 									<tr>
 										<td style="width: 60%; height: 50px;"><pre
@@ -151,7 +160,7 @@
 												</c:if>
 											</p></td>
 										<td style="width: 35%; text-align: right;"><fmt:formatDate
-												value="${replyList.reply_regdate}" pattern="yy-MM-dd HH:mm" /></td>
+												value="${replyList.reply_regdate}" pattern="yy-MM-dd hh:mm:ss" /></td>
 										<td style="width: 5%;">&nbsp;</td>
 									</tr>
 								</c:forEach>
@@ -175,10 +184,12 @@
 						<input type="hidden" name="keyword" name="keyword" value="${scri.keyword}">+
  --%>
 							<%-- <input type="hidden" id="reply_no" name="reply_no" value="${replyList.board_no}"> --%>
+						<div class="comment-form">
 							<p>
 								<label>댓글 작성자:</label> <input type="text" name="reply_writer"
 									value="${member.me_name}" readonly>
 							</p>
+						</div>
 							<p>
 								댓글 내용:
 								<textarea class="form-control" rows="3" cols="155"

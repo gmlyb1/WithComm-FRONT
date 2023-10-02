@@ -9,7 +9,7 @@
 	$(document).ready(function() {
 		
 		// 프로필 사진 수정
-		$("#upload").change(function() {
+		/* $("#upload").change(function() {
         var form = new FormData();
         var file = $("#upload")[0].files[0];
         form.append("file", file);
@@ -29,7 +29,26 @@
                 alert("요청 처리 중 오류가 발생하였습니다.");
             }
         });
-    });
+    }); */
+    
+    	//비밀번호 변경
+    	$("#submitBtn").click(function() {
+    		if (confirm("비밀번호를 변경 하시겠습니까?")) {
+				$.ajax({
+					url : "/account/pwdUdt",
+					type : "POST",
+					success : function(data) {
+						$("#me_pwd").val(data.me_pwd);
+						alert("비밀번호 변경이 성공적으로 처리되었습니다.");
+						location.href = "/account/profile";
+					},
+					error : function(error) {
+						console.log(error);
+						alert("요청 처리 중 오류가 발생하였습니다."+error);
+					}
+				});
+			}
+    	})
 		
 		
 		//회원 탈퇴
@@ -97,7 +116,7 @@
                           width="100"
                           id="uploadedAvatar"
                         />
-                      <form action="/account/updateImg" method="post" enctype="multipart/form-data">
+                      <!-- <form action="/account/updateImg" method="post" enctype="multipart/form-data"> -->
                         <input type="hidden" name="me_id" id="me_id" value="${login.me_id}">
                         <div class="button-wrapper">
                           <label for="upload" class="btn btn-primary me-2 mb-4" tabindex="0">
@@ -150,15 +169,19 @@
                           </div>
                           <div class="mb-3 col-md-6">
                             <label for="me_name" class="form-label">닉네임</label>
-                            <input class="form-control" type="text" name="me_name" id="me_name" value="${member.me_name}" readonly />
+                            <input class="form-control" type="text" name="me_name" id="me_name" value="${member.me_name}[${member.state}]" readonly />
                           </div>
                           <div class="mb-3 col-md-6">
-                            <label for="state" class="form-label">가입일자</label>
+                            <label for="me_regDate" class="form-label">가입일자</label>
                             <input class="form-control" type="text" id="me_regDate" name="me_regDate" value="<fmt:formatDate value="${member.me_regDate}" pattern = "yyyy-MM-dd"/>"readonly>
                           </div>
+                          <div class="mb-3 col-md-6">
+                            <label for="me_pwd" class="form-label">비밀번호</label>
+                            <input class="form-control" type="text" id="me_pwd" name="me_pwd">
+                          </div>
                         <div class="mt-2">
-                          <button id="submitBtn" type="submit" class="btn btn-primary me-2">Save changes</button>
-                          <button type="reset" class="btn btn-outline-secondary">Cancel</button>
+                          <button id="submitBtn" type="submit" class="btn btn-primary me-2">변경</button>
+                          <button type="reset" class="btn btn-outline-secondary">취소</button>
                         </div>
                     </div>
                    </div>
@@ -166,12 +189,12 @@
                  </form>
                     <!-- /Account -->
                   <div class="card">
-                    <h5 class="card-header">Delete Account</h5>
+                    <h5 class="card-header"><Strong>회원 탈퇴</Strong></h5>
                     <div class="card-body">
                       <div class="mb-3 col-12 mb-0">
                         <div class="alert alert-warning">
-                          <h6 class="alert-heading fw-bold mb-1">Are you sure you want to delete your account?</h6>
-                          <p class="mb-0">Once you delete your account, there is no going back. Please be certain.</p>
+                          <h6 class="alert-heading fw-bold mb-1">정말로 이 계정을 삭제하시기를 원하십니까?</h6>
+                          <p class="mb-0">한번 탈퇴한 계정은 다시 복구 하실 수 없습니다. 다시 한번 확인해 주시기 바랍니다.</p>
                         </div>
                       </div>
                       <form id="formAccountDeactivation" onsubmit="return false">
@@ -187,7 +210,7 @@
                           >
                         </div>
                         <button id="delBtn" data-member-id="${member.me_id}" type="button" class="btn btn-danger deactivate-account">회원 탈퇴</button>
-                      </form>
+                      <!-- </form> -->
                     </div>
                   </div>
                 </div>

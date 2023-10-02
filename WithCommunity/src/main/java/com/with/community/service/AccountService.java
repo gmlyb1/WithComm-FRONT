@@ -22,6 +22,9 @@ public interface AccountService {
 	// 로그인 유지 처리
 	public void keepLogin(String me_id, String sessionId, Date sessionLimit) throws Exception;
 	
+	//비밀번호 변경 
+	public void pwdUdt(AccountVO vo) throws Exception;
+	
 	// 세션 키 검증
 	public AccountVO checkUserWithSessionKey(String value) throws Exception;
 	

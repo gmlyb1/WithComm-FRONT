@@ -28,11 +28,25 @@
 
 	<!-- 글 목록 -->
 	<select id="BoardList" resultType="BoardVO" parameterType="BoardVO">
-		select
-		 *
-		from
-		 tbl_board
-		ORDER BY BOARD_NO DESC
+		select * from (
+            select 
+            	board_no,
+            	board_bgno,
+            	board_title,
+            	board_writer,
+            	board_regdate,
+            	board_updatedate  
+        from tbl_board
+        	<!-- where
+        		1=1
+        		<if test="board_bgno == '1'">
+        			and board_bgno = '1'
+        		</if>
+        		<if test="board_bgno == '2'">
+        			and board_bgno = '2'
+        		</if> -->
+         order by board_no desc) as T1 
+        limit #{skip},#{amount}
 	</select>
 
 	<!-- <select id="BoardListCri" resultType="BoardVO">
@@ -47,6 +61,7 @@
 		tbl_board
 		(
 			board_no	
+		 <!-- ,  board_bgno -->
 		 ,	board_title
 		 ,  board_content
 		 ,	board_writer
@@ -56,6 +71,7 @@
 		values
 		(
 			#{board_no}
+	    <!-- ,   #{board_bgno} -->
 		,	#{board_title}
 		,   #{board_content}
 		,	#{board_writer}
@@ -86,6 +102,7 @@
 		update tbl_board
 			set board_title = #{board_title},	
 				board_content = #{board_content},
+				<!-- board_bgno = #{board_bgno}, -->
 				board_updateDate = CURRENT_TIMESTAMP()
 		where board_no = #{board_no}
 	</update>

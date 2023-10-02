@@ -27,7 +27,7 @@ import com.with.community.service.BoardService;
 import com.with.community.service.ReplyService;
 import com.with.community.vo.BoardVO;
 import com.with.community.vo.Criteria;
-import com.with.community.vo.PageVO;
+import com.with.community.vo.PageMakerVO;
 import com.with.community.vo.ReplyVO;
 
 
@@ -55,13 +55,14 @@ public class BoardController {
 			}
 			
 			//리스트 받아서 바인딩.
-			List<BoardVO> boardList = boardService.BoardList();
+			List<BoardVO> boardList = boardService.BoardList(cri);
 			int totCnt = boardService.getListCount();
 			
+			PageMakerVO pageMake = new PageMakerVO(cri, totCnt);
 			
 			model.addAttribute("boardList", boardList);
-			model.addAttribute("totCnt", totCnt);
-//			model.addAttribute("pageMaker", new PageVO(cri, totCnt));
+			model.addAttribute("pageMaker", pageMake);
+			model.addAttribute("cri", cri);
 			
 			return "/board/list";
 		}

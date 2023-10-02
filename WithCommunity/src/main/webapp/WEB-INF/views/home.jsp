@@ -51,7 +51,9 @@
 										이곳은 <span class="fw-bold">전 세계 개발자들의</span> 여러가지의 이야기를
 										공유하기 위한 커뮤니티입니다.
 									</p>
-
+									
+									<a href="chat" class = "btn btn-success">웹 소켓 테스트</a>
+								
 									<a href="javascript:;" class="btn btn-sm btn-outline-primary">View
 										Badges</a>
 								</div>

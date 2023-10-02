@@ -49,6 +49,12 @@ public class AccountServiceImpl implements AccountService {
 	public int deleteAccount(String me_id) throws Exception {
 		return accountDAO.deleteAccount(me_id);
 	}
+	
+	// 비밀번호 변경
+	@Override
+	public void pwdUdt(AccountVO vo) throws Exception {
+		 accountDAO.pwdUdt(vo);
+	}
 
 
 }

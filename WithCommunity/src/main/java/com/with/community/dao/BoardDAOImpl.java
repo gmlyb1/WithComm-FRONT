@@ -8,6 +8,7 @@ import org.apache.ibatis.session.RowBounds;
 import org.apache.ibatis.session.SqlSession;
 
 import com.with.community.vo.BoardVO;
+import com.with.community.vo.Criteria;
 
 public class BoardDAOImpl implements BoardDAO {
 	
@@ -22,8 +23,8 @@ public class BoardDAOImpl implements BoardDAO {
 	}
 
 	@Override
-	public List<BoardVO> BoardList() throws Exception {
-		return sqlSession.selectList("namespace.BoardList");
+	public List<BoardVO> BoardList(Criteria cri) throws Exception {
+		return sqlSession.selectList("namespace.BoardList", cri);
 	}
 
 	@Override

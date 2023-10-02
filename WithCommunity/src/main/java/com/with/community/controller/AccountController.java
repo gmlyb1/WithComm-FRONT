@@ -62,8 +62,8 @@ public class AccountController {
 				rttr.addFlashAttribute("msg", "이미 존재하는 아이디입니다. 다시 확인해주세요.");
 				return "/account/register";
 			}else if(result == 0) {
-				String hashedPw = new BCryptPasswordEncoder().encode(vo.getMe_pwd());
-				vo.setMe_pwd(hashedPw);
+//				String hashedPw = new BCryptPasswordEncoder().encode(vo.getMe_pwd());
+//				vo.setMe_pwd(hashedPw);
 				accountService.register(vo);
 				rttr.addFlashAttribute("msg", "회원가입이 완료되었습니다");
 			}
@@ -161,6 +161,21 @@ public class AccountController {
 		}
 		
 		return "redirect:/account/login";
+	}
+	
+	//비밀번호 변경 GET
+	@RequestMapping(value="/pwdUdt", method= RequestMethod.GET)
+	public void pwdUpdate(AccountVO vo) {
+		
+	}
+	
+	//비밀번호 변경
+	@RequestMapping(value="/pwdUdt", method= RequestMethod.POST)
+	public String pwdUpdatePOST(AccountVO vo) throws Exception {
+
+		accountService.pwdUdt(vo);
+		
+		return "redirect:/account/profile";
 	}
 	
 	@RequestMapping(value="/alram", method=RequestMethod.GET)

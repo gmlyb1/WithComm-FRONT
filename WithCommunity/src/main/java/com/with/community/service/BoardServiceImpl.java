@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.with.community.dao.BoardDAO;
 import com.with.community.vo.BoardVO;
+import com.with.community.vo.Criteria;
 
 @Service
 public class BoardServiceImpl implements BoardService {
@@ -35,8 +36,8 @@ public class BoardServiceImpl implements BoardService {
 	}
 
 	@Override
-	public List<BoardVO> BoardList() throws Exception {
-		return boardDAO.BoardList();
+	public List<BoardVO> BoardList(Criteria cri) throws Exception {
+		return boardDAO.BoardList(cri);
 	}
 
 	@Transactional(isolation = Isolation.READ_COMMITTED)
