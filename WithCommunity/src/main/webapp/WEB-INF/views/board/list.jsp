@@ -19,9 +19,34 @@
 		$(".pageInfo a").on("click", function(e) {
 			e.preventDefault();
 			
-			moveForm.append("input type='hidden' name='board_no' value='" + $(this).attr("href") + "'>");
+			var pageNum = $(this).attr("href");
+			var input = $("<input>")
+				.attr("type","hidden")
+				.attr("name","pageNum")
+				.val(pageNum);
+			
+			
+			moveForm..empty();
+			moveForm.append(input);
+			
 			moveForm.attr("action", "/board/list");
 			moveForm.submit();
+		});
+		
+		// new 스티커 처리
+		var currentTime = new Date().getTime();
+		
+		$("table tr").each(function() {
+			var regdate = new Date($(this).data("regdate")).getTime();
+			var isNewPost = (currentTime - regdate < 24 * 60 * 60 * 1000);
+			
+			if(isNewPost) {
+				$(this).find("td:eq(1)").append('<span class="badge badge-success">New</span>');
+				
+				setTimeout(function() {
+					$sticker.find(".badge").remove();
+				},24 * 60 * 60 * 1000);
+			}
 		});
 		//끝
 	});
@@ -54,6 +79,16 @@
         background-color: #cdd5ec;
         font-weight: bold;
     }
+    
+    /* 선택 상자의 폭과 높이 조정 */
+  select.form-select {
+    width: 100px; /* 원하는 폭으로 조정 */
+  }
+
+  /* 선택 상자 내부 텍스트 크기 조정 */
+  select.form-select option {
+    font-size: 14px; /* 원하는 텍스트 크기로 조정 */
+  }
 </style>
 
 
@@ -62,14 +97,15 @@
 	<br>
 	<!-- Page Heading -->
 	<h1 class="h3 mb-2 text-gray-800">고객 게시판</h1>
-	<p class="mb-4">
+<!-- 	<p class="mb-4">
 		<a><strong>저희 소프트홈페이지의 고객 게시판을 찾아 주셔서 감사합니다.</strong></a>
-	</p>
+	</p> -->
+	<br/>
 
 	<!-- DataTales Example -->
 	<div class="card shadow mb-4">
 		<div class="card-header py-3">
-			<h6 class="m-0 font-weight-bold text-primary">고객 게시판 리스트</h6>
+			<h6 class="m-0 font-weight-bold text-primary"><strong>고객 게시판 리스트</strong></h6>
 			<br>
 			<c:if test="${member == null}">
 				<span style="color: red"><strong> 현재 페이지의 글쓰기,수정,삭제는
@@ -84,7 +120,7 @@
 					onClick="window.location.reload()">
 			</form>
 			
-			<select class="text-right" id="bgno" name="bgno">
+			<select class="form-select" id="bgno" name="bgno">
 					<option value="">전체</option>
 					<option value="1">커뮤니티</option>
 					<option value="2">공유합시다</option>
@@ -112,7 +148,7 @@
 						</thead>
 						<tbody>
 							<c:forEach items="${boardList}" var="list">
-								<tr>
+								<tr data-regdate = "${list.board_regdate}">
 									<td class="text-center"><c:out value="${list.board_no}" /></td>
 									<td class="text-center"><c:out value="${list.board_bgno}" /></td>
 									<td><a href="/board/read?board_no=${list.board_no}">

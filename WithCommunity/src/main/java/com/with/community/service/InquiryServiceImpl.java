@@ -30,4 +30,9 @@ public class InquiryServiceImpl implements InquiryService {
 	public void insertInquiry(InquiryVO vo) throws Exception {
 		inquiryDAO.insertInquiry(vo);
 	}
+
+	@Override
+	public InquiryVO selectInqCnt(InquiryVO Ivo) throws Exception {
+		return inquiryDAO.selectInqCnt(Ivo);
+	}
 }

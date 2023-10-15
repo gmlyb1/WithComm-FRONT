@@ -20,6 +20,8 @@ public class InquiryVO {
 	private Timestamp inq_regdate;
 	
 	private String me_name;
+	private int inqCount;
+	private boolean answerYn;
 	
 	
 	

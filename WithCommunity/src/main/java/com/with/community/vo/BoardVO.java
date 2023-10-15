@@ -26,6 +26,8 @@ public class BoardVO{
 	private int reply_cnt;
 	
 	private int bgnoinsert;
+	
+	private int reply_no;
 
 	
 

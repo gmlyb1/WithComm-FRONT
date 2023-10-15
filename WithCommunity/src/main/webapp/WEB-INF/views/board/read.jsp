@@ -32,6 +32,19 @@
 			formObj.attr("method", "post");
 			formObj.submit();
 		});
+		
+		//댓글수정창 닫기
+		$('#replyModal').on('click',function() {
+			
+			$('#editModal').modal('hide');
+		});
+
+		$('#replyEditCancel').on('click',function() {
+			$('#editModal').modal('hide');
+		});
+		
+		//댓글수정창 닫기
+		
 		//끝
 	});
 	
@@ -43,6 +56,15 @@
 					+ data2;
 		}
 	}
+	
+	// 댓글 수정 모달
+	function openEditModal(replyNo, content) {
+		$('#editReplyNo').val(replyNo);
+		$('#editedContent').val(content);
+		$('#editModal').modal('show');
+	}
+	
+	
 </script>
 <style type="text/css">
  .comment-form {
@@ -148,7 +170,7 @@
 							<c:otherwise>
 								<c:forEach items="${replyList}" var="replyList">
 									<tr style="width: 100%;">
-										<td style="font-weight: bold;" colspan="3">${replyList.reply_writer}(${member.state})</td>
+										<td style="font-weight: bold;" colspan="3">${replyList.reply_writer}</td>
 									</tr>
 									<tr>
 										<td style="width: 60%; height: 50px;"><pre
@@ -156,6 +178,7 @@
 											<p>
 												<c:if test="${member.adminCk == 1  || member.me_name == replyList.reply_writer}">
 													<!-- <a class="btn btn-primary" href="#">댓글 수정</a> -->
+													<a class="btn btn-primary" href="javascript:void(0);" onclick="openEditModal(${replyList.reply_no}, '${replyList.reply_content}')">댓글 수정</a>
 													<a class="btn btn-danger" href="javascript:remove_replyNo(${replyList.reply_no},${replyList.board_no});">삭제</a>
 												</c:if>
 											</p></td>
@@ -178,6 +201,7 @@
 					<div>
 						<form method="post" action="/reply/write">
 							<input type="hidden" name="board_no" value="${read.board_no}">
+							<input type="hidden" name="reply_no" value="${read.reply_no}">
 							<%-- 						<input type="hidden" name="page" name="page" value="${scri.page}">
 						<input type="hidden" name="perPageNum" name="perPageNum" value="${scri.perPageNum }">
 						<input type="hidden" name="searchType" name="searchType" value="${scri.searchType }">
@@ -204,33 +228,6 @@
 						</form>
 					</div>
 				</c:if>
-
-				<!-- 댓글 수정 -->
-				<!-- 모달 창 컨테이너 -->
-				<div class="modal fade" id="editModal">
-					<div class="modal-dialog modal-dialog-centered">
-						<div class="modal-content">
-							<div class="modal-header">
-								<h4 class="modal-title">댓글 수정</h4>
-								<button type="button" class="close" data-dismiss="modal">&times;</button>
-							</div>
-							<div class="modal-body">
-								<!-- 수정 폼 내용 -->
-							</div>
-							<div class="modal-footer">
-								<!-- 수정 버튼 -->
-								<button type="button" class="btn btn-primary"
-									id="submitEditForm">수정하기</button>
-								<!-- 취소 버튼 -->
-								<button type="button" class="btn btn-secondary"
-									data-dismiss="modal">취소</button>
-							</div>
-						</div>
-					</div>
-				</div>
-
-
-				<!-- 댓글 수정 -->
 
 				<!-- 댓글 작성 끝 -->
 				<div class="my-3 p-3 bg-white rounded shadow-sm">
@@ -273,6 +270,32 @@
 	</div>
 </div>
 
+<!-- 댓글 수정 모달 팝업 -->
+<div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="editModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="editModalLabel">수정</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" id="replyEditCancel">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="editForm">
+                    <input type="hidden" name="reply_no" id="editReplyNo">
+                    <div class="form-group">
+                        <label for="editedContent">댓글 내용:</label>
+                        <textarea class="form-control" id="editedContent" name="edited_content"></textarea>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+		        <button type="button" class="btn btn-secondary" data-dismiss="modal" id="replyModal">취소</button>
+		        <button type="button" class="btn btn-primary" id="submitEditForm">수정하기</button>
+	   		</div>
+        </div>
+    </div>
+</div>
 
 
 <%@include file="../include/footer.jsp"%>

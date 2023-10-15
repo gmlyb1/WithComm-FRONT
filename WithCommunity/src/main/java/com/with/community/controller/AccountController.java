@@ -178,6 +178,12 @@ public class AccountController {
 		return "redirect:/account/profile";
 	}
 	
+	//비밀번호 찾기 페이지
+	@RequestMapping(value="/forgotPass" , method=RequestMethod.GET)
+	public String forgotPassPage() {
+		return "/account/forgotPass";
+	}
+	
 	@RequestMapping(value="/alram", method=RequestMethod.GET)
 	public void AlramGET() {
 		

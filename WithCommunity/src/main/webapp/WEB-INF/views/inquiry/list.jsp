@@ -3,8 +3,10 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%@include file="../include/header.jsp"%>
-<script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
 <script type="text/javascript">
 	$(document).ready(function() {
 		var msg = "${msg}";
@@ -52,6 +54,7 @@
 							<th class="text-center">주제</th>
 							<th class="text-center">작성자</th>
 							<th class="text-center">작성일자</th>
+							<th class="text-center">답변여부</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -64,6 +67,16 @@
 									<td class="text-center"><c:out value="${list.inq_name}" /></td>
 									<td class="text-center">
 									<fmt:formatDate pattern="yyyy-MM-dd" value="${list.inq_regdate}"/></td>
+									<td class="text-center">
+									  <c:choose>
+									    <c:when test="${list.answerYn == true}">
+									      <i class="fas fa-check"></i> <!-- 'fas'는 Font Awesome Solid 스타일 아이콘입니다. -->
+									    </c:when>
+									    <c:otherwise>
+									      <i class="fas fa-times"></i>
+									    </c:otherwise>
+									  </c:choose>
+									</td>
 								</tr>
 							</c:if>
 						</c:forEach>

@@ -65,50 +65,41 @@
  		});
  	</script>
  	<script type="text/javascript">
-var socket = null;
-$(document).ready(function(){
-if(${login != null}){
-connectWs();
-}
-})
-
-
-//소켓
-
-
-function connectWs(){
-console.log("tttttt")
-var ws = new SockJS("/alram");
-socket = ws;
-
-	ws.onopen = function() {
- console.log('open');
- 
- };
-
-	ws.onmessage = function(event) {
-		console.log("onmessage"+event.data);
-		let $socketAlert = $('div#socketAlert');
-		$socketAlert.html(event.data)
-		$socketAlert.css('display', 'block');
-		
-		setTimeout(function(){
-			$socketAlert.css('display','none');
+		var socket = null;
+			$(document).ready(function(){
+			if(${login != null}){
+			connectWs();
+			}
+		})
 			
-		}, 5000);
-};
-
-	ws.onclose = function() {
-	    console.log('close');
- };
- 
- 
- 
-
-};
-
-//소켓끝
-</script>
+			
+			//소켓
+			function connectWs(){
+			console.log("tttttt")
+			var ws = new SockJS("/alram");
+			socket = ws;
+			
+				ws.onopen = function() {
+			 console.log('open');
+			 };
+				ws.onmessage = function(event) {
+					console.log("onmessage"+event.data);
+					let $socketAlert = $('div#socketAlert');
+					$socketAlert.html(event.data)
+					$socketAlert.css('display', 'block');
+					
+					setTimeout(function(){
+						$socketAlert.css('display','none');
+						
+					}, 5000);
+			};
+				ws.onclose = function() {
+				    console.log('close');
+			 };
+		};
+		
+		//소켓끝
+		</script>
  
  
   </head>
@@ -192,20 +183,23 @@ socket = ws;
 
           <ul class="menu-inner py-1">
             <!-- Dashboard -->
-            <li class="menu-item">
+            
+           <!--  <li class="menu-item">
               <a href="index.html" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-home-circle"></i>
                 <div data-i18n="Analytics">대시보드</div>
               </a>
-            </li>
+            </li> 
 
-            <!-- Layouts -->
-            <li class="menu-item">
+            
+             <li class="menu-item">
               <a href="javascript:void(0);" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-layout"></i>
                 <div data-i18n="Layouts">레이아웃</div>
               </a>
+            </li> -->
             
+            <!-- Layouts -->
             <li class="menu-item">
               <a href="/notice/list" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-dock-top"></i>
@@ -221,7 +215,7 @@ socket = ws;
             </li>
             
             <li class="menu-item">
-              <a href="#" class="menu-link">
+              <a href="/know/list" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-cube-alt"></i>
                 <div data-i18n="Basic">지식인</div>
               </a>
@@ -255,12 +249,12 @@ socket = ws;
             </li>
             
              <!-- Tables -->
-            <li class="menu-item">
+            <!-- <li class="menu-item">
               <a href="/inquiry/list" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-table"></i>
                 <div data-i18n="Tables">운영자 상담</div>
               </a>
-            </li>
+            </li> -->
             <!-- Misc -->
             <!-- <li class="menu-header small text-uppercase"><span class="menu-header-text">Misc</span></li>
             <li class="menu-item">
@@ -333,6 +327,7 @@ socket = ws;
 				                        </div>
 				                    </a>
 				                </li>
+				                
 				                <li>
 				                    <div class="dropdown-divider"></div>
 				                </li>
@@ -347,7 +342,7 @@ socket = ws;
 				                        <span class="d-flex align-items-center align-middle">
 				                            <i class="flex-shrink-0 bx bx-credit-card me-2"></i>
 				                            <span class="flex-grow-1 align-middle">&nbsp;1:1문의</span>
-				                            <span class="flex-shrink-0 badge badge-center rounded-pill bg-danger w-px-20 h-px-20">4</span>
+				                            <span class="flex-shrink-0 badge badge-center rounded-pill bg-danger w-px-20 h-px-20">${inqCnt.inqCount}</span>
 				                        </span>
 				                    </a>
 				                </li>

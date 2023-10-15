@@ -29,4 +29,9 @@ public class InquiryDAOImpl implements InquiryDAO {
 	public void insertInquiry(InquiryVO vo) throws Exception {
 		sqlSession.insert("namespace.insertInquiry",vo);
 	}
+
+	@Override
+	public InquiryVO selectInqCnt(InquiryVO Ivo) throws Exception {
+		return sqlSession.selectOne("namespace.selectInqCnt",Ivo);
+	}
 }

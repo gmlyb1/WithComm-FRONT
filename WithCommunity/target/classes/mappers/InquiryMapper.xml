@@ -25,6 +25,14 @@
 		where inq_no = #{inq_no}
 	</select>
 	
+	<!-- 프로필 나의 문의 개수 -->
+	<select id="selectInqCnt" parameterType="InquiryVO" resultType="InquiryVO">
+		select count(1) as inqCount
+			from tbl_inquiry ti left join tbl_member tm
+		on ti.inq_name = tm.me_name
+			where ti.inq_name = #{inq_name}
+	</select>
+	
 	<!-- 글쓰기 -->
 	<insert id="insertInquiry">
 	insert into tbl_inquiry
