@@ -96,7 +96,7 @@
 <div class="container-fluid">
 	<br>
 	<!-- Page Heading -->
-	<h1 class="h3 mb-2 text-gray-800">고객 게시판</h1>
+	<h1 class="h3 mb-2 text-gray-800">자유 게시판</h1>
 <!-- 	<p class="mb-4">
 		<a><strong>저희 소프트홈페이지의 고객 게시판을 찾아 주셔서 감사합니다.</strong></a>
 	</p> -->
@@ -150,7 +150,15 @@
 							<c:forEach items="${boardList}" var="list">
 								<tr data-regdate = "${list.board_regdate}">
 									<td class="text-center"><c:out value="${list.board_no}" /></td>
-									<td class="text-center"><c:out value="${list.board_bgno}" /></td>
+										<c:if test="${list.board_bgno == '0' && list.board_bgno == null}">
+											<td class="text-center">-</td>
+										</c:if>
+										<c:if test="${list.board_bgno == '1'}">
+											<td class="text-center">커뮤니티</td>
+										</c:if>
+										<c:if test="${list.board_bgno == '2'}">
+											<td class="text-center">공유합시다</td>
+										</c:if>
 									<td><a href="/board/read?board_no=${list.board_no}">
 											${list.board_title}[${list.reply_cnt}]</a></td>
 									<td class="text-center"><c:out

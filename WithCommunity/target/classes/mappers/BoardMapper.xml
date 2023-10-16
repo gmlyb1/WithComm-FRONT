@@ -61,7 +61,7 @@
 		tbl_board
 		(
 			board_no	
-		 <!-- ,  board_bgno -->
+		 ,  board_bgno
 		 ,	board_title
 		 ,  board_content
 		 ,	board_writer
@@ -71,7 +71,7 @@
 		values
 		(
 			#{board_no}
-	    <!-- ,   #{board_bgno} -->
+	    ,   #{board_bgno}
 		,	#{board_title}
 		,   #{board_content}
 		,	#{board_writer}

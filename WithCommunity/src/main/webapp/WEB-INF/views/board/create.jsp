@@ -29,13 +29,29 @@
 			$("#board_content").focus();
 			return false;
 		}
+		
+		if($("#board_bgno").val() == "") {
+			alert("카테고리를 선택해 주세요.");
+			$("#board_bgno").focus();
+			return false;
+		}
 
 		if (!confirm("등록하시겠습니까?")) {
 			return false;
 		}
 	}
 </script>
+<style type="text/css">
+    /* 선택 상자의 폭과 높이 조정 */
+  select.form-select {
+    width: 100px; /* 원하는 폭으로 조정 */
+  }
 
+  /* 선택 상자 내부 텍스트 크기 조정 */
+  select.form-select option {
+    font-size: 14px; /* 원하는 텍스트 크기로 조정 */
+  }
+</style>
 
 <%@include file="../include/header.jsp"%>
 
@@ -69,7 +85,7 @@
 								<tr>
 									<th class="active">글 카테고리</th>
 										<td class="form-inline">
-											<select id="bgno" name="bgno">
+											<select class="form-select" id="board_bgno" name="board_bgno">
 												<option value="">전체</option>
 												<option value="1">커뮤니티</option>
 												<option value="2">공유합시다</option>
