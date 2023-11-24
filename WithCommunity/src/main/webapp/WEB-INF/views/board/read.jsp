@@ -43,8 +43,30 @@
 			$('#editModal').modal('hide');
 		});
 		
-		//댓글수정창 닫기
-		
+		$('#submitModifyReply').on('click', function() {
+		    var edited_content = $('#editedContent').val();
+		    var reply_no = $('#editReplyNo').val();
+		    var board_no = $('#board_no').val();
+		    
+		    // Make an AJAX request to update the comment on the server
+		    $.ajax({
+		        type: 'POST',
+		        url: '/reply/modify',
+		        data: {
+		        	board_no : board_no,
+		            reply_no: reply_no, // Correct the variable name
+		            edited_content: edited_content // Correct the variable name
+		        },
+		        success: function(response) {
+		            alert('성공');
+		        },
+		        error: function(xhr, textStatus, errorThrown) {
+		            alert('실패: ' + xhr.status + ' ' + errorThrown);
+		        }
+		        
+		    });
+		    //$('#editModal').modal('hide');
+		});
 		//끝
 	});
 	
@@ -63,6 +85,20 @@
 		$('#editedContent').val(content);
 		$('#editModal').modal('show');
 	}
+	
+	let form = $("#infoForm");
+	
+	$("#list_btn").on("click",function(e) {
+		form.find("#board_no").remove();
+		form.attr("action","/board/list");
+		form.submit();
+	});
+	
+	$("#modify_btn").on("click",function(e) {
+		form.attr("action", "/board/update");
+		form.submit();
+	});
+	
 	
 	
 </script>
@@ -155,6 +191,12 @@
 						<br>
 						<hr>
 					</div>
+					
+					<form id="infoForm" action="/board/update" method="get">
+						<input type="hidden" id="board_no" name="board_no" value='<c:out value="${pageInfo.board_no}"/>'>
+						<input type="hidden" id="pageNum" value='<c:out value="${cri.pageNum}"/>'>
+						<input type="hidden" id="amount" value='<c:out value="${cri.amount}"/>'>
+					</form>
 				</form>
 				<!-- 게시판 끝 -->
 
@@ -291,7 +333,7 @@
             </div>
             <div class="modal-footer">
 		        <button type="button" class="btn btn-secondary" data-dismiss="modal" id="replyModal">취소</button>
-		        <button type="button" class="btn btn-primary" id="submitEditForm">수정하기</button>
+		        <button type="button" class="btn btn-primary" id="submitModifyReply">수정하기</button>
 	   		</div>
         </div>
     </div>

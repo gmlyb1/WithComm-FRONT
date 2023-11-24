@@ -28,25 +28,19 @@
 
 	<!-- 글 목록 -->
 	<select id="BoardList" resultType="BoardVO" parameterType="BoardVO">
-		select * from (
-            select 
-            	board_no,
-            	board_bgno,
-            	board_title,
-            	board_writer,
-            	board_regdate,
-            	board_updatedate  
-        from tbl_board
-        	<!-- where
-        		1=1
-        		<if test="board_bgno == '1'">
-        			and board_bgno = '1'
-        		</if>
-        		<if test="board_bgno == '2'">
-        			and board_bgno = '2'
-        		</if> -->
-         order by board_no desc) as T1 
-        limit #{skip},#{amount}
+		select * from 
+		(
+			select
+				row_number() over() as rowNo 
+			   ,board_no
+			   ,board_bgno
+			   ,board_title
+			   ,board_writer
+			   ,board_regdate
+			   ,board_updateDate
+			from tbl_board order by board_no desc
+		)as T1
+		limit #{skip},#{amount}
 	</select>
 
 	<!-- <select id="BoardListCri" resultType="BoardVO">

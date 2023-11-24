@@ -9,37 +9,48 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
+
 <script type="text/javascript">
+	
+	
+	
+	
 	function _onSubmit() {
-
-		if ($("#board_writer").val() == "") {
-			alert("작성자를 입력해주세요");
-			$("#board_writer").focus();
-			return false;
+	
+			if ($("#board_writer").val() == "") {
+				alert("작성자를 입력해주세요");
+				$("#board_writer").focus();
+				return false;
+			}
+	
+			if ($("#board_title").val() == "") {
+				alert("제목을 입력해주세요");
+				$("#board_title").focus();
+				return false;
+			}
+	
+			if ($("#board_content").val() == "") {
+				alert("내용을 입력해주세요");
+				$("#board_content").focus();
+				return false;
+			}
+			
+			if($("#board_bgno").val() == "") {
+				alert("카테고리를 선택해 주세요.");
+				$("#board_bgno").focus();
+				return false;
+			}
+	
+			if (!confirm("등록하시겠습니까?")) {
+				return false;
+			}
+			
+			//pageNum 및 amount default 값을 폼 데이터에 추가
+			$('#write').append('<input type="hidden" name="pageNum" value="1" />');
+			$('#write').append('<input type="hidden" name="amount" value="10" />');
+			
+			return true;
 		}
-
-		if ($("#board_title").val() == "") {
-			alert("제목을 입력해주세요");
-			$("#board_title").focus();
-			return false;
-		}
-
-		if ($("#board_content").val() == "") {
-			alert("내용을 입력해주세요");
-			$("#board_content").focus();
-			return false;
-		}
-		
-		if($("#board_bgno").val() == "") {
-			alert("카테고리를 선택해 주세요.");
-			$("#board_bgno").focus();
-			return false;
-		}
-
-		if (!confirm("등록하시겠습니까?")) {
-			return false;
-		}
-	}
 </script>
 <style type="text/css">
     /* 선택 상자의 폭과 높이 조정 */

@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%@include file="../include/header.jsp"%>
@@ -12,26 +13,6 @@
 		if (msg != "") {
 			alert(msg);
 		}
-		
-		// 페이징
-		var moveForm = $("form[name='moveForm']");
-		
-		$(".pageInfo a").on("click", function(e) {
-			e.preventDefault();
-			
-			var pageNum = $(this).attr("href");
-			var input = $("<input>")
-				.attr("type","hidden")
-				.attr("name","pageNum")
-				.val(pageNum);
-			
-			
-			moveForm..empty();
-			moveForm.append(input);
-			
-			moveForm.attr("action", "/board/list");
-			moveForm.submit();
-		});
 		
 		// new 스티커 처리
 		var currentTime = new Date().getTime();
@@ -50,35 +31,49 @@
 		});
 		//끝
 	});
+	
+	var moveForm = $("form[name='moveForm']");
+
+	$(".pageInfo a").on("click", function(e) {
+
+		e.preventDefault();
+		
+		var pageNum;
+		var amount = ${pageMaker.cri.amount};
+		var startPage = ${pageMaker.startPage};
+		
+		if(startPage <= 0) {
+			pageNum = 1;
+		}else {
+			pageNum = $(this).attr("href");
+		}
+		
+		moveForm.append("<input type='hidden' name='board_no' value='"+ $(this).attr("href")+ "'>");
+		moveForm.attr("action","/board/list");
+		moveForm.submit();
+
+	});
 </script>
 <style type="text/css">
-    .pageInfo {
-        list-style: none;
-        display: flex;
-        align-items: center;
-        margin: 50px 0 0 100px;
-    }
-    .pageInfo li {
-        margin-left: 18px;
-        font-weight: 500;
-    }
-    .pageInfo a {
-        color: black;
-        text-decoration: none;
-        font-size: 16px;
-        padding: 5px 10px;
-        border: 1px solid #ccc;
-        border-radius: 4px;
-        transition: background-color 0.3s, color 0.3s;
-    }
-    .pageInfo a:hover {
-        background-color: #cdd5ec;
-        color: black;
-    }
-    .pageInfo .active {
-        background-color: #cdd5ec;
-        font-weight: bold;
-    }
+    .pageInfo{
+      list-style : none;
+      display: inline-block;
+    margin: 50px 0 0 100px;      
+  }
+  .pageInfo li{
+      float: left;
+    font-size: 20px;
+    margin-left: 18px;
+    padding: 7px;
+    font-weight: 500;
+  }
+ a:link {color:black; text-decoration: none;}
+ a:visited {color:black; text-decoration: none;}
+ a:hover {color:black; text-decoration: underline;}
+ 
+ .active {
+ background-color : #cdd5ec;
+ }
     
     /* 선택 상자의 폭과 높이 조정 */
   select.form-select {
@@ -149,7 +144,7 @@
 						<tbody>
 							<c:forEach items="${boardList}" var="list">
 								<tr data-regdate = "${list.board_regdate}">
-									<td class="text-center"><c:out value="${list.board_no}" /></td>
+									<td class="text-center"><c:out value="${list.rowNo}" /></td>
 										<c:if test="${list.board_bgno == '0' && list.board_bgno == null}">
 											<td class="text-center">-</td>
 										</c:if>
@@ -174,35 +169,38 @@
 					</table>
 					<br>
 
-					<div class="pageInfo_wrap">
-						<div class="pageInfo_area">
-							<ul id="pageInfo" class="pageInfo">
-					    		<!-- 이전페이지 버튼 -->
+					<div class="pageInfo_wrap" >
+				        <div class="pageInfo_area">
+				 			<ul id="pageInfo" class="pageInfo">
+				 			
+				 				 <!-- 이전페이지 버튼 -->
 				                <c:if test="${pageMaker.prev}">
 				                    <li class="pageInfo_btn previous"><a href="${pageMaker.startPage-1}">Previous</a></li>
 				                </c:if>
-								<!-- 각 번호 페이지 버튼 -->
-				                <c:forEach var="num" begin="${pageMaker.startPage < 1 ? 1 : pageMaker.startPage}" end="${pageMaker.endPage}">
-				                    <li class="pageInfo_btn ${pageMaker.cri.pageNum == num ? "active":"" }"><a href="${num}">${num}</a></li>
-				                </c:forEach>
+				                
+								 <!-- 각 번호 페이지 버튼 -->
+				                <c:forEach var="num" begin="${pageMaker.startPage}" end="${pageMaker.endPage}">
+								    <li class="pageInfo_btn ${pageMaker.cri.pageNum == num ? "active":"" }">
+								        <a href="/board/list?pageNum=${num}&amount=${pageMaker.cri.amount}">${num}</a>
+								    </li>
+								</c:forEach> 
+				                
 				                <!-- 다음페이지 버튼 -->
 				                <c:if test="${pageMaker.next}">
 				                    <li class="pageInfo_btn next"><a href="${pageMaker.endPage + 1 }">Next</a></li>
-				                </c:if>  
-							</ul>
-							  
-						</div>
-					</div>
-					
-					<form id="moveForm" method="get">
-						<input type="hidden" name="pageNum" value="${cri.pageNum}">
-						<input type="hidden" name="amount" value="${cri.amount}">
-					</form>
+				                </c:if>    
+							</ul>				 			
+				        </div>
+				    </div>
 
 					<c:if test="${member != null}">
 						<button type="button" onclick="location.href='/board/create';"
 							class="btn btn-success">글쓰기</button>
 					</c:if>
+				</form>
+				<form id="moveForm" method="get">
+					<input type="hidden" name="pageNum" value="${pageMaker.cri.pageNum}">
+					<input type="hidden" name="amount" value="${pageMaker.cri.amount}">
 				</form>
 			</div>
 		</div>

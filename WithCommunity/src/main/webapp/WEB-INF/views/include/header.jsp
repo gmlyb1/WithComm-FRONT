@@ -43,25 +43,40 @@
     <script src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
  	<script type="text/javascript">
  		$(document).ready(function() {
-	 			var path = window.location.pathname;
-	 			
-	 			
-	 			$(".menu-item").click(function() {
-	 				$(".menu-item").removeClass("active");
-	 		
-	 			$(this).addClass("active");	
+ 			var path = window.location.pathname;
+ 			
+ 			// 메뉴 클릭시 css처리
+ 			$(".menu-item a").each(function() {
+ 				var href = $(this).attr("href");
+ 			      if (path === href) {
+ 			        $(this).closest(".menu-item").addClass("active");
+ 			      
+ 			      } else if (path.startsWith(href) && href !== "/") {
+ 			        // Handle cases where the URL path starts with the menu item's URL
+ 			        $(this).closest(".menu-item").addClass("active");
+ 				}
+ 			
  			});
-	 			
-	 			$(".menu-item a").each(function() {
-	 				var href = $(this).attr("href");
-	 			      if (path === href) {
-	 			        $(this).closest(".menu-item").addClass("active");
-	 			      } else if (path.startsWith(href) && href !== "/") {
-	 			        // Handle cases where the URL path starts with the menu item's URL
-	 			        $(this).closest(".menu-item").addClass("active");
-	 				}
-	 			
-	 			});
+ 			
+ 			$(".menu-item").click(function() {
+ 				$(".menu-item").removeClass("active");
+ 		
+ 			$(this).addClass("active");	
+			
+ 			});
+ 			
+ 			// 자유게시판 클릭했을때 list를 get으로 넘겼기 때문에 default로 pageNum & amount를 설정한다.
+ 			$("#BoardLink").click(function(e) {
+ 				e.preventDefault();
+ 			
+ 				$("#boardForm input[name='pageNum']").val(1);
+ 				$("#boardForm input[name='amount']").val(10);
+ 				
+ 				$("#boardForm").submit();
+ 			
+ 			});
+ 			
+ 			//끝
  		});
  	</script>
  	<script type="text/javascript">
@@ -106,6 +121,10 @@
 
   <body>
   
+  <form id="boardForm" action="/board/list" method="post">
+  	<input type="hidden" name="pageNum"	value="1">
+  	<input type="hidden" name="amount"	value="10">
+  </form>
 
     <!-- Layout wrapper -->
     <div class="layout-wrapper layout-content-navbar">
@@ -208,7 +227,7 @@
             </li>
             
            <li class="menu-item">
-              <a href="/board/list" class="menu-link">
+              <a href="/board/list" class="menu-link" id="BoardLink">
                 <i class="bx bx-globe"></i>
                 <div data-i18n="Basic">&nbsp;&nbsp;&nbsp;&nbsp;자유 게시판</div>
               </a>
@@ -349,7 +368,7 @@
 				                <li>
 				                    <a class="dropdown-item" href="#">
 				                        <i class="bx bx-cog me-2"></i>
-				                        <span class="align-middle">준비중</span>
+				                        <span class="align-middle" id="ready">준비중</span>
 				                    </a>
 				                </li>
 				                <li>

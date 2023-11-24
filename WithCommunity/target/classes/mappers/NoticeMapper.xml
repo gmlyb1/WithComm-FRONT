@@ -8,7 +8,12 @@
 	<!-- 글 목록 -->
 	<select id="NoticeList" resultType="NoticeVO" parameterType="NoticeVO">
 		select
-		 *
+		 	row_number() over() as rowNo
+		 ,	notice_title
+		 ,	notice_writer
+		 ,	notice_count
+		 ,	notice_regdate
+		 ,	notice_updateDate
 		from
 		 tbl_notice
 		where useYn = 1

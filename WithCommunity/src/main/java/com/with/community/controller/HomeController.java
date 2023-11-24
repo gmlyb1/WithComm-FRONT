@@ -18,6 +18,7 @@ import com.with.community.service.AccountService;
 import com.with.community.service.BoardService;
 import com.with.community.service.InquiryService;
 import com.with.community.service.NoticeService;
+import com.with.community.service.VisitCountService;
 import com.with.community.vo.AccountVO;
 import com.with.community.vo.InquiryVO;
 
@@ -41,6 +42,9 @@ public class HomeController {
 	@Autowired
 	private InquiryService inquiryService;
 	
+	@Autowired
+	private VisitCountService visitCountService;
+	
 	/**
 	 * Simply selects the home view to render by returning its name.
 	 * @throws Exception 
@@ -61,6 +65,7 @@ public class HomeController {
 		model.addAttribute("HomeNoticeList", noticeService.HomeNoticeList());
 		model.addAttribute("HomeBoardList", boardService.HomeBoardList());
 		model.addAttribute("HomeMemberList", accountService.selectHomeList(vo));
+		model.addAttribute("visitCnt", visitCountService.selectVisitCount());
 		
 		
 		return "home";

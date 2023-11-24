@@ -75,7 +75,7 @@
 							</c:forEach>
 							<c:forEach items="${noticeList}" var="list">
 								<tr>
-									<td class="text-center"><c:out value="${list.notice_no}" /></td>
+									<td class="text-center"><c:out value="${list.rowNo}" /></td>
 									<td><a href="/notice/read?notice_no=${list.notice_no}"><c:out
 												value="${list.notice_title}" /></a></td>
 									<td class="text-center"><c:out

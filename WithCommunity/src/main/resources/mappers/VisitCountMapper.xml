@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="com.with.community.dao.VisitCountDAO">
+	
+	<insert id="insertVisitCount">
+		INSERT INTO TBL_VISIT
+		(
+			visit_id
+		,	regDate
+		,	visitCount
+		)
+		VALUES
+		(
+			#{visit_id}
+		,	NOW()
+		,	1
+		)
+	</insert>
+	
+	<update id="updateVisitCount">
+		update
+			tbl_visit
+		set
+			visitCount = #{visitCount} + 1
+		where 
+			regDate = date_format(now(), '%Y-%m-%d')
+	</update>
+	
+	<select id="selectVisitCount" resultType="VisitCountVO">
+		SELECT 
+			regDate
+		,	visitCount
+		from 
+			tbl_visit
+		where 
+			regDate = date_format(now(), '%Y-%m-%d')
+	</select>
+	
+</mapper>

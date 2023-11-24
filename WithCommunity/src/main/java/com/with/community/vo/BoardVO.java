@@ -12,7 +12,8 @@ import lombok.ToString;
 @Setter
 @ToString
 public class BoardVO{
-
+	
+	private int rowNo;
 	private int board_no;
 	private int board_bgno;
 	private String board_title;

@@ -22,7 +22,7 @@ public class AccountVO {
 	private String me_image;
 	private int adminCk;
 	private String state;
-	
+	private String aprvStts;
 	
 
 	

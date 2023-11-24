@@ -42,7 +42,7 @@ public class ReplyController {
 		return "redirect:/board/read?board_no="+bvo.getBoard_no();
 	}
 	
-	@RequestMapping(value="update", method=RequestMethod.GET)
+	@RequestMapping(value="/update", method=RequestMethod.GET)
 	public String replyUpdateGET(BoardVO bvo, Model model)throws Exception  {
 		
 		model.addAttribute("rUpdate", replyService.replyList(bvo.getBoard_no()));
@@ -68,6 +68,22 @@ public class ReplyController {
 		return "redirect:/board/read?board_no="+bvo.getBoard_no();
 	}
 		
+		// 댓글 수정 - 버튼클릭
+		@RequestMapping(value="/modify", method=RequestMethod.POST) 
+		public String modifyReply(@RequestParam("reply_no")int reply_no, @RequestParam("board_no")int board_no, RedirectAttributes rttr,BoardVO bvo, ReplyVO rvo,@RequestParam("edited_content")String edited_content) throws Exception {
+			try {
+				// 댓글 수정 성공시
+				replyService.modifyReply(reply_no,edited_content);
+				rttr.addFlashAttribute("msg", "댓글 수정을 성공하였습니다.");
+				
+			} catch (Exception e) {
+				rttr.addFlashAttribute("msg", "에러가 발생하였습니다.");
+				logger.error("오류 : " + e);
+			}
+			
+			return "redirect:/board/read?board_no="+bvo.getBoard_no();
+		}
+	
 		// 댓글 삭제
 		@RequestMapping(value="/delete" , method=RequestMethod.GET)
 		public String removeReply(@RequestParam("reply_no")int reply_no, @RequestParam("board_no")int board_no, BoardVO bvo, ReplyVO rvo,RedirectAttributes rttr) throws Exception 

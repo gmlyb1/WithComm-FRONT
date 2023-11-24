@@ -45,8 +45,8 @@ public class BoardController {
 	private static final Logger logger = LoggerFactory.getLogger(BoardController.class);
 	
 		//목록
-		@RequestMapping(value = "/list", method=RequestMethod.GET)
-		public String BoardList(@ModelAttribute("vo") BoardVO vo,HttpServletRequest request,Model model,Criteria cri,@RequestParam(value = "range", required = false, defaultValue = "1") int range) throws Exception 
+		@RequestMapping(value = "/list", method= {RequestMethod.GET, RequestMethod.POST})
+		public String BoardList(@ModelAttribute("vo") BoardVO vo,HttpServletRequest request,Model model,Criteria cri, @RequestParam(value="pageNum", required= false, defaultValue = "1")int pageNum,@RequestParam(value="amount" , required=false, defaultValue = "10") int amount) throws Exception 
 		{
 			Map<String, ?> inputFlashMap = RequestContextUtils.getInputFlashMap(request);
 			
@@ -60,6 +60,8 @@ public class BoardController {
 			
 			PageMakerVO pageMake = new PageMakerVO(cri, totCnt);
 			
+			model.addAttribute("pageNum", pageNum);
+			model.addAttribute("amount", amount);
 			model.addAttribute("boardList", boardList);
 			model.addAttribute("pageMaker", pageMake);
 			model.addAttribute("cri", cri);

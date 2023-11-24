@@ -35,4 +35,10 @@ public class ReplyServiceImpl implements ReplyService {
 	public void replyUpdate(BoardVO bvo) throws Exception{
 		replyDAO.replyUpdate(bvo);
 	}
+
+	// 버튼 댓글 수정
+	@Override
+	public void modifyReply(int reply_no,String edited_content) throws Exception {
+		replyDAO.modifyReply(reply_no,edited_content);
+	}
 }

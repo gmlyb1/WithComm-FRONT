@@ -1,6 +1,8 @@
 package com.with.community.dao;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.inject.Inject;
 
@@ -39,5 +41,17 @@ public class ReplyDAOImpl implements ReplyDAO {
 	@Override
 	public void replyUpdate(BoardVO bvo) throws Exception {
 		sqlSession.update("namespace.replyUpdate", bvo);
+	}
+	
+	// 버튼 댓글 수정
+	@Override
+	public void modifyReply(int reply_no,String edited_content) throws Exception {
+		
+		Map<String, Object> paramMap = new HashMap<>();
+		paramMap.put("edited_content", edited_content);
+		paramMap.put("reply_no", reply_no);
+		
+		
+		sqlSession.update("namespace.modifyReply",paramMap);
 	}
 }
