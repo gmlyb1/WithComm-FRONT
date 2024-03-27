@@ -311,6 +311,7 @@
               <div class="navbar-nav align-items-center">
                 <div class="nav-item d-flex align-items-center">
                   <i class="bx bx-search fs-4 lh-0"></i>
+
                   <input
                     type="text"
                     class="form-control border-0 shadow-none"
@@ -366,9 +367,9 @@
 				                    </a>
 				                </li>
 				                <li>
-				                    <a class="dropdown-item" href="#">
+				                    <a class="dropdown-item" href="/mail/recevMail">
 				                        <i class="bx bx-cog me-2"></i>
-				                        <span class="align-middle" id="ready">준비중</span>
+				                        <span class="align-middle" id="ready">메일</span>
 				                    </a>
 				                </li>
 				                <li>
