@@ -10,6 +10,13 @@
 <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
 <script type="text/javascript">
 $(document).ready(function() {
+	
+	$("#cancelBtn").on("click",function(){
+		if(!confirm("글쓰기를 취소하고 목록 페이지로 돌아 가시겠습니까?")) {
+			location.href = "/notice/list"
+		};
+	});
+	
 	function _onSubmit() {
 
 		if ($("#notice_writer").val() == "") {
@@ -88,26 +95,26 @@ $(document).ready(function() {
 							<tbody>
 								<tr>
 									<th class="active">작성자</th>
-									<td class="form-inline"><input type="text"
-										id="notice_writer" name="notice_writer" class="form-control"
-										style="width: 200px" value="${member.me_name}" readonly /></td>
+									<td class="form-inline">
+									<input type="text" id="notice_writer" name="notice_writer" class="form-control" style="width: 200px" value="${member.me_name}" readonly />
+									</td>
 								</tr>
 								<tr>
 									<th class="active">제목</th>
-									<td class="form-inline"><input type="text"
-										id="notice_title" placeholder="제목을 입력해주세요." name="notice_title"
-										class="form-control" style="width: 840px" /></td>
+									<td class="form-inline">
+										<input type="text" id="notice_title" name="notice_title" placeholder="제목을 입력해주세요." class="form-control" style="width: 840px" />
+									</td>
 								</tr>
 
 								<tr>
 									<th class="active">내용</th>
-									<td class="form-inline"><textarea id="notice_content"
-											name="notice_content" cols="100" rows="10"
-											placeholder="내용을 입력해주세요." class="form-control"></textarea></td>
+									<td class="form-inline">
+										<textarea id="notice_content" name="notice_content" cols="100" rows="10" placeholder="내용을 입력해주세요." class="form-control"></textarea>
+									</td>
 								</tr>
 								<tr>
 									 <td>
-										<input type="checkbox" id="isFixed" name="isFixed" onchange="YnCheck(this);"><label for="isFixed">상단 고정</label>								
+										<input type="checkbox" class="form-check-input" id="isFixed" name="isFixed" onchange="YnCheck(this);"><label for="isFixed">&nbsp;&nbsp;상단 고정</label>								
 									</td> 
 								</tr>
 							</tbody>
@@ -115,7 +122,7 @@ $(document).ready(function() {
 					</div>
 					<div style="margin-left: 1px;">
 						<button type="submit" class="btn btn-primary">등록</button>
-						<a href="/notice/list" class="btn btn-danger">취소</a>
+						<a id="cancelBtn" href="/notice/list" class="btn btn-danger">취소</a>
 					</div>
 				</form>
 			</div>

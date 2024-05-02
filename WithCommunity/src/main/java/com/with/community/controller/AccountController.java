@@ -1,5 +1,8 @@
 package com.with.community.controller;
 
+import java.io.File;
+import java.util.UUID;
+
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -7,12 +10,15 @@ import javax.servlet.http.HttpSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
+import org.springframework.security.access.event.LoggerListener;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -31,9 +37,14 @@ public class AccountController {
 	private FileUtils fileUtil;
 	
 	private final static Logger logger = LoggerFactory.getLogger(AccountController.class);
+	
 //	@Autowired
-//	@Inject
 //	private BCryptPasswordEncoder passEncoder;
+//	
+//	 @Bean
+//    public BCryptPasswordEncoder passwordEncoder() {
+//        return new BCryptPasswordEncoder();
+//    }
 	
 	@RequestMapping(value="/idChk" , method= RequestMethod.POST)
 	public int idChk(AccountVO vo) throws Exception {
@@ -51,10 +62,6 @@ public class AccountController {
 	public String registerPOST(AccountVO vo, Model model, HttpSession sesion, RedirectAttributes rttr)throws Exception
 	{
 		
-//		String inputPass = vo.getMe_pwd();
-//		String pass = passEncoder.encode(inputPass);
-//		vo.setMe_pwd(pass);
-		
 		int result = accountService.idChk(vo);
 		
 		try {
@@ -62,8 +69,10 @@ public class AccountController {
 				rttr.addFlashAttribute("msg", "이미 존재하는 아이디입니다. 다시 확인해주세요.");
 				return "/account/register";
 			}else if(result == 0) {
-//				String hashedPw = new BCryptPasswordEncoder().encode(vo.getMe_pwd());
-//				vo.setMe_pwd(hashedPw);
+//				String inputPass = vo.getMe_pwd();
+//				String pwd = passEncoder.encode(inputPass);
+//				vo.setMe_pwd(pwd);
+				
 				accountService.register(vo);
 				rttr.addFlashAttribute("msg", "회원가입이 완료되었습니다");
 			}
@@ -107,11 +116,12 @@ public class AccountController {
 				rttr.addFlashAttribute("msg", "본 아이디는 관리자에 의해 중지된 아이디입니다.");
 				return "redirect:/account/login";
 				
-			}else {
+			}else{
 				session.setAttribute("member", login);
 				rttr.addFlashAttribute("msg", "로그인에 성공하였습니다.");
 				return "redirect:/home";
 			}
+			
 	}
 	
 	@RequestMapping(value = "/logout", method=RequestMethod.GET)
@@ -134,20 +144,44 @@ public class AccountController {
 		
 	}
 	
-	@RequestMapping(value="/updateImg" , method=RequestMethod.POST)
-	public String updateImg(MultipartHttpServletRequest mpRequest, HttpSession session,String me_id)throws Exception {
+	@RequestMapping(value="/profileUdt" , method=RequestMethod.POST)
+	public String profileUdt(MultipartHttpServletRequest multiRequest, Model model) throws Exception
+	{
 		
-		String me_image = fileUtil.updateImg(mpRequest);
+		String me_image = "";
 		
-		AccountVO accountVO = (AccountVO) session.getAttribute("login");
+		// 해당 파일 가져오기 
+		MultipartFile file = multiRequest.getFile("me_image");
 		
-		accountService.updateImg(me_image,me_id);
-		
-		accountVO.setMe_image(me_image);
-		session.setAttribute("login", accountVO);
-		
+		if(file.getOriginalFilename() == "") {
+			logger.info(" 기존 파일 " );
+			me_image = multiRequest.getParameter("default_file");
+			
+		}else {
+			
+			// 절대경로 설정 
+			String file_path = multiRequest.getSession().getServletContext().getRealPath("/resources/upload/mem_Image");
+			
+			AccountVO avo = new AccountVO();
+			
+			if(file.getOriginalFilename() != "") {
+				
+				String uuid = UUID.randomUUID().toString();
+				logger.info("file === " + file);
+				String file_newName = uuid + "_" + file.getOriginalFilename();
+				file.transferTo(new File(file_path + "/" + file_newName));
+				
+				logger.info("파일 업로드 완료!");
+				
+				avo.setMe_image(file_newName);
+			}
+			
+		}
+	
 		return "/account/profile";
+		
 	}
+	
 	
 	@RequestMapping(value="/delete" , method=RequestMethod.POST) 
 	public String deleteAccount(HttpSession session,HttpServletRequest request, String me_id, RedirectAttributes rttr)

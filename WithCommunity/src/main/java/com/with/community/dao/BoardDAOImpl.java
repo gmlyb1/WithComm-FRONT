@@ -60,8 +60,8 @@ public class BoardDAOImpl implements BoardDAO {
 	}
 
 	@Override
-	public int getListCount() throws Exception {
-		return sqlSession.selectOne("namespace.getListCount");
+	public int getListCount(Criteria cri) throws Exception {
+		return sqlSession.selectOne("namespace.getListCount",cri);
 	}
 
 	@Override

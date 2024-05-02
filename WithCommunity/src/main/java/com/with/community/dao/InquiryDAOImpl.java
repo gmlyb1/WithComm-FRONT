@@ -6,6 +6,7 @@ import javax.inject.Inject;
 
 import org.apache.ibatis.session.SqlSession;
 
+import com.with.community.vo.Criteria;
 import com.with.community.vo.InquiryVO;
 
 public class InquiryDAOImpl implements InquiryDAO {
@@ -16,8 +17,8 @@ public class InquiryDAOImpl implements InquiryDAO {
 	private static final String namespace = "com.with.community.dao.InquiryDAO";
 
 	@Override
-	public List<InquiryVO> selectInquiryList() throws Exception {
-		return sqlSession.selectList("namespace.selectInquiryList");
+	public List<InquiryVO> selectInquiryList(Criteria cri) throws Exception {
+		return sqlSession.selectList("namespace.selectInquiryList",cri);
 	}
 
 	@Override
@@ -31,7 +32,7 @@ public class InquiryDAOImpl implements InquiryDAO {
 	}
 
 	@Override
-	public InquiryVO selectInqCnt(InquiryVO Ivo) throws Exception {
-		return sqlSession.selectOne("namespace.selectInqCnt",Ivo);
+	public int selectInqCnt(Criteria cri) throws Exception {
+		return sqlSession.selectOne("namespace.selectInqCnt",cri);
 	}
 }

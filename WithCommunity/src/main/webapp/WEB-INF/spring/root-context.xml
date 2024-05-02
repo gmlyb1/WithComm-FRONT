@@ -24,18 +24,25 @@
 	<bean id="dataSource" 
 	      class="org.springframework.jdbc.datasource.DriverManagerDataSource">
 	      
-	      <property name="driverClassName" 
-	      			value="com.mysql.cj.jdbc.Driver"
-	      ></property>
-	      <property name="url" 
-	      value="jdbc:mysql://localhost:3306/SOFT?useSSL=false&amp;serverTimezone=Asia/Seoul">
+	     <!--  <property name="driverClassName" value="com.mysql.cj.jdbc.Driver">
+	      </property>
+	      <property name="url" value="jdbc:mysql://localhost:3306/SOFT?useSSL=false&amp;serverTimezone=Asia/Seoul">
 	      </property>
 	      <property name="username">
 	      	<value>root</value>
 	      </property>
 	      <property name="password">
 	        <value>1234</value>
-	      </property>
+	      </property> -->
+	      
+	       <property name="driverClassName" value="com.mysql.cj.jdbc.Driver" />
+	       <property name="url" value="jdbc:mysql://localhost:3306/SOFT?allowPublicKeyRetrieval=true&amp;useSSL=false&amp;serverTimezone=UTC" />
+	       <property name="username">
+	       		<value>root</value>
+	       </property>
+	       <property name="password">
+	       		<value>1234</value>
+	       </property>
 	</bean>
 	<!-- DB연결객체(DataSource) -->
 	

@@ -7,6 +7,7 @@ import javax.inject.Inject;
 import org.springframework.stereotype.Service;
 
 import com.with.community.dao.InquiryDAO;
+import com.with.community.vo.Criteria;
 import com.with.community.vo.InquiryVO;
 
 @Service
@@ -16,8 +17,8 @@ public class InquiryServiceImpl implements InquiryService {
 	private InquiryDAO inquiryDAO;
 
 	@Override
-	public List<InquiryVO> selectInquiryList() throws Exception {
-		return inquiryDAO.selectInquiryList();
+	public List<InquiryVO> selectInquiryList(Criteria cri) throws Exception {
+		return inquiryDAO.selectInquiryList(cri);
 	}
 
 	@Override
@@ -32,7 +33,7 @@ public class InquiryServiceImpl implements InquiryService {
 	}
 
 	@Override
-	public InquiryVO selectInqCnt(InquiryVO Ivo) throws Exception {
-		return inquiryDAO.selectInqCnt(Ivo);
+	public int selectInqCnt(Criteria cri) throws Exception {
+		return inquiryDAO.selectInqCnt(cri);
 	}
 }

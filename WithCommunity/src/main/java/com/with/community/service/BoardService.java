@@ -23,7 +23,7 @@ public interface BoardService {
 
 	public void BoardHit(int board_no) throws Exception;
 	
-	public int getListCount() throws Exception;
+	public int getListCount(Criteria cri) throws Exception;
 	
 	public void updateReplyCount(int board_no) throws Exception;
 	

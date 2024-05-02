@@ -1,6 +1,7 @@
 package com.with.community.vo;
 
-import java.util.Date;
+
+import java.sql.Date;
 
 import org.springframework.stereotype.Component;
 
@@ -14,7 +15,7 @@ import lombok.ToString;
 @ToString
 public class AccountVO {
 	
-	private int me_id;
+	private Integer me_id;
 	private String me_email;
 	private String me_pwd;
 	private String me_name;

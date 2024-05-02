@@ -61,12 +61,11 @@ public class HomeController {
 		
 		model.addAttribute("serverTime", formattedDate );
 		//상담내용 개수 - 1:1 문의 count 개수 표시하기
-		model.addAttribute("inqCnt", inquiryService.selectInqCnt(Ivo));
+//		model.addAttribute("inqCnt", inquiryService.selectInqCnt(Ivo));
 		model.addAttribute("HomeNoticeList", noticeService.HomeNoticeList());
 		model.addAttribute("HomeBoardList", boardService.HomeBoardList());
 		model.addAttribute("HomeMemberList", accountService.selectHomeList(vo));
 		model.addAttribute("visitCnt", visitCountService.selectVisitCount());
-		
 		
 		return "home";
 	}

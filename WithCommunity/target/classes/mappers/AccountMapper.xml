@@ -12,6 +12,7 @@
 		<result property="me_email" column="me_email"/>
 		<result property="me_image" column="me_image"/>
 	</resultMap>
+	
 		
 	
 
@@ -34,8 +35,10 @@
 		)
 	</insert>
 
-	<update id="updateImg">
-	update tbl_member set me_image = #{me_image} where me_id = #{me_id}
+	<update id="profileUdt">
+	update tbl_member set
+		me_image = #{me_image}
+ 	where me_id = #{me_id}
 	</update>
 
 	<select id="login" resultType="AccountVO">
@@ -78,5 +81,5 @@
 		update tbl_member set me_pwd = #{me_pwd}
 		where me_id = #{me_id}
 	</update>
-
+	
 </mapper>  

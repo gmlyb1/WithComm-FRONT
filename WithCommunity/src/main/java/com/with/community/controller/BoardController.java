@@ -27,7 +27,7 @@ import com.with.community.service.BoardService;
 import com.with.community.service.ReplyService;
 import com.with.community.vo.BoardVO;
 import com.with.community.vo.Criteria;
-import com.with.community.vo.PageMakerVO;
+import com.with.community.vo.PageMaker;
 import com.with.community.vo.ReplyVO;
 
 
@@ -46,7 +46,7 @@ public class BoardController {
 	
 		//목록
 		@RequestMapping(value = "/list", method= {RequestMethod.GET, RequestMethod.POST})
-		public String BoardList(@ModelAttribute("vo") BoardVO vo,HttpServletRequest request,Model model,Criteria cri, @RequestParam(value="pageNum", required= false, defaultValue = "1")int pageNum,@RequestParam(value="amount" , required=false, defaultValue = "10") int amount) throws Exception 
+		public String BoardList(@ModelAttribute("vo") BoardVO vo,HttpServletRequest request,Model model,Criteria cri) throws Exception 
 		{
 			Map<String, ?> inputFlashMap = RequestContextUtils.getInputFlashMap(request);
 			
@@ -56,15 +56,14 @@ public class BoardController {
 			
 			//리스트 받아서 바인딩.
 			List<BoardVO> boardList = boardService.BoardList(cri);
-			int totCnt = boardService.getListCount();
+			int totCnt = boardService.getListCount(cri);
 			
-			PageMakerVO pageMake = new PageMakerVO(cri, totCnt);
+			PageMaker pageMaker = new PageMaker();
+			pageMaker.setCri(cri);
+			pageMaker.setTotalCount(boardService.getListCount(cri));
 			
-			model.addAttribute("pageNum", pageNum);
-			model.addAttribute("amount", amount);
+			model.addAttribute("pageMaker", pageMaker);
 			model.addAttribute("boardList", boardList);
-			model.addAttribute("pageMaker", pageMake);
-			model.addAttribute("cri", cri);
 			
 			return "/board/list";
 		}

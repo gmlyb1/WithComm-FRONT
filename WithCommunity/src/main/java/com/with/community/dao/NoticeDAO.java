@@ -2,6 +2,7 @@ package com.with.community.dao;
 
 import java.util.List;
 
+import com.with.community.vo.Criteria;
 import com.with.community.vo.NoticeVO;
 
 public interface NoticeDAO {
@@ -12,7 +13,7 @@ public interface NoticeDAO {
 	
 	public void insertNotice(NoticeVO vo) throws Exception;
 	
-	public List<NoticeVO> NoticeList() throws Exception;
+	public List<NoticeVO> NoticeList(Criteria cri) throws Exception;
 	
 	public NoticeVO NoticeRead(int notice_no) throws Exception;
 	
@@ -22,7 +23,7 @@ public interface NoticeDAO {
 	
 	public void NoticeHit(int notice_no) throws Exception;
 	
-	public int getListCount() throws Exception;
+	public int getListCount(Criteria cri) throws Exception;
 	
 	public List<NoticeVO> HomeNoticeList() throws Exception;
 	

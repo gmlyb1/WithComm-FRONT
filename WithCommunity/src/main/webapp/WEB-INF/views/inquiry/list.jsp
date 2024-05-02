@@ -16,17 +16,13 @@
 	});
 </script>
 
-
-<!-- Begin Page Content -->
  <div class="container-fluid">
 <br>
-	<!-- Page Heading -->
 	<h1 class="h3 mb-2 text-gray-800">1:1문의</h1>
 	<p class="mb-4">
 		<a><strong>관리자와 1:1 문의가 가능합니다.</strong></a>
 	</p>
 
-	<!-- DataTales Example -->
 	<div class="card shadow mb-4">
 		<div class="card-header py-3">
 			<h6 class="m-0 font-weight-bold text-primary">고객 게시판 리스트</h6>
@@ -35,22 +31,15 @@
 				<span style="color: red"><strong> 현재 페이지의 글쓰기,수정,삭제는
 						<strong style="color:blue">관리자</strong>만 이용 가능합니다.</strong></span>
 			</c:if>
-
-			<%-- <c:if test="${member != null }">
-				<a href="/board/mypage" class="btn btn-success">마이페이지로 이동</a>
-			</c:if> --%>
-			<form>
-				<input type="button" class="btn btn-warning" value="페이지 새로 고침"
-					onClick="window.location.reload()">
-			</form>
 		</div>
 		<div class="card-body">
 			<div class="table-responsive">
+			<form method="get" id="listForm" action="/inquiry/list">
 				<table class="table table-bordered" id="dataTable" width="100%"
 					cellspacing="0">
 					<thead>
 						<tr>
-							<!-- <th class="text-center">번호</th> -->
+							<th class="text-center">번호</th>
 							<th class="text-center">주제</th>
 							<th class="text-center">작성자</th>
 							<th class="text-center">작성일자</th>
@@ -62,7 +51,7 @@
 						<c:forEach items="${inquiryList}" var="list">
 							 <c:if test="${list.inq_name eq member.me_name}">
 								<tr>
-									<%-- <td class="text-center"><c:out value="${list.inq_no}" /></td> --%>
+									<td class="text-center"><c:out value="${list.inq_no}" /></td>
 									<td><a href="/inquiry/detail?inq_no=${list.inq_no}"><c:out value="${list.inq_title}" /></a></td>
 									<td class="text-center"><c:out value="${list.inq_name}" /></td>
 									<td class="text-center">
@@ -83,16 +72,50 @@
 					</c:if>
 					</tbody>
 				</table>
+				<input type="hidden" name="page" value="1">
+			</form>
 				<c:if test="${member != null}">
 				<br>
 					<a type="button" href="/inquiry/create" class="btn btn-success">글쓰기</a>
 				</c:if>
+				
+				<!-- 페이징 -->
+				<form name="form2">
+				    <div id="pagination" class="d-flex justify-content-center align-items-center">
+				        <ul id="pageUL" class="pagination">
+				            <c:if test="${pageMaker.prev}">
+				                <li class="page-item">
+				                    <a class="page-link" href='<c:url value="/inquiry/list?page=${pageMaker.startPage-1}"/>' aria-label="Previous">
+				                        <span aria-hidden="true">&laquo;</span>
+				                        <span class="sr-only">Previous</span>
+				                    </a>
+				                </li>
+				            </c:if>
+				            
+				            <c:forEach begin="${pageMaker.startPage}" end="${pageMaker.endPage}" var="pageNum" varStatus="loop">
+						    <li id="page${loop.index}" class="page-item <c:if test='${pageNum eq pageMaker.cri.page}'>active</c:if>'">
+						        <a class="page-link" href='<c:url value="/inquiry/list?page=${pageNum}"/>'><c:out value="${pageNum}"/></a>
+						    </li>
+							</c:forEach>
+							
+				            <c:if test="${pageMaker.next && pageMaker.endPage > 0}">
+				                <li class="page-item">
+				                    <a class="page-link" href='<c:url value="/inquiry/list?page=${pageMaker.endPage+1}"/>' aria-label="Next">
+				                        <span aria-hidden="true">&raquo;</span>
+				                        <span class="sr-only">Next</span>
+				                    </a>
+				                </li>
+				            </c:if>
+				        </ul>
+				    </div>
+				    <input id="pageH" type="hidden" name="page" value="${pageMaker.cri.page}">
+				    <input id="keywordH" type="hidden" name="keyword" value="${pageMaker.cri.keyword}">
+				    <input id="optionH" type="hidden" name="option" value="${pageMaker.cri.option}">
+				</form>
 			</div>
 		</div>
 	</div>
-
 </div>
-<!-- /.container-fluid -->
 
 
 <%@include file="../include/footer.jsp"%>

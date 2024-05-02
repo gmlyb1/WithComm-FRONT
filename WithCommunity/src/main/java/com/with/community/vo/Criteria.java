@@ -6,37 +6,64 @@ import lombok.ToString;
 
 public class Criteria {
 	
-	private int pageNum;
-	private int amount;
-	private int skip;
+	private int page;
+	private int perPageNum;
+	private String keyword, option;
 	
-	public int getPageNum() {
-		return pageNum;
-	}
-	
-	public void setPageNum(int pageNum) {
-		
-		this.skip = (pageNum - 1) * this.amount;
-		this.pageNum = pageNum;
-	}
-	public int getAmount() {
-		return amount;
-	}
-	public void setAmount(int amount) {
-		this.skip = (this.pageNum - 1) * amount;
-		this.amount = amount;
-	}
-	public int getSkip() {
-		return skip;
-	}
-	public void setSkip(int skip) {
-		this.skip = skip;
-	}
-	
-	@Override
-	public String toString() {
-		return "Criteria [pageNum=" + pageNum + ", amount=" + amount + ", skip=" + skip + "]";
-	}
-	
+	  public String getKeyword() {
+	        return keyword;
+	    }
+	    public void setKeyword(String keyword) {
+	        this.keyword = keyword;
+	    }
+	    public String getOption() {
+	        return option;
+	    }
+	    public void setOption(String option) {
+	        this.option = option;
+	    }
+
+	//현재 페이지 게시글 시작 번호
+	public int getPageStart() {
+	    return (this.page-1)*perPageNum;
+	    }
+	    
+	    //첫 접근 시 현재 페이지는 1, 게시물 개수 10개
+	    public Criteria() {
+	        this.page = 1;
+	        this.perPageNum = 10;
+	    }
+	    
+	    public int getPage() {
+	        return page;
+	    }
+	    
+	    //음수가 될 경우는 시작 페이지를 리턴
+	    public void setPage(int page) {
+	        if(page <= 0) {
+	            this.page = 1;
+	        } else {
+	            this.page = page;
+	        }
+	    }
+	    
+	    public int getPerPageNum() {
+	        return perPageNum;
+	    }
+	    
+	    //페이지 당 게시글 수가 변하지 않아야 한다
+	    public void setPerPageNum(int pageCount) {
+	        int cnt = this.perPageNum;
+	        if(pageCount != cnt) {
+	            this.perPageNum = cnt;
+	        } else {
+	            this.perPageNum = pageCount;
+	        }
+	    }
+	    
+	    @Override
+	    public String toString() {
+	    	return "Criteria[page = " + page + ", perPageNum = " + perPageNum + "]";
+	    }
 	
 }

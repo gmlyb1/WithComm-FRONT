@@ -39,8 +39,12 @@ public class AccountDAOImpl implements AccountDAO{
 	}
 
 	@Override
-	public void updateImg(String me_image, String me_id) throws Exception {
-		sqlSession.update("namespace.updateImg", me_id);
+	public int profileUdt(AccountVO avo) throws Exception {
+		
+		int result = sqlSession.update("namespace.profileUdt", avo);
+		
+		System.out.println(" 결과 : " + result);
+		return result;
 	}
 
 	@Override
@@ -74,6 +78,8 @@ public class AccountDAOImpl implements AccountDAO{
 	public void pwdUdt(AccountVO vo) throws Exception {
 		sqlSession.update("namespace.pwdUdt",vo);
 	}
+
+
 
 
 }

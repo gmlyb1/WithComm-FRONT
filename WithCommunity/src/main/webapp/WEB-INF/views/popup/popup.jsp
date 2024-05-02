@@ -30,37 +30,48 @@
 </script>
 
 <style type="text/css">
-font-family: SF Pro KR, SF Pro Display, SF Pro Icons, AOS Icons, Apple Gothic, HY Gulim, MalgunGothic, HY Dotum, Lexi Gulim, Helvetica Neue, Helvetica, Arial, sans-serif;
-.layerPopup img{
-margin-bottom : 20px;}
-.layerPopup:before {display:block; content:""; position:fixed; left:0; top:0; width:100%; height:100%; background:rgba(0,0,0,.5); z-index:9000}
-.layerPopup .layerBox {    z-index:10000;   
-position:fixed; left:85%; top:48%; transform:translate(-50%, -50%); padding:30px; background:#fff; border-radius:6px; }
-.layerPopup .layerBox .title {margin-bottom:10px; padding-bottom:10px; font-weight:600; border-bottom:1px solid #d9d9d9;}
-.layerPopup .layerBox .btnTodayHide {
-font-size:14px; font-weight:600; color:black; 
-float: left;text-decoration:none;width: 150px; 
-height : 30px;line-height:30px;border:black solid 1px; text-align : center;text-decoration:none;
+/* 폰트 및 기본 스타일 */
+.layerPopup {
+    font-family: Arial, sans-serif;
+    text-align: center;
 }
-.layerPopup div{
-	display : inline;
+.layerPopup .layerBox {
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    padding: 30px;
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
 }
-.layerPopup form{
-	margin-top : 5px;
-	font-size:16px; font-weight:600;
-	weight: 100%;
-	height : 30px;
-	line-height:30px
+.layerPopup .title {
+    margin-bottom: 20px;
+    font-size: 24px;
+    font-weight: bold;
+    color: #333;
 }
-.layerPopup #close {
-font-size:16px; font-weight:600; width: 40px; height : 30px;color:black; float: right; line-height:30px; text-align : center;text-decoration:underline;
+.layerPopup .cont {
+    margin-bottom: 20px;
 }
-.layerPopup a{
-	text-decoration : none;
-	color : black;width: 50px;height : 40px;
+.layerPopup #check label {
+    font-size: 16px;
+    color: #666;
 }
-
-
+.layerPopup #close a {
+    display: inline-block;
+    padding: 8px 20px;
+    margin-top: 10px;
+    font-size: 16px;
+    font-weight: bold;
+    color: #fff;
+    background-color: #007bff;
+    border-radius: 5px;
+    text-decoration: none;
+}
+.layerPopup #close a:hover {
+    background-color: #0056b3;
+}
 </style>
 
 	<!-- layer popup content -->
@@ -74,7 +85,7 @@ font-size:16px; font-weight:600; width: 40px; height : 30px;color:black; float: 
         </div>
           <form name="pop_form">
         <div id="check" ><input type="checkbox" name="chkbox" value="checkbox" id='chkbox' >
-        <label for="chkbox">&nbsp&nbsp오늘 하루동안 보지 않기</label></div>
+        <label for="chkbox">&nbsp;&nbsp;오늘 하루동안 보지 않기</label></div>
 		<div id="close" ><a href="javascript:closePop();">닫기</a></div>    
 		</form>
 	</div>

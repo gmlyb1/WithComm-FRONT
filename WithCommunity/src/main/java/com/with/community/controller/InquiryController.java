@@ -18,7 +18,9 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.with.community.service.InquiryService;
 import com.with.community.vo.AccountVO;
 import com.with.community.vo.BoardVO;
+import com.with.community.vo.Criteria;
 import com.with.community.vo.InquiryVO;
+import com.with.community.vo.PageMaker;
 import com.with.community.vo.ReplyVO;
 
 @Controller
@@ -30,13 +32,21 @@ public class InquiryController {
 	
 	private static final Logger logger = LoggerFactory.getLogger(InquiryController.class);
 	
-	@RequestMapping(value="/list" , method=RequestMethod.GET)
-	public String inquiryGET(InquiryVO vo, Model model) throws Exception {
+	@RequestMapping(value="/list" ,method = {RequestMethod.GET, RequestMethod.POST})
+	public String inquiryGET(InquiryVO vo, Model model, Criteria cri) throws Exception {
+		
 		
 		// 1:1 문의 리스트
-			List<InquiryVO> inquiryList = inquiryService.selectInquiryList();
-			model.addAttribute("inquiryList", inquiryList);
-			model.addAttribute("inquiry", vo.getInq_name());
+		List<InquiryVO> inquiryList = inquiryService.selectInquiryList(cri);
+		int totCnt = inquiryService.selectInqCnt(cri);
+		
+		PageMaker pageMaker = new PageMaker();
+		pageMaker.setCri(cri);
+		pageMaker.setTotalCount(totCnt);
+		
+		model.addAttribute("pageMaker", pageMaker);
+		model.addAttribute("inquiryList", inquiryList);
+		model.addAttribute("inquiry", vo.getInq_name());
 			
 		return "/inquiry/list";
 	}

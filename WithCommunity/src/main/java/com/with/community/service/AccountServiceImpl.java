@@ -30,8 +30,10 @@ public class AccountServiceImpl implements AccountService {
 		return result;
 	}
 	@Override
-	public void updateImg(String me_image, String me_id) throws Exception {
-		accountDAO.updateImg(me_image, me_id);
+	public int profileUdt(AccountVO avo) throws Exception {
+		accountDAO.profileUdt(avo);
+		
+		return 1;
 	}
 	@Override
 	public void keepLogin(String me_id, String sessionId, Date sessionLimit) throws Exception {

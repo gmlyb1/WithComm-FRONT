@@ -7,6 +7,7 @@ import javax.inject.Inject;
 import org.apache.ibatis.session.RowBounds;
 import org.apache.ibatis.session.SqlSession;
 
+import com.with.community.vo.Criteria;
 import com.with.community.vo.NoticeVO;
 
 public class NoticeDAOImpl implements NoticeDAO {
@@ -22,10 +23,10 @@ public class NoticeDAOImpl implements NoticeDAO {
 	}
 
 	@Override
-	public List<NoticeVO> NoticeList() throws Exception {
+	public List<NoticeVO> NoticeList(Criteria cri) throws Exception {
 		
 		
-		return sqlSession.selectList("namespace.NoticeList");
+		return sqlSession.selectList("namespace.NoticeList",cri);
 	}
 
 	@Override
@@ -40,7 +41,7 @@ public class NoticeDAOImpl implements NoticeDAO {
 
 	@Override
 	public void NoticeDelete(int notice_no) throws Exception {
-		sqlSession.delete("namespace.NoticeDelete",notice_no);
+		sqlSession.update("namespace.NoticeDelete",notice_no);
 	}
 
 	@Override
@@ -60,8 +61,8 @@ public class NoticeDAOImpl implements NoticeDAO {
 	}
 
 	@Override
-	public int getListCount() throws Exception {
-		return sqlSession.selectOne("namespace.getListCount");
+	public int getListCount(Criteria cri) throws Exception {
+		return sqlSession.selectOne("namespace.getListCount",cri);
 	}
 
 	@Override

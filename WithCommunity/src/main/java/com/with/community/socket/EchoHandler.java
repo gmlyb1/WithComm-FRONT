@@ -8,6 +8,8 @@ import java.util.Map;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.socket.CloseStatus;
 import org.springframework.web.socket.TextMessage;
@@ -15,11 +17,21 @@ import org.springframework.web.socket.WebSocketHandler;
 import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.handler.TextWebSocketHandler;
 
+import com.with.community.dao.AlaramDAO;
 import com.with.community.vo.AccountVO;
+import com.with.community.vo.AlaramVO;
 
+@Component
 @RequestMapping("/echo")
 public class EchoHandler extends TextWebSocketHandler {
 
+	@Autowired 
+	private AlaramDAO alaramDAO;
+	
+	public void setAlarmDao(AlaramDAO alaramDAO) {
+		this.alaramDAO = alaramDAO;
+	}
+	
 	private static final Logger logger = LoggerFactory.getLogger(WebSocketHandler.class);
 	//로그인 한 인원 전체
 	private List<WebSocketSession> sessions = new ArrayList<WebSocketSession>();
@@ -38,111 +50,28 @@ public class EchoHandler extends TextWebSocketHandler {
 	
 	@Override
 	protected void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {// 메시지
-		logger.info("ssesion"+currentUserName(session));
-		String msg = message.getPayload();//자바스크립트에서 넘어온 Msg
-		logger.info("msg="+msg);
-		
-		if (StringUtils.isNotEmpty(msg)) {
-			logger.info("if문 들어옴?");
-			String[] strs = msg.split(",");
-			if(strs != null && strs.length == 6) {
-				
-				String cmd = strs[0];
-				String replyWriter = strs[1];
-				String boardWriter = strs[2];
-				String board_no = strs[3];
-				String board_title = strs[4];
-				String board_bgno = strs[5];
-				logger.info("length 성공?"+cmd);
-				
-				WebSocketSession replyWriterSession = userSessionsMap.get(replyWriter);
-				WebSocketSession boardWriterSession = userSessionsMap.get(boardWriter);
-				logger.info("boardWriterSession="+userSessionsMap.get(boardWriter));
-				logger.info("boardWirterSession"+boardWriterSession);
-				
-				//댓글
-				if ("reply".equals(cmd) && boardWriterSession != null) {
-					logger.info("onmessage되나?");
-					TextMessage tmpMsg = new TextMessage(replyWriter + "님이 "
-							+ "<a href='/board/read?board_no="+ board_no +"&board_bgno="+board_bgno+"'  style=\"color: black\">"
-							+ board_title+" 에 댓글을 달았습니다!</a>");
-					boardWriterSession.sendMessage(tmpMsg);
-				}
-				
-				//스크랩
-				else if("scrap".equals(cmd) && boardWriterSession != null) {
-					//replyWriter = 스크랩누른사람 , boardWriter = 게시글작성자
-					TextMessage tmpMsg = new TextMessage(replyWriter + "님이 "
-							+ "<a href='/board/read?board_no=" + board_no + "&board_bgno="+board_bgno+"'  style=\"color: black\"><strong>"
-							+ board_title+"</strong> 에 작성한 글을 스크랩했습니다!</a>");
-
-					boardWriterSession.sendMessage(tmpMsg);
-					
-				}
-				
-				//좋아요
-				else if("like".equals(cmd) && boardWriterSession != null) {
-					//replyWriter = 좋아요누른사람 , boardWriter = 게시글작성자
-					TextMessage tmpMsg = new TextMessage(replyWriter + "님이 "
-							+ "<a href='/board/read?board_no=" + board_no + "&bgno="+board_bgno+"'  style=\"color: black\"><strong>"
-							+ board_title+"</strong> 에 작성한 글을 좋아요했습니다!</a>");
-
-					boardWriterSession.sendMessage(tmpMsg);
-					
-				}
-				
-				//DEV
-				else if("Dev".equals(cmd) && boardWriterSession != null) {
-					//replyWriter = 좋아요누른사람 , boardWriter = 게시글작성자
-					TextMessage tmpMsg = new TextMessage(replyWriter + "님이 "
-							+ "<a href='/board/read?bno=" + board_no + "&bgno="+board_bgno+"'  style=\"color: black\"><strong>"
-							+ board_title+"</strong> 에 작성한 글을 DEV했습니다!</a>");
-
-					boardWriterSession.sendMessage(tmpMsg);
-					
-				}
-				
-				//댓글채택
-				else if("questionCheck".equals(cmd) && replyWriterSession != null) {
-					//replyWriter = 댓글작성자 , boardWriter = 글작성자
-					TextMessage tmpMsg = new TextMessage(boardWriter + "님이 "
-							+ "<a href='/board/read?board_no=" + board_no + "&board_bgno="+board_bgno+"'  style=\"color: black\"><strong>"
-							+ board_title+"</strong> 에 작성한 댓글을 채택했습니다!</a>");
-
-					replyWriterSession.sendMessage(tmpMsg);
-					
-				}
-				
-				//댓글좋아요
-				else if("commentLike".equals(cmd) && replyWriterSession != null) {
-					logger.info("좋아요onmessage되나?");
-					logger.info("result=board="+boardWriter+"//"+replyWriter+"//"+board_no+"//"+board_bgno+"//"+board_title);
-					//replyWriter=댓글작성자 , boardWriter=좋아요누른사람 
-					TextMessage tmpMsg = new TextMessage(boardWriter + "님이 "
-							+ "<a href='/board/read?board_no=" + board_no + "&board_bgno="+board_bgno+"'  style=\"color: black\"><strong>"
-							+ board_title+"</strong> 에 작성한 댓글을 추천했습니다!</a>");
-
-					replyWriterSession.sendMessage(tmpMsg);
-				}
-				
-				
-				//댓글DEV
-				else if("commentDev".equals(cmd) && replyWriterSession != null) {
-					logger.info("좋아요onmessage되나?");
-					logger.info("result=board="+boardWriter+"//"+replyWriter+"//"+board_no+"//"+board_bgno+"//"+board_title);
-					//replyWriter=댓글작성자 , boardWriter=좋아요누른사람 
-					TextMessage tmpMsg = new TextMessage(boardWriter + "님이 "
-							+ "<a href='/board/read?board_no=" + board_no + "&board_bgno="+board_bgno+"'  style=\"color: black\"><strong>"
-							+ board_title+"</strong> 에 작성한 댓글을 DEV했습니다!</a>");
-
-					replyWriterSession.sendMessage(tmpMsg);
-				}
-				
-				
-					
-				
-			}
+		for(WebSocketSession single : sessions) {
 			
+			// 세션아이디 
+			String hsid = (String)single.getAttributes().get("me_id");
+			
+			//세션값이 같을때, 알람보낼 것이 있을 때만 전송 -> 로그인 한 사용자가 처음으로 알람 받는 순간임
+	        //해당 sendMsg에 DB정보 넣어서 체크 안된 알람 전부 전송하기
+			if(single.getAttributes().get("me_id").equals(session.getAttributes().get("me_id"))) {
+				List<AlaramVO> aVO = new ArrayList<>();
+				aVO = AlaramDAO.selectAlaram(hsid);
+				
+				for(AlaramVO alaram : aVO) {
+					int idx = alaram.getIdx();
+					String prefix = alaram.getPrefix();
+					String code = alaram.getCode();
+					if(code.equals("NewPost")) {
+						code = "답변이 등록되었습니다.";
+					}
+					TextMessage sendMsg = new TextMessage("("+idx+")" + prefix + "에 " + code);
+					single.sendMessage(sendMsg);
+				}
+			}
 		}
 	}
 	

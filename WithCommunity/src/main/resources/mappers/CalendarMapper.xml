@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="com.with.community.dao.CalendarDAO">
+	
+	<insert id="schedule_add">
+		insert into tbl_schedule
+		<include refid="schedule_cols"/>
+		values
+		(
+			#{schedule_idx}
+		,	#{schedule_num}
+		,	#{schedule_subject}
+		,	#{schedule_desc}
+		,	#{schedule_date}
+		,	#{schedule_share}
+		,	#{schedule_mycolor}
+		)
+	</insert>
+	
+	<sql id="schedule_cols">
+		(schedule_idx, schedule_num, shcedule_subject, schedule_desc, schedule_date, schedule_share, schedule_mycolor)
+	</sql>
+	
+	<select id="before_shcedule_add_search" resultType="int">
+		select count(*) from tbl_schedule where schedule_date = #{schedule_date}
+	</select>
+	
+	<select id="schedule_list" resultType="ScheduleVO">
+		select * from tbl_schedule 
+		where 
+			schedule_date between #{db_startDate} and #{db_endDate}
+		order by schedule_date, schedule_num, schedule_idx
+	</select>
+	
+	<select id="get" resultType="ScheduleVO">
+		<![CDATA[
+			select * from tbl_schedule where schedule_idx = #{schedule_idx}
+		]]>
+	</select>
+	
+	<update id="update">
+		update tbl_schedule
+		set schedule_num = #{schedule_num}
+		,   schedule_subject = #{schedule_subject}
+		,   schedule_desc = #{schedule_desc}
+		,   schedule_date = #{schedule_date}
+		,	schedule_share = #{schedule_share}
+		,	shcedule_mycolor = #{shcedule_mycolor}
+		where schedule_idx = #{schedule_idx} 
+	</update>
+	
+	<delete id="delete">
+		delete from tbl_schedule 
+		where schedule_idx = #{schedule_idx}
+	</delete>
+
+</mapper>

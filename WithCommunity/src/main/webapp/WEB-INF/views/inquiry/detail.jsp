@@ -115,7 +115,7 @@ $("#list_btn").on("click", function(){ location.href = "/board/list?page=${scri.
 						</div>
 					</div>
 					<!-- 게시판 글보기  -->
-					<%-- <div style="margin-left: 1px;">
+				<div style="margin-left: 1px;">
 						<c:if test="${member.me_name == read.inq_name}">
 							<button type="button" class="btn btn-success"
 								onclick="location.href='/board/update?board_no=${read.board_no}';">수정</button>
@@ -125,12 +125,12 @@ $("#list_btn").on("click", function(){ location.href = "/board/list?page=${scri.
 							id="list_btn" class="btn btn-primary">목록</button>
 						<br>
 						<hr>
-					</div> --%>
+					</div> 
 				</form>
 				<!-- 게시판 끝 -->
 
 				<!-- 댓글 시작 -->
-				<%-- <div class="mb-3" style="height: 270px; OVERFLOW-Y: auto;">
+				<%--  <div class="mb-3" style="height: 270px; OVERFLOW-Y: auto;">
 					<table class="table table-striped">
 						<c:choose>
 							<c:when test="${replyList == null}">
@@ -168,11 +168,10 @@ $("#list_btn").on("click", function(){ location.href = "/board/list?page=${scri.
 
 
 				<!-- 댓글 작성 시작 -->
-				<%-- <c:if test="${member.me_grade == '최고관리자' }"> --%>
-				<%-- <c:if test="${member != null }">
+			<%-- <c:if test="${member.me_grade == '최고관리자'}"> 
 					<div>
 						<form method="post" action="/reply/write">
-							<input type="hidden" name="board_no" value="${read.board_no}">
+							<input type="hidden" name="board_no" value="${read.inq_no}">
 													<input type="hidden" name="page" name="page" value="${scri.page}">
 						<input type="hidden" name="perPageNum" name="perPageNum" value="${scri.perPageNum }">
 						<input type="hidden" name="searchType" name="searchType" value="${scri.searchType }">
@@ -196,13 +195,13 @@ $("#list_btn").on("click", function(){ location.href = "/board/list?page=${scri.
 							</p>
 						</form>
 					</div>
-				</c:if> --%>
+				</c:if>  --%>
 
-				<!-- 댓글 수정 -->
+			
 				<!-- 댓글 수정 -->
 
 				<!-- 댓글 작성 끝 -->
-				<%-- <div class="my-3 p-3 bg-white rounded shadow-sm">
+			<%--  <div class="my-3 p-3 bg-white rounded shadow-sm">
 					<c:choose>
 						<c:when test="${nextBoardList.board_no != null}">
 
@@ -234,9 +233,9 @@ $("#list_btn").on("click", function(){ location.href = "/board/list?page=${scri.
 							<button type="button" class="btn btn-info mr-3" disabled>이전글이
 								없습니다</button>
 						</c:when>
-					</c:choose>
+					</c:choose> --%>
 
-				</div> --%>
+				</div> 
 			</div>
 		</div>
 	</div>

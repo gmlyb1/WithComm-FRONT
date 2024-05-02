@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.with.community.dao.NoticeDAO;
 import com.with.community.vo.BoardVO;
+import com.with.community.vo.Criteria;
 import com.with.community.vo.NoticeVO;
 
 @Service
@@ -24,8 +25,8 @@ public class NoticeServiceImpl implements NoticeService {
 	}
 
 	@Override
-	public List<NoticeVO> NoticeList() throws Exception {
-		return noticeDAO.NoticeList();
+	public List<NoticeVO> NoticeList(Criteria cri) throws Exception {
+		return noticeDAO.NoticeList(cri);
 	}
 	
 	@Transactional(isolation = Isolation.READ_COMMITTED)
@@ -61,8 +62,8 @@ public class NoticeServiceImpl implements NoticeService {
 	}
 
 	@Override
-	public int getListCount() throws Exception {
-		return noticeDAO.getListCount();
+	public int getListCount(Criteria cri) throws Exception {
+		return noticeDAO.getListCount(cri);
 	}
 
 	@Override

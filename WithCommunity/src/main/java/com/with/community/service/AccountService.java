@@ -17,7 +17,7 @@ public interface AccountService {
 	public int idChk(AccountVO vo) throws Exception;
 
 	// 프로필 사진 변경
-	public void updateImg(String me_image, String me_id)throws Exception;
+	public int profileUdt(AccountVO avo)throws Exception;
 	
 	// 로그인 유지 처리
 	public void keepLogin(String me_id, String sessionId, Date sessionLimit) throws Exception;
@@ -31,4 +31,5 @@ public interface AccountService {
 	public List<AccountVO> selectHomeList(AccountVO vo) throws Exception;
 	
 	public int deleteAccount(String me_id) throws Exception;
+	
 }

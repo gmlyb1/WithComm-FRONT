@@ -62,13 +62,10 @@ $("#isFixed").click(function () {
 			<div class="panel-body">
 				<form action="/notice/update" role="form" method="post" id="updateForm"
 					name="updateForm" onsubmit="return _onSubmit();">
-					<input type="hidden" name="notice_no" value="${update.notice_no}"
-						readonly="readonly" /> <input type="hidden" id="fileNoDel"
-						name="fileNoDel[]" value=""> <input type="hidden"
-						id="fileNameDel" name="fileNameDel[]" value="">
+					<input type="hidden" name="notice_no" value="${update.notice_no}" readonly="readonly" /> 
+					<input type="hidden" id="fileNoDel" name="fileNoDel[]" value=""> <input type="hidden" id="fileNameDel" name="fileNameDel[]" value="">
 					<div class="table-responsive" style="text-align: center;">
-						<table id="datatable-scroller"
-							class="table table-bordered tbl_Form">
+						<table id="datatable-scroller" class="table table-bordered tbl_Form">
 							<caption></caption>
 							<colgroup>
 								<col width="250px" />
@@ -77,19 +74,19 @@ $("#isFixed").click(function () {
 							<tbody>
 								<tr>
 									<td class="form-inline"><label for="notice_writer">작성자:</label><input
-										type="text" id="notice_writer" name="notice_writer"
+										type="text" id="notice_writer" name="notice_writer" class="form-control"
 										style="width: 200px" value="${update.notice_writer}" disabled />
 									</td>
 								</tr>
 								<tr>
 									<td class="form-inline"><label for="notice_title">제목:</label><input
-										type="text" id="notice_title" name="notice_title"
+										type="text" id="notice_title" name="notice_title" class="form-control"
 										style="width: 840px" value="${update.notice_title}" /></td>
 								</tr>
 								<tr>
 									<td class="form-inline"><label for="notice_content">내용:</label>
-										<textarea id="notice_content" name="notice_content" cols="130"
-											rows="20"><c:out value="${update.notice_content}" /></textarea>
+									<textarea id="notice_content" name="notice_content" cols="100" class="form-control"
+										rows="10"><c:out value="${update.notice_content}" /></textarea>
 								</tr>
 								<tr>
 									<td>
@@ -100,8 +97,6 @@ $("#isFixed").click(function () {
 							</tbody>
 						</table>
 					</div>
-
-
 					<div style="margin-left: 1px;">
 						<button type="submit" class="btn btn-primary">수정</button>
 						<a href="/notice/list" class="btn btn-danger">취소</a>

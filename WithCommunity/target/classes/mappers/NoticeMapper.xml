@@ -6,9 +6,9 @@
 <mapper namespace="com.with.community.dao.NoticeDAO">
 
 	<!-- 글 목록 -->
-	<select id="NoticeList" resultType="NoticeVO" parameterType="NoticeVO">
+	<select id="NoticeList" resultType="NoticeVO">
 		select
-		 	row_number() over() as rowNo
+		    notice_no
 		 ,	notice_title
 		 ,	notice_writer
 		 ,	notice_count
@@ -16,19 +16,22 @@
 		 ,	notice_updateDate
 		from
 		 tbl_notice
-		where useYn = 1
+		where useYn = '1'
+		order by notice_no desc
+		limit #{pageStart}, #{perPageNum}
 	</select>
 	
 	<!-- 총 개수 -->
-	<select id="getListCount" resultType="int" parameterType="java.util.List">
-		select count(*) from tbl_notice
+	<select id="getListCount" resultType="int">
+		select 
+			count(notice_no)
+		from tbl_notice
+		where useYn = '1'
 	</select>
 	
 	 <select id="selectNoticeImportant" resultType="NoticeVO" parameterType="NoticeVO">
 		select * from tbl_notice where isFixed = '1'
 	</select>
-	
-	
 	
 	<!--  글 작성 -->
 	<insert id="insertNotice">

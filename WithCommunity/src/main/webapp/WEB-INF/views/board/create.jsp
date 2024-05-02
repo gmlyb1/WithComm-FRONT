@@ -97,7 +97,6 @@
 									<th class="active">글 카테고리</th>
 										<td class="form-inline">
 											<select class="form-select" id="board_bgno" name="board_bgno">
-												<option value="">전체</option>
 												<option value="1">커뮤니티</option>
 												<option value="2">공유합시다</option>
 											</select>
@@ -105,9 +104,9 @@
 								</tr>
 								<tr>
 									<th class="active">제목</th>
-									<td class="form-inline"><input type="text"
-										id="board_title" placeholder="제목을 입력해주세요." name="board_title"
-										class="form-control" style="width: 840px" /></td>
+									<td class="form-inline">
+										<input type="text" id="board_title" placeholder="제목을 입력해주세요." name="board_title" class="form-control" style="width: 840px" />
+									</td>
 								</tr>
 
 								<tr>

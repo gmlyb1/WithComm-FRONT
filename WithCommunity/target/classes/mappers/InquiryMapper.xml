@@ -6,7 +6,7 @@
 <mapper namespace="com.with.community.dao.InquiryDAO">
 
 	<!-- 글 목록 -->
-	<select id="selectInquiryList" resultType="InquiryVO" parameterType="InquiryVO">
+	<select id="selectInquiryList" resultType="InquiryVO">
 	select 
 		inq_no
 	   ,inq_title
@@ -14,6 +14,8 @@
 	   ,inq_name
 	   ,inq_regdate
 	from tbl_inquiry
+	order by inq_no desc
+	limit #{pageStart}, #{perPageNum}
 	</select>
 
 	<!-- 게시글 조회 -->
@@ -26,11 +28,8 @@
 	</select>
 	
 	<!-- 프로필 나의 문의 개수 -->
-	<select id="selectInqCnt" parameterType="InquiryVO" resultType="InquiryVO">
-		select count(1) as inqCount
-			from tbl_inquiry ti left join tbl_member tm
-		on ti.inq_name = tm.me_name
-			where ti.inq_name = #{inq_name}
+	<select id="selectInqCnt" resultType="int">
+		select count(inq_no) from tbl_inquiry 
 	</select>
 	
 	<!-- 글쓰기 -->

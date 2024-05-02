@@ -21,4 +21,8 @@
 		<property name="maxInMemorySize" value="100000000" /> 
 	</bean> 
 	
+	
+	<!-- <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver"></bean> -->
+	
+	
 </beans>

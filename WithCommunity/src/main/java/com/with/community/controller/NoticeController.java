@@ -22,7 +22,9 @@ import org.springframework.web.servlet.support.RequestContextUtils;
 
 import com.with.community.service.NoticeService;
 import com.with.community.vo.BoardVO;
+import com.with.community.vo.Criteria;
 import com.with.community.vo.NoticeVO;
+import com.with.community.vo.PageMaker;
 import com.with.community.vo.ReplyVO;
 
 @Controller
@@ -34,8 +36,8 @@ public class NoticeController {
 	
 	private static final Logger logger = LoggerFactory.getLogger(NoticeController.class);
 	
-	@RequestMapping(value="/list", method=RequestMethod.GET)
-	public String NoticeList(@ModelAttribute("vo")NoticeVO vo,HttpServletRequest request,Model model,@RequestParam(value="currenttPage",required = false, defaultValue = "1") int currentPage) throws Exception {
+	@RequestMapping(value="/list", method= {RequestMethod.GET, RequestMethod.POST})
+	public String NoticeList(@ModelAttribute("vo")NoticeVO vo,HttpServletRequest request,Model model,Criteria cri) throws Exception {
 		
 		Map<String, ?> inputFlashMap = RequestContextUtils.getInputFlashMap(request);
 		
@@ -43,11 +45,17 @@ public class NoticeController {
 			model.addAttribute("msg", (String)inputFlashMap.get("msg"));
 		}
 		// 페이징
-		int listCount = noticeService.getListCount();
 		vo.setIsFixed(vo.getIsFixed());
 		
-		List<NoticeVO> noticeList = noticeService.NoticeList();
+		PageMaker pageMaker = new PageMaker();
+		pageMaker.setCri(cri);
+		pageMaker.setTotalCount(noticeService.getListCount(cri));
+		
+		List<NoticeVO> noticeList = noticeService.NoticeList(cri);
+		
+		model.addAttribute("pageMaker", pageMaker);
 		model.addAttribute("noticeList", noticeList);
+		
 		model.addAttribute("FixedList", noticeService.selectNoticeImportant(vo));
 //		if(vo.getIsFixed() > 0 ) {
 //			List<NoticeVO> ImportantList =  noticeService.selectNoticeImportant(vo);

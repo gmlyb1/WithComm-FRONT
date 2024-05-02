@@ -36,6 +36,25 @@
     <link rel="stylesheet" href="/resources/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css" />
     <link rel="stylesheet" href="/resources/assets/vendor/libs/apex-charts/apex-charts.css" />
 	
+	<!-- FullCalendar 2 -->
+	<link rel="stylesheet"
+		href="/resources/vendor/css/fullcalendar.min.css" />
+	<%--  <link rel="stylesheet"
+		href="${pageContext.request.contextPath }/resources/vendor/css/bootstrap.min.css" />  --%>
+	<link rel="stylesheet"
+		href='/resources/vendor/css/select2.min.css' />
+	<link rel="stylesheet"
+		href='/resources/vendor/css/bootstrap-datetimepicker.min.css' />
+	
+	<link rel="stylesheet"
+		href="https://fonts.googleapis.com/css?family=Open+Sans:400,500,600">
+	<link rel="stylesheet"
+		href="https://fonts.googleapis.com/icon?family=Material+Icons">
+	
+	<link rel="stylesheet"
+		href="/resources/css/main.css">
+	
+	
     <script src="/resources/assets/vendor/js/helpers.js"></script>
     <script src="/resources/assets/js/config.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
@@ -55,7 +74,6 @@
  			        // Handle cases where the URL path starts with the menu item's URL
  			        $(this).closest(".menu-item").addClass("active");
  				}
- 			
  			});
  			
  			$(".menu-item").click(function() {
@@ -63,6 +81,8 @@
  		
  			$(this).addClass("active");	
 			
+ 			
+ 			showSpinner();
  			});
  			
  			// 자유게시판 클릭했을때 list를 get으로 넘겼기 때문에 default로 pageNum & amount를 설정한다.
@@ -74,47 +94,122 @@
  				
  				$("#boardForm").submit();
  			
+ 				
+ 			});
+ 			
+ 		// 자유게시판 클릭했을때 list를 get으로 넘겼기 때문에 default로 pageNum & amount를 설정한다.
+ 			$("#NoticeLink").click(function(e) {
+ 				e.preventDefault();
+ 			
+ 				$("#noticeForm input[name='pageNum']").val(1);
+ 				$("#noticeForm input[name='amount']").val(10);
+ 				
+ 				$("#noticeForm").submit();
+ 				
+ 				
  			});
  			
  			//끝
  		});
  	</script>
  	<script type="text/javascript">
-		var socket = null;
-			$(document).ready(function(){
-			if(${login != null}){
+	var socket = null;
+		$(document).ready(function(){
+		if(${login != null}){
 			connectWs();
-			}
-		})
-			
-			
-			//소켓
-			function connectWs(){
-			console.log("tttttt")
-			var ws = new SockJS("/alram");
-			socket = ws;
-			
-				ws.onopen = function() {
-			 console.log('open');
-			 };
-				ws.onmessage = function(event) {
-					console.log("onmessage"+event.data);
-					let $socketAlert = $('div#socketAlert');
-					$socketAlert.html(event.data)
-					$socketAlert.css('display', 'block');
+		}
+	});
+		
+		
+		//소켓
+		function connectWs(){
+		console.log("tttttt")
+		var ws = new SockJS("/alram");
+		socket = ws;
+		
+			ws.onopen = function() {
+		 console.log('open');
+		 };
+			ws.onmessage = function(event) {
+				console.log("onmessage"+event.data);
+				let $socketAlert = $('div#socketAlert');
+				$socketAlert.html(event.data)
+				$socketAlert.css('display', 'block');
+				
+				setTimeout(function(){
+					$socketAlert.css('display','none');
 					
-					setTimeout(function(){
-						$socketAlert.css('display','none');
-						
-					}, 5000);
+				}, 5000);
+		};
+			ws.onclose = function() {
+			    console.log('close');
+		 };
+	};
+	
+	const alarmUL = document.querySelector("#alarmUL");
+	const alarmI = document.querySelector("#alarmI");
+	const alarmDiv = document.querySelector("#alarmDiv");
+	var sock = null;
+	
+	$(document).ready(function() {
+		
+		connectWs();
+		
+		function connectWs() {
+			var ws = newe SockJS("/echo");
+			sock = ws
+			
+			ws.onopen = function() {
+				console.log("연결완료.");
+				ws.send($('#socketuserID').val());
 			};
-				ws.onclose = function() {
-				    console.log('close');
-			 };
+			
+			ws.onmessage = function(event) {
+				// 받을 알람이 있을때 
+				console.log(event.data);
+				if(event.data.length > 0) {
+					let newAlarm = '';
+					newAlarm += '<li scope="col">' + event.data + "</li>"
+					$('#alarmUL').append(newAlarm);
+					alarmDiv.style.visibility = "visible";
+				}
+			};
+			
+			ws.onclose = function() {
+				console.log('close');
+			};
 		};
 		
-		//소켓끝
-		</script>
+		// 알람창 추가
+		alarmI.addEventListener('click',function() {
+			alarmUL.classList.toggle('visible');
+			$(this).stop(false,false);
+		});
+		
+		alarmUL.addEventListener('click',function(e) {
+			var endIdx =  e.target.textContent.indexOf(")");
+			var idx = e.target.textContent.substr(1,endIdx-1);
+			
+			$.ajax({
+				url : '/alarmDel',
+				data : {"idx" : idx},
+				type : 'post',
+				success : function(data){
+					console.log(data);
+					alert("성공");
+				}
+			});
+			
+			$(e.target).remove();
+			if(alarm.children.length == 0) {
+				alarmDiv.stylel.visibility = "hidden";
+			}
+			
+		});
+	});
+	
+	//소켓끝
+	</script>
  
  
   </head>
@@ -125,6 +220,12 @@
   	<input type="hidden" name="pageNum"	value="1">
   	<input type="hidden" name="amount"	value="10">
   </form>
+  
+   <form id="noticeForm" action="/notice/list" method="post">
+  	<input type="hidden" name="pageNum"	value="1">
+  	<input type="hidden" name="amount"	value="10">
+  </form>
+  
 
     <!-- Layout wrapper -->
     <div class="layout-wrapper layout-content-navbar">
@@ -201,56 +302,36 @@
           <div class="menu-inner-shadow"></div>
 
           <ul class="menu-inner py-1">
-            <!-- Dashboard -->
-            
-           <!--  <li class="menu-item">
-              <a href="index.html" class="menu-link">
-                <i class="menu-icon tf-icons bx bx-home-circle"></i>
-                <div data-i18n="Analytics">대시보드</div>
-              </a>
-            </li> 
-
-            
-             <li class="menu-item">
-              <a href="javascript:void(0);" class="menu-link">
-                <i class="menu-icon tf-icons bx bx-layout"></i>
-                <div data-i18n="Layouts">레이아웃</div>
-              </a>
-            </li> -->
-            
-            <!-- Layouts -->
-            <li class="menu-item">
-              <a href="/notice/list" class="menu-link">
-                <i class="menu-icon tf-icons bx bx-dock-top"></i>
-                <div data-i18n="Basic">공지사항</div>
-              </a>
-            </li>
+            <li class="menu-header small text-uppercase"><span class="menu-header-text">게시판</span></li>
+	            <li class="menu-item">
+	              <a href="/notice/list" class="menu-link" id="NoticeLink">
+	                <i class="menu-icon tf-icons bx bx-dock-top"></i>
+	                <div data-i18n="Basic">공지사항</div>
+	              </a>
+	            </li>
             
            <li class="menu-item">
-              <a href="/board/list" class="menu-link" id="BoardLink">
-                <i class="bx bx-globe"></i>
-                <div data-i18n="Basic">&nbsp;&nbsp;&nbsp;&nbsp;자유 게시판</div>
-              </a>
-            </li>
+	              <a href="/board/list" class="menu-link" id="BoardLink">
+	                <i class="bx bx-globe"></i>
+	                <div data-i18n="Basic">&nbsp;&nbsp;&nbsp;&nbsp;자유 게시판</div>
+	              </a>
+	            </li>
             
             <li class="menu-item">
-              <a href="/know/list" class="menu-link">
-                <i class="menu-icon tf-icons bx bx-cube-alt"></i>
-                <div data-i18n="Basic">지식인</div>
-              </a>
+	              <a href="/know/list" class="menu-link">
+	                <i class="menu-icon tf-icons bx bx-cube-alt"></i>
+	                <div data-i18n="Basic">지식인</div>
+	              </a>
             </li>
             
-            <!-- Components -->
             <li class="menu-header small text-uppercase"><span class="menu-header-text">Components</span></li>
-            <!-- Cards -->
             <li class="menu-item">
-              <a href="#" class="menu-link">
-                <i class="bx bxs-user-check"></i>&nbsp;
-                <div data-i18n="Basic">&nbsp;&nbsp;구인/구직</div>
-              </a>
+	              <a href="#" class="menu-link">
+	                <i class="bx bxs-user-check"></i>&nbsp;
+	                <div data-i18n="Basic">&nbsp;&nbsp;구인/구직</div>
+	              </a>
             </li>
             
-            <!-- User interface -->
             <li class="menu-item">
               <a href="#" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-collection"></i>
@@ -261,21 +342,21 @@
            
             <!-- Tables -->
             <li class="menu-item">
-              <a href="#" class="menu-link">
+              <a href="/calendar/index" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-table"></i>
                 <div data-i18n="Tables">달력</div>
               </a>
             </li>
             
              <!-- Tables -->
-            <!-- <li class="menu-item">
+            <li class="menu-item">
               <a href="/inquiry/list" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-table"></i>
                 <div data-i18n="Tables">운영자 상담</div>
               </a>
-            </li> -->
+            </li> 
             <!-- Misc -->
-            <!-- <li class="menu-header small text-uppercase"><span class="menu-header-text">Misc</span></li>
+           <li class="menu-header small text-uppercase"><span class="menu-header-text">Misc</span></li>
             <li class="menu-item">
               <a href="#" target="_blank" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-support"></i>
@@ -287,15 +368,19 @@
                 <i class="menu-icon tf-icons bx bx-file"></i>
                 <div data-i18n="Documentation">파일 게시판</div>
               </a>
-            </li> -->
+            </li>
+          <c:if test="${member.me_email == 'admin@with.com'}">
+            <li class="menu-item">
+              <a href="/setting/control" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-file"></i>
+                <div data-i18n="Documentation">환경 설정</div>
+              </a>
+            </li>
+          </c:if>
           </ul>
         </aside>
-        <!-- / Menu -->
 
-        <!-- Layout container -->
         <div class="layout-page">
-          <!-- Navbar -->
-
         <nav
             class="layout-navbar container-xxl navbar navbar-expand-xl navbar-detached align-items-center bg-navbar-theme"
             id="layout-navbar"
@@ -320,7 +405,6 @@
                   />
                 </div>
               </div>
-              <!-- /Search -->
 
              <ul class="navbar-nav flex-row align-items-center ms-auto">
 				    <!-- User -->
@@ -348,9 +432,21 @@
 				                    </a>
 				                </li>
 				                
+				                
+				                
 				                <li>
 				                    <div class="dropdown-divider"></div>
 				                </li>
+				                
+			                <c:if test="${member.state == '관리자'}">
+				                <li>
+				                    <a class="dropdown-item" href="#">
+				                       <i class='bx bxs-slideshow' ></i>
+				                        <span class="align-middle">관리자 페이지</span>
+				                    </a>
+				                </li>
+			                </c:if>
+			                
 				                <li>
 				                    <a class="dropdown-item" href="/account/profile">
 				                        <i class="bx bx-user me-2"></i>
@@ -398,7 +494,12 @@
 				            <a href="/account/register" class="btn btn-success" style="color: white; font-weight: bold;">회원가입</a>
 				        </li>
 				    </c:if>
-				    <!--/ User -->
 				</ul>
             </div>
           </nav>
+          
+		<div id="spinnerDiv" style="display: none;">
+		  <div class="spinner-border spinner-border-lg text-primary" role="status">
+		    <span class="visually-hidden">Loading...</span>
+		  </div>
+		</div>

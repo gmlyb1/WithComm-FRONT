@@ -102,12 +102,7 @@ $("#update_btn").on("click", function(){
 					<input type="hidden" name="board_no" value="${update.board_no}" readonly="readonly" /> 
 					<input type="hidden" id="fileNoDel" name="fileNoDel[]" value=""> 
 					<input type="hidden" id="fileNameDel" name="fileNameDel[]" value="">
-					<%-- <input type="hidden" name="bno" value="${update.bno}" readonly="readonly"/>
-					<input type="hidden" id="page" name="page" value="${scri.page}"> 
-					<input type="hidden" id="perPageNum" name="perPageNum" value="${scri.perPageNum}"> 
-					<input type="hidden" id="searchType" name="searchType" value="${scri.searchType}"> 
-					<input type="hidden" id="keyword" name="keyword" value="${scri.keyword}">
-					<div class="table-responsive" style="text-align: center;"> --%>
+					<div class="table-responsive" style="text-align: center;">
 						<table id="datatable-scroller"
 							class="table table-bordered tbl_Form">
 							<caption></caption>
@@ -117,33 +112,48 @@ $("#update_btn").on("click", function(){
 							</colgroup>
 							<tbody>
 								<tr>
-									<td class="form-inline"><label for="board_writer">작성자:</label><input
-										type="text" id="board_writer" name="board_writer"
-										style="width: 200px" value="${update.board_writer}" disabled />
+									<th class="active">작성자</th>
+									<td class="form-inline"><input type="text"
+										id="board_writer" name="board_writer" class="form-control"
+										style="width: 200px" value="${update.board_writer}" readonly /></td>
+								</tr>
+								<tr>
+									<th class="active">글 카테고리</th>
+										<td class="form-inline">
+											<select class="form-select" id="board_bgno" name="board_bgno">
+												<option value="1" ${update.board_bgno == '1' ? 'selected' : ''}>커뮤니티</option>
+												<option value="2" ${update.board_bgno == '2' ? 'selected' : ''}>공유합시다</option>
+											</select>
+										</td>
+								</tr>
+								<tr>
+									<th class="active">제목</th>
+									<td class="form-inline"><input type="text"
+										id="board_title" placeholder="제목을 입력해주세요." name="board_title"
+										class="form-control" style="width: 840px" value="${update.board_title}"/></td>
+								</tr>
+
+								<tr>
+									<th class="active">내용</th>
+									<td class="form-inline">
+										<textarea id="board_content" name="board_content" cols="100" rows="10" placeholder="내용을 입력해주세요." class="form-control">
+											<c:out value="${update.board_content}" />
+										</textarea>
 									</td>
 								</tr>
-								<tr>
-									<td class="form-inline"><label for="board_title">제목:</label><input
-										type="text" id="board_title" name="board_title"
-										style="width: 840px" value="${update.board_title}" /></td>
-								</tr>
-								<tr>
-									<td class="form-inline"><label for="board_content">내용:</label>
-										<textarea id="board_content" name="board_content" cols="130"
-											rows="20"><c:out value="${update.board_content}" /></textarea>
-								</tr>
+								
+								<!-- <tr>
+									<td id="fileIndex">
+									<input type="file" name="file" />
+								<div>  
+			 						<button id="fileAdd_btn" class="btn btn-primary" type="button">파일추가+</button>
+								</div>
+									</td>
+								</tr> -->
+
 							</tbody>
 						</table>
 					</div>
-					<!-- 첨부파일 -->
-
-			</div>
-			<div style="margin-left: 1px;">
-				<!-- <button type="button" id="update_btn" class="btn btn-primary">수정</button>
-				<button type="button" id="cancel_btn" class="btn btn-primary">취소</button>
-				<button type="button" id="fileAdd_btn" class="btn btn-primary">파일추가</button> -->
-
-				<!-- 첨부파일 -->
 
 
 				<div style="margin-left: 1px;">
