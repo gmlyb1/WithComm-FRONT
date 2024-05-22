@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="com.with.community.dao.KnowDAO">
+
+	<!-- 글 목록 -->
+	<select id="KnowList" resultType="KnowVO">
+			select
+			    know_no
+			   ,know_title
+			   ,know_content
+			   ,know_writer
+			   ,know_count
+			   ,know_regdate
+			   ,know_updateDate
+			from tbl_know order by know_no desc
+			limit #{pageStart}, #{perPageNum}
+	</select>
+	
+	<!-- 총 개수 -->
+	<select id="getListCount" resultType="int">
+		select count(know_no)
+		 from tbl_know
+	</select>
+	
+	<!-- 게시글 조회 -->
+	<select id="KnowRead" parameterType="int" resultType="KnowVO">
+		select
+		 *
+		from 
+		 tbl_know
+		where know_no = #{know_no}
+	</select>
+	
+	<!--  글 작성 -->
+	<insert id="insertKnow">
+  		insert
+		 into
+		tbl_know
+		(
+			know_no	
+		 ,  know_writer
+		 ,	know_title
+		 ,  know_content
+		 ,	know_writer
+		 <!-- ,	know_count -->
+		 ,	know_regdate
+		)
+		values
+		(
+			#{know_no}
+		,   #{know_writer}
+		,	#{know_title}
+		,   #{know_content}
+		,	#{know_writer}
+		<!-- ,	#{know_count} -->
+		,	now()
+		)
+	</insert>
+	
+	<!-- 게시글 수정 -->
+	<update id="updateKnow" parameterType="KnowVO">
+		update tbl_know
+			set know_title = #{know_title},	
+				know_content = #{know_content},
+				know_updateDate = NOW()
+		where know_no = #{know_no}
+	</update>
+	
+	<!-- 게시글 삭제 -->
+	<delete id="deleteKnow" parameterType="int">
+		delete 
+		  from tbl_know
+		where know_no = #{know_no}
+	</delete>
+</mapper>

@@ -6,37 +6,36 @@
 
 <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.css" rel="stylesheet">
 <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.css" rel="stylesheet">
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
 
 <script type="text/javascript">
 	
-	
-	
-	
 	function _onSubmit() {
 	
 			if ($("#board_writer").val() == "") {
-				alert("작성자를 입력해주세요");
+				swal.fire("작성자를 입력해주세요");
 				$("#board_writer").focus();
 				return false;
 			}
-	
+				
 			if ($("#board_title").val() == "") {
-				alert("제목을 입력해주세요");
+				swal.fire("제목을 입력해주세요");
 				$("#board_title").focus();
 				return false;
 			}
 	
 			if ($("#board_content").val() == "") {
-				alert("내용을 입력해주세요");
+				swal.fire("내용을 입력해주세요");
 				$("#board_content").focus();
 				return false;
 			}
 			
 			if($("#board_bgno").val() == "") {
-				alert("카테고리를 선택해 주세요.");
+				swal.fire("카테고리를 선택해 주세요.");
 				$("#board_bgno").focus();
 				return false;
 			}
@@ -66,18 +65,28 @@
 
 <%@include file="../include/header.jsp"%>
 
+<br><br><br>
 <div class="row" style="margin-bottom: 20px; margin-left: 1px;">
-	<div class="col-lg-12">
-		<h1 class="page-header">글작성</h1>
-	</div>
+  <strong>	
+	<ol class="breadcrumb breadcrumb-style2 mb-0">
+      <li class="breadcrumb-item">
+        <a href="javascript:void(0);">게시판</a>
+      </li>
+      <li class="breadcrumb-item">
+        <a href="javascript:void(0);">자유게시판</a>
+      </li>
+      <li class="breadcrumb-item">
+        <a href="javascript:void(0);">글 쓰기</a>
+      </li>
+    </ol>
+  </strong>
 </div>
 
 <div class="panel" style="margin-left: 1px;">
 	<div id="contAreaBox">
 		<div class="panel">
 			<div class="panel-body">
-				<form action="/board/create" method="post" name="write" id="write"
-					onsubmit="return _onSubmit();">
+				<form action="/board/create" method="post" name="write" id="write" onsubmit="return _onSubmit();">
 					<div class="table-responsive" style="text-align: center;">
 						<table id="datatable-scroller"
 							class="table table-bordered tbl_Form">
@@ -97,20 +106,21 @@
 									<th class="active">글 카테고리</th>
 										<td class="form-inline">
 											<select class="form-select" id="board_bgno" name="board_bgno">
+												<option value="0">전체</option>
 												<option value="1">커뮤니티</option>
 												<option value="2">공유합시다</option>
 											</select>
 										</td>
 								</tr>
 								<tr>
-									<th class="active">제목</th>
+									<th class="active">제목</th><br>
 									<td class="form-inline">
 										<input type="text" id="board_title" placeholder="제목을 입력해주세요." name="board_title" class="form-control" style="width: 840px" />
 									</td>
 								</tr>
 
 								<tr>
-									<th class="active">내용</th>
+									<th class="active">내용</th><br>
 									<td class="form-inline">
 									<textarea id="board_content" name="board_content" cols="100" rows="10" placeholder="내용을 입력해주세요." class="form-control"></textarea></td>
 								</tr>
@@ -127,7 +137,7 @@
 							</tbody>
 						</table>
 					</div>
-					<div style="margin-left: 1px;">
+					<div style="margin-left: auto; margin-right: auto; width: fit-content;">
 						<button type="submit" class="btn btn-primary">등록</button>
 						<a href="/board/list" class="btn btn-danger">취소</a>
 					</div>

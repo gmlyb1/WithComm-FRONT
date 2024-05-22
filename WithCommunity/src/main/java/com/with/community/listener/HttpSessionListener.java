@@ -29,8 +29,10 @@ public class HttpSessionListener implements javax.servlet.http.HttpSessionListen
 		WebApplicationContext ctx = WebApplicationContextUtils.getWebApplicationContext(session.getServletContext());
 		VisitCountService visitCountService = ctx.getBean("VisitCountService",VisitCountService.class);
 		
+		VisitCountVO vvo = new VisitCountVO();
+		
 		if(session.isNew()) {
-			VisitCountVO visitCountVO = visitCountService.selectVisitCount();
+			VisitCountVO visitCountVO = visitCountService.selectVisitCount(vvo);
 			if(visitCountVO == null) {
 				visitCountService.insertVisitCount();
 				setTodayVisitCount(1);

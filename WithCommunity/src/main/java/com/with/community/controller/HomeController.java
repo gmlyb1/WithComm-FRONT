@@ -2,6 +2,7 @@ package com.with.community.controller;
 
 import java.text.DateFormat;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 
 import javax.servlet.http.HttpSession;
@@ -21,6 +22,7 @@ import com.with.community.service.NoticeService;
 import com.with.community.service.VisitCountService;
 import com.with.community.vo.AccountVO;
 import com.with.community.vo.InquiryVO;
+import com.with.community.vo.VisitCountVO;
 
 /**
  * Handles requests for the application home page.
@@ -50,8 +52,8 @@ public class HomeController {
 	 * @throws Exception 
 	 */
 	@RequestMapping(value = "/home", method = RequestMethod.GET)
-	public String home(Locale locale, Model model,AccountVO vo,InquiryVO Ivo,HttpSession session) throws Exception {
-		logger.info("Welcome home! The client locale is {}.", locale);
+	public String home(Locale locale, Model model,AccountVO vo,VisitCountVO vvo,InquiryVO Ivo,HttpSession session) throws Exception {
+//		logger.info("Welcome home! The client locale is {}.", locale);
 		
 		Date date = new Date();
 		DateFormat dateFormat = DateFormat.getDateTimeInstance(DateFormat.LONG, DateFormat.LONG, locale);
@@ -65,7 +67,7 @@ public class HomeController {
 		model.addAttribute("HomeNoticeList", noticeService.HomeNoticeList());
 		model.addAttribute("HomeBoardList", boardService.HomeBoardList());
 		model.addAttribute("HomeMemberList", accountService.selectHomeList(vo));
-		model.addAttribute("visitCnt", visitCountService.selectVisitCount());
+		model.addAttribute("HomeVisitCnt", visitCountService.selectVisitCount(vvo));
 		
 		return "home";
 	}

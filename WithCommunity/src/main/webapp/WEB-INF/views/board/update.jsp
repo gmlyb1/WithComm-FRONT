@@ -4,6 +4,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script
@@ -86,11 +87,23 @@ $("#update_btn").on("click", function(){
 
 
 <%@include file="../include/header.jsp"%>
-
+<br><br><br>
 <div class="row" style="margin-bottom: 20px; margin-left: 1px;">
+  <strong>
 	<div class="col-lg-12">
-		<h1 class="page-header">글수정</h1>
+		<ol class="breadcrumb breadcrumb-style2 mb-0">
+	      <li class="breadcrumb-item">
+	        <a href="javascript:void(0);">게시판</a>
+	      </li>
+	      <li class="breadcrumb-item">
+	        <a href="javascript:void(0);">자유게시판</a>
+	      </li>
+	      <li class="breadcrumb-item">
+	        <a href="javascript:void(0);">글 수정</a>
+	      </li>
+	    </ol>
 	</div>
+  </strong>
 </div>
 
 <div class="panel" style="margin-left: 1px;">
@@ -128,9 +141,8 @@ $("#update_btn").on("click", function(){
 								</tr>
 								<tr>
 									<th class="active">제목</th>
-									<td class="form-inline"><input type="text"
-										id="board_title" placeholder="제목을 입력해주세요." name="board_title"
-										class="form-control" style="width: 840px" value="${update.board_title}"/></td>
+									<td class="form-inline">
+									<input type="text" id="board_title" placeholder="제목을 입력해주세요." name="board_title" class="form-control" style="width: 840px" value="${update.board_title}"/></td><br>
 								</tr>
 
 								<tr>
@@ -156,7 +168,7 @@ $("#update_btn").on("click", function(){
 					</div>
 
 
-				<div style="margin-left: 1px;">
+						<div style="margin-left: auto; margin-right: auto; width: fit-content;">
 					<button type="submit" class="btn btn-primary">수정</button>
 					<a href="/board/list" class="btn btn-danger" id="cancel_btn">취소</a>
 				</div>

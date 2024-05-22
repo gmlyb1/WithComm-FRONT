@@ -13,8 +13,9 @@ public interface ReplyService {
 	
 	public void replyDelete(int reply_no)throws Exception;
 
-	public void replyUpdate(BoardVO bvo) throws Exception;
 	
 	// 버튼 댓글 수정
-	public void modifyReply(int reply_no,String edited_content) throws Exception;
+	public void modifyReply(int reply_no,int board_no, String reply_content) throws Exception;
+
+
 }

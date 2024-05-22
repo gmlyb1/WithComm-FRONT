@@ -7,6 +7,7 @@ import java.util.Map;
 import javax.inject.Inject;
 
 import org.apache.ibatis.session.SqlSession;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.with.community.vo.BoardVO;
 import com.with.community.vo.ReplyVO;
@@ -45,13 +46,18 @@ public class ReplyDAOImpl implements ReplyDAO {
 	
 	// 버튼 댓글 수정
 	@Override
-	public void modifyReply(int reply_no,String edited_content) throws Exception {
+	public void modifyReply(@RequestParam("reply_no") int reply_no,@RequestParam("board_no") int board_no,@RequestParam("reply_content") String reply_content) throws Exception {
+		try {
+			Map<String, Object> paramMap = new HashMap<>();
+			paramMap.put("reply_content", reply_content);
+			paramMap.put("reply_no", reply_no);
+			paramMap.put("board_no", board_no);
+			
+			sqlSession.update("namespace.modifyReply",paramMap);
+		}catch (Exception e) {
+			e.printStackTrace();
+			System.out.println("실패 이유 :" + e );
+		}
 		
-		Map<String, Object> paramMap = new HashMap<>();
-		paramMap.put("edited_content", edited_content);
-		paramMap.put("reply_no", reply_no);
-		
-		
-		sqlSession.update("namespace.modifyReply",paramMap);
 	}
 }

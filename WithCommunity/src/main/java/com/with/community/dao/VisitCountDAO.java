@@ -8,5 +8,5 @@ public interface VisitCountDAO {
 	
 	public void updateVisitCount();
 	
-	public VisitCountVO selectVisitCount();
+	public VisitCountVO selectVisitCount(VisitCountVO vvo);
 }

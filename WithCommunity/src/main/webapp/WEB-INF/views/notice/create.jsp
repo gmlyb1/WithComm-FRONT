@@ -4,6 +4,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <!-- include summernote css/js -->
 <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.css" rel="stylesheet">
@@ -20,19 +21,19 @@ $(document).ready(function() {
 	function _onSubmit() {
 
 		if ($("#notice_writer").val() == "") {
-			alert("작성자를 입력해주세요");
+			swal.fire("작성자를 입력해주세요");
 			$("#notice_writer").focus();
 			return false;
 		}
 
 		if ($("#notice_title").val() == "") {
-			alert("제목을 입력해주세요");
+			swal.fire("제목을 입력해주세요");
 			$("#notice_title").focus();
 			return false;
 		}
 
 		if ($("#notice_content").val() == "") {
-			alert("내용을 입력해주세요");
+			swal.fire("내용을 입력해주세요");
 			$("#notice_content").focus();
 			return false;
 		}
@@ -68,14 +69,22 @@ $(document).ready(function() {
 });
 </script>
 
-
-
 <%@include file="../include/header.jsp"%>
-<br>
+<br><br><br>
 <div class="row" style="margin-bottom: 20px; margin-left: 1px;">
-	<div class="col-lg-12">
-		<h1 class="page-header">글작성</h1>
-	</div>
+  <strong>
+	<ol class="breadcrumb breadcrumb-style2 mb-0">
+      <li class="breadcrumb-item">
+        <a href="javascript:void(0);">게시판</a>
+      </li>
+      <li class="breadcrumb-item">
+        <a href="javascript:void(0);">공지사항</a>
+      </li>
+      <li class="breadcrumb-item">
+        <a href="javascript:void(0);">글 쓰기</a>
+      </li>
+    </ol>
+  </strong>
 </div>
 
 <div class="panel" style="margin-left: 1px;">
@@ -94,33 +103,33 @@ $(document).ready(function() {
 							</colgroup>
 							<tbody>
 								<tr>
-									<th class="active">작성자</th>
+									<th class="active">작성자</th><br>
 									<td class="form-inline">
 									<input type="text" id="notice_writer" name="notice_writer" class="form-control" style="width: 200px" value="${member.me_name}" readonly />
 									</td>
 								</tr>
 								<tr>
-									<th class="active">제목</th>
+									<th class="active">제목</th><br>
 									<td class="form-inline">
 										<input type="text" id="notice_title" name="notice_title" placeholder="제목을 입력해주세요." class="form-control" style="width: 840px" />
 									</td>
 								</tr>
 
 								<tr>
-									<th class="active">내용</th>
+									<th class="active">내용</th><br>
 									<td class="form-inline">
 										<textarea id="notice_content" name="notice_content" cols="100" rows="10" placeholder="내용을 입력해주세요." class="form-control"></textarea>
 									</td>
 								</tr>
 								<tr>
 									 <td>
-										<input type="checkbox" class="form-check-input" id="isFixed" name="isFixed" onchange="YnCheck(this);"><label for="isFixed">&nbsp;&nbsp;상단 고정</label>								
+										<input type="checkbox" class="form-check-input" id="isFixed" name="isFixed" onchange="YnCheck(this);"><label for="isFixed" >&nbsp;&nbsp;상단 고정</label>								
 									</td> 
 								</tr>
 							</tbody>
 						</table>
 					</div>
-					<div style="margin-left: 1px;">
+							<div style="margin-left: auto; margin-right: auto; width: fit-content;">
 						<button type="submit" class="btn btn-primary">등록</button>
 						<a id="cancelBtn" href="/notice/list" class="btn btn-danger">취소</a>
 					</div>

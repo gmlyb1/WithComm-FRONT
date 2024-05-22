@@ -18,7 +18,6 @@ public class ReplyVO {
 	private String reply_writer;
 	private Timestamp reply_regdate;
 	
-	private String edited_content;
 
 	
 }

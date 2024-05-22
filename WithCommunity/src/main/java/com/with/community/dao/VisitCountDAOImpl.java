@@ -24,8 +24,8 @@ public class VisitCountDAOImpl implements VisitCountDAO{
 	}
 
 	@Override
-	public VisitCountVO selectVisitCount() {
-		return sqlSession.selectOne("namespace.selectVisitCount");
+	public VisitCountVO selectVisitCount(VisitCountVO vvo) {
+		return sqlSession.selectOne("namespace.selectVisitCount",vvo);
 	}
 
 }

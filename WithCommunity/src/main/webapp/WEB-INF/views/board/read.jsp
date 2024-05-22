@@ -4,6 +4,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%@include file="../include/header.jsp"%>
 
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <script
 	src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script type="text/javascript">
@@ -43,8 +44,9 @@
 			$('#editModal').modal('hide');
 		});
 		
+		
 		$('#submitModifyReply').on('click', function() {
-		    var edited_content = $('#editedContent').val();
+		    var reply_content = $('#reply_content').val();
 		    var reply_no = $('#editReplyNo').val();
 		    var board_no = $('#board_no').val();
 		    
@@ -55,20 +57,26 @@
 		        data: {
 		        	board_no : board_no,
 		            reply_no: reply_no, // Correct the variable name
-		            edited_content: edited_content // Correct the variable name
+		            reply_content: reply_content // Correct the variable name
 		        },
 		        success: function(response) {
-		            alert('성공');
+		        	//console.log(response);
+		        	console.log("reply_content:" + reply_content);
+		            alert('댓글 수정에 성공하였습니다.');
+		            $('#editModal').modal('hide');
+		            location.reload();
 		        },
 		        error: function(xhr, textStatus, errorThrown) {
 		            alert('실패: ' + xhr.status + ' ' + errorThrown);
 		        }
 		        
 		    });
-		    //$('#editModal').modal('hide');
+		  
 		});
 		//끝
 	});
+	
+	
 	
 	function remove_replyNo(data1, data2) {
 		if (!confirm("삭제 하시겠습니까?"))
@@ -82,7 +90,7 @@
 	// 댓글 수정 모달
 	function openEditModal(replyNo, content) {
 		$('#editReplyNo').val(replyNo);
-		$('#editedContent').val(content);
+		$('#reply_content').val(content);
 		$('#editModal').modal('show');
 	}
 	
@@ -118,6 +126,18 @@
         border: 1px solid #ccc;
         border-radius: 4px;
     }
+    
+    .page-header {
+    	font-family: 'Noto Sans KR', sans-serif; /* 한글을 위한 웹 폰트 */
+            font-size: 36px; /* 폰트 크기 조절 */
+            color: #ffffff; /* 텍스트 색상 */
+            background: linear-gradient(to right, #7367F0, #CE9FFC); /* Sneat 테마 그라디언트 배경 */
+            padding: 20px; /* 텍스트 주위의 여백 */
+            border-radius: 10px; /* 둥근 모서리 */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* 부드러운 그림자 */
+            text-align: center; /* 텍스트 가운데 정렬 */
+            margin-bottom: 20px; /* 아래쪽 여백 */
+    }
 </style>
 
 <div class="row" style="margin-bottom: 20px; margin-left: 1px;">
@@ -125,17 +145,8 @@
 		<span style="color: red" class="text-center"><strong>
 				현재 페이지의 글쓰기,수정,삭제는 회원만 이용 가능합니다.</strong></span>
 	</c:if>
-
-	<%-- <c:if test="${member != null}">
-		<span style="color: blue" class="text-center"><strong>
-				댓글작성은 관리자만 가능합니다.</strong></span>
-	</c:if> --%>
 	<div class="col-lg-12"><br>
 		<h1 class="page-header text-left">상세 페이지</h1>
-		<c:if test="${member != null}">
-			<span style="color: blue" class="text-center"><strong>
-					댓글작성은 관리자만 가능합니다.</strong></span>
-		</c:if>
 	</div>
 </div>
 
@@ -180,11 +191,10 @@
 					<br>
 					
 					<!-- 게시판 글보기  -->
-					<div style="margin-left: 1px;">
+					&nbsp;&nbsp;&nbsp;<div style="margin-left: 1px;">
 						<c:if test="${member.me_name == read.board_writer}">
-							<button type="button" class="btn btn-success"
-								onclick="location.href='/board/update?board_no=${read.board_no}';">수정</button>
-							<button type="submit" class="btn btn-danger" id="delete_btn">삭제</button>
+							&nbsp;&nbsp;&nbsp;<button type="button" class="btn btn-success" onclick="location.href='/board/update?board_no=${read.board_no}';">수정</button>
+							&nbsp;&nbsp;&nbsp;<button type="submit" class="btn btn-danger" id="delete_btn">삭제</button>
 						</c:if>
 						<button onclick="location.href='/board/list'" type="button"
 							id="list_btn" class="btn btn-primary">목록</button>
@@ -220,7 +230,7 @@
 											<p>
 												<c:if test="${member.adminCk == 1  || member.me_name == replyList.reply_writer}">
 													<!-- <a class="btn btn-primary" href="#">댓글 수정</a> -->
-													<a class="btn btn-primary" href="javascript:void(0);" onclick="openEditModal(${replyList.reply_no}, '${replyList.reply_content}')">댓글 수정</a>
+													<a class="btn btn-primary" href="javascript:void(0);" onclick="openEditModal(${replyList.reply_no}, '${replyList.reply_content}')">수정</a>
 													<a class="btn btn-danger" href="javascript:remove_replyNo(${replyList.reply_no},${replyList.board_no});">삭제</a>
 												</c:if>
 											</p></td>
@@ -239,7 +249,6 @@
 
 				<!-- 댓글 작성 시작 -->
 				<%-- <c:if test="${member.me_grade == '최고관리자' }"> --%>
-				<c:if test="${member != null }">
 					<div>
 						<form method="post" action="/reply/write">
 							<input type="hidden" name="board_no" value="${read.board_no}">
@@ -269,7 +278,6 @@
 							</p>
 						</form>
 					</div>
-				</c:if>
 
 				<!-- 댓글 작성 끝 -->
 				<div class="my-3 p-3 bg-white rounded shadow-sm">
@@ -326,8 +334,8 @@
                 <form id="editForm">
                     <input type="hidden" name="reply_no" id="editReplyNo">
                     <div class="form-group">
-                        <label for="editedContent">댓글 내용:</label>
-                        <textarea class="form-control" id="editedContent" name="edited_content"></textarea>
+                        <label for="reply_content">댓글 내용:</label>
+                        <textarea class="form-control" id="reply_content" name="reply_content"></textarea>
                     </div>
                 </form>
             </div>

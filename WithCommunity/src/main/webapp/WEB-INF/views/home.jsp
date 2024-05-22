@@ -95,10 +95,10 @@
 											</div>
 										</div>
 									</div>
-									<span class="fw-semibold d-block mb-1">Profit</span>
-									<h3 class="card-title mb-2">$12,628</h3>
+									<span class="fw-semibold d-block mb-1">하루 방문자</span>
+									<h3 class="card-title mb-2">${HomeVisitCnt.day} 명</h3>
 									<small class="text-success fw-semibold"><i
-										class="bx bx-up-arrow-alt"></i> +72.80%</small>
+										class="bx bx-up-arrow-alt"></i> 1일 대비 ${HomeVisitCnt.yesterday_diff} 명</small>
 								</div>
 							</div>
 						</div>
@@ -125,10 +125,10 @@
 											</div>
 										</div>
 									</div>
-									<span>Sales</span>
-									<h3 class="card-title text-nowrap mb-1">$4,679</h3>
+									<span><strong>주 방문자</strong></span>
+									<h3 class="card-title text-nowrap mb-1"><strong>${HomeVisitCnt.week} 명</strong></h3>
 									<small class="text-success fw-semibold"><i
-										class="bx bx-up-arrow-alt"></i> +28.42%</small>
+										class="bx bx-up-arrow-alt"></i> 전주 대비 ${HomeVisitCnt.last_week_diff} 명</small>
 								</div>
 							</div>
 						</div>
@@ -205,10 +205,10 @@
 											</div>
 										</div>
 									</div>
-									<span class="d-block mb-1">Payments</span>
-									<h3 class="card-title text-nowrap mb-2">$2,456</h3>
-									<small class="text-danger fw-semibold"><i
-										class="bx bx-down-arrow-alt"></i> -14.82%</small>
+									<span class="d-block mb-1"><strong>월 방문자</strong></span>
+									<h3 class="card-title text-nowrap mb-2">${HomeVisitCnt.month} 명</h3>
+									<small class="text-success fw-semibold"><i
+										class="bx bx-up-arrow-alt"></i> 전월 대비 ${HomeVisitCnt.last_month_diff} 명</small>
 								</div>
 							</div>
 						</div>
@@ -233,10 +233,10 @@
 											</div>
 										</div>
 									</div>
-									<span class="fw-semibold d-block mb-1">Transactions</span>
-									<h3 class="card-title mb-2">$14,857</h3>
+									<span class="fw-semibold d-block mb-1">연 방문자</span>
+									<h3 class="card-title mb-2">${HomeVisitCnt.year} 명</h3>
 									<small class="text-success fw-semibold"><i
-										class="bx bx-up-arrow-alt"></i> +28.14%</small>
+										class="bx bx-up-arrow-alt"></i> 작년 대비 ${HomeVisitCnt.last_year_diff} 명</small>
 								</div>
 							</div>
 						</div>

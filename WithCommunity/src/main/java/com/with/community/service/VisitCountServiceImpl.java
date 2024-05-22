@@ -24,8 +24,8 @@ public class VisitCountServiceImpl implements VisitCountService{
 	}
 
 	@Override
-	public VisitCountVO selectVisitCount() {
-		return visitCountDAO.selectVisitCount();
+	public VisitCountVO selectVisitCount(VisitCountVO vvo) {
+		return visitCountDAO.selectVisitCount(vvo);
 	}
 
 }

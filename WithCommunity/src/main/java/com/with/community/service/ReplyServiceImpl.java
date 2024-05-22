@@ -32,13 +32,9 @@ public class ReplyServiceImpl implements ReplyService {
 	}
 
 	@Override
-	public void replyUpdate(BoardVO bvo) throws Exception{
-		replyDAO.replyUpdate(bvo);
+	public void modifyReply(int reply_no, int board_no,String reply_content) throws Exception{
+		replyDAO.modifyReply(reply_no,board_no,reply_content);
 	}
 
-	// 버튼 댓글 수정
-	@Override
-	public void modifyReply(int reply_no,String edited_content) throws Exception {
-		replyDAO.modifyReply(reply_no,edited_content);
-	}
+
 }

@@ -1,10 +1,13 @@
 package com.with.community.controller;
 
 import java.io.File;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.UUID;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
@@ -16,15 +19,22 @@ import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.with.community.service.AccountService;
 import com.with.community.util.FileUtils;
 import com.with.community.vo.AccountVO;
+
+import net.sf.json.JSONObject;
 
 @Controller
 @RequestMapping(value ="/account/*")
@@ -47,9 +57,16 @@ public class AccountController {
 //    }
 	
 	@RequestMapping(value="/idChk" , method= RequestMethod.POST)
-	public int idChk(AccountVO vo) throws Exception {
-		int result = accountService.idChk(vo);
-		return result;
+	@ResponseBody
+	public String idChk(@RequestBody String filterJSON,HttpServletResponse response, Model model) throws Exception {
+		
+		
+	AccountVO avo = new AccountVO();
+	int idChk = accountService.idChk(avo);
+	
+	model.addAttribute("idChk", idChk);
+		
+		return null;
 	}
 	
 	
@@ -74,7 +91,7 @@ public class AccountController {
 //				vo.setMe_pwd(pwd);
 				
 				accountService.register(vo);
-				rttr.addFlashAttribute("msg", "회원가입이 완료되었습니다");
+				rttr.addFlashAttribute("msg", "회원가입이 완료되었습니다.\n 관리자의 승인 이후에 서비스 사용이 가능합니다.");
 			}
 		} catch (Exception e) {
 			rttr.addFlashAttribute("msg", "회원가입 도중 에러가 발생했습니다!");
@@ -147,38 +164,42 @@ public class AccountController {
 	@RequestMapping(value="/profileUdt" , method=RequestMethod.POST)
 	public String profileUdt(MultipartHttpServletRequest multiRequest, Model model) throws Exception
 	{
+		logger.info("실행");
 		
 		String me_image = "";
 		
-		// 해당 파일 가져오기 
 		MultipartFile file = multiRequest.getFile("me_image");
 		
 		if(file.getOriginalFilename() == "") {
-			logger.info(" 기존 파일 " );
+			logger.info("기존 파일에 넣기");
 			me_image = multiRequest.getParameter("default_file");
-			
-		}else {
-			
-			// 절대경로 설정 
-			String file_path = multiRequest.getSession().getServletContext().getRealPath("/resources/upload/mem_Image");
-			
-			AccountVO avo = new AccountVO();
-			
-			if(file.getOriginalFilename() != "") {
-				
-				String uuid = UUID.randomUUID().toString();
-				logger.info("file === " + file);
-				String file_newName = uuid + "_" + file.getOriginalFilename();
-				file.transferTo(new File(file_path + "/" + file_newName));
-				
-				logger.info("파일 업로드 완료!");
-				
-				avo.setMe_image(file_newName);
-			}
-			
+		} else {
+			logger.info("변경 파일에 넣기");
 		}
-	
-		return "/account/profile";
+		
+		String file_path = multiRequest.getSession().getServletContext().getRealPath("/resources/upload/mem_Image");
+		
+		String uuid = UUID.randomUUID().toString();
+		
+		me_image = uuid + "_" + file.getOriginalFilename();
+		
+		file.transferTo(new File(file_path + "/" + me_image));
+		
+		File f = new File(file_path + "/" + multiRequest.getParameter("default_file"));
+		if(f.exists()) {
+			f.delete();
+		}
+		
+		AccountVO avo = new AccountVO();
+		
+		avo.setMe_image((String) multiRequest.getParameter("me_image"));
+		
+		int result = accountService.profileUdt(avo);
+		
+		logger.info("result : " + result);
+		model.addAttribute("updateAcc_result", result);
+		
+		return "redirect:/account/profile";
 		
 	}
 	

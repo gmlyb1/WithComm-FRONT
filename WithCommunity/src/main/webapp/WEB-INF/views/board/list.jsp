@@ -5,13 +5,22 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%@include file="../include/header.jsp"%>
 
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script type="text/javascript">
 	$(document).ready(function() {
 		var msg = "${msg}";
 		if (msg != "") {
-			alert(msg);
+			swal.fire(msg);
 		}
+		
+		 // 클릭된 페이지를 감지하여 active 클래스를 설정하는 함수
+        $("#pageUL").on("click", ".page-item", function() {
+            // 이전에 active 클래스가 설정된 페이지에서 해당 클래스를 제거
+            $(".page-item.active").removeClass("active");
+            // 클릭된 페이지에 active 클래스 설정
+            $(this).addClass("active");
+        });
 		
 		// new 스티커 처리
 		var currentTime = new Date().getTime();
@@ -52,6 +61,49 @@
 	});
 });
 </script>
+<style type="text/css">
+.pagination {
+    display: flex;
+    list-style: none;
+    padding-left: 0;
+}
+
+.page-item {
+    margin-right: 5px; /* 페이지 사이의 간격을 조정할 수 있습니다. */
+}
+
+.page-link {
+    position: relative;
+    display: block;
+    padding: .5rem .75rem;
+    line-height: 1.25;
+    color: #007bff;
+    background-color: #fff;
+    border: 1px solid #dee2e6;
+    text-decoration: none;
+}
+
+.page-link:hover {
+    z-index: 2;
+    color: #0056b3;
+    background-color: #e9ecef;
+    border-color: #dee2e6;
+}
+
+.page-item.disabled .page-link {
+    color: #6c757d;
+    pointer-events: none;
+    background-color: #fff;
+    border-color: #dee2e6;
+}
+
+.page-item.active .page-link {
+    z-index: 3;
+    color: #fff;
+    background-color: #007bff;
+    border-color: #007bff;
+}
+</style>
 
 <div class="container-fluid">
 	<br>
@@ -60,6 +112,7 @@
 
 	<div class="card shadow mb-4">
 		<div class="card-header py-3">
+		  <strong>
 			<ol class="breadcrumb breadcrumb-style2 mb-0">
                <li class="breadcrumb-item">
                  <a href="javascript:void(0);">게시판</a>
@@ -68,6 +121,7 @@
                  <a href="javascript:void(0);">자유게시판</a>
                </li>
              </ol>
+           </strong>
 			<br>
 			
 			<select class="form-select" id="bgno" name="bgno">

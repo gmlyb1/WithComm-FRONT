@@ -33,7 +33,8 @@
     <link rel="stylesheet" href="/resources/assets/css/demo.css" />
     <link rel="stylesheet" href="/resources/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css" />
     <link rel="stylesheet" href="/resources/assets/vendor/libs/apex-charts/apex-charts.css" />
-
+	
+	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="/resources/assets/vendor/js/helpers.js"></script>
     <script src="/resources/assets/js/config.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
@@ -86,34 +87,44 @@
 	
 	<script type="text/javascript">
 	$(document).ready(function(){
+		var msg = "${msg}"
+			
+		if (msg != "") {
+			swal(msg);
+		}
+		
 		$("#submit").on("click", function(){
 			if($("#me_email").val()==""){
-				alert("아이디를 입력해주세요.");
+				swal.fire("아이디를 입력해주세요.");
 				$("#me_email").focus();
 				return false;
 			}
 			if($("#me_pwd").val()==""){
-				alert("비밀번호를 입력해주세요.");
+				swal.fire("비밀번호를 입력해주세요.");
 				$("#me_pwd").focus();
 				return false;
 			}
+			
+			
+			
 		});
 	})
 	</script>
-	<script type="text/javascript">
-	$(document).ready(function() {
-		var msg = "${msg}"
-	
-		if (msg != "") {
-			alert(msg);
+	<style type="text/css">
+		.loader-container {
+		  position: fixed; /* 화면에 고정되도록 설정 */
+		  top: 50%; /* 상단에서 중앙으로 이동 */
+		  left: 50%; /* 좌측에서 중앙으로 이동 */
+		  transform: translate(-50%, -50%); /* 중앙 정렬 */
+		  z-index: 9999; /* 다른 요소 위에 표시되도록 설정 */
 		}
-	});
-	</script>
+		
+	</style>
   </head>
 
   <body>
     <!-- Content -->
-
+	
 
     <div class="container-xxl">
       <div class="authentication-wrapper authentication-basic container-p-y">
@@ -202,7 +213,7 @@
                   <div class="d-flex justify-content-between">
                     <label class="form-label" for="password">Password</label>
                     <a href="/account/forgotPass">
-                      <small>Forgot Password?</small>
+                      <small>비밀번호 찾기</small>
                     </a>
                   </div>
                   <div class="input-group input-group-merge">
@@ -229,10 +240,11 @@
               </form>
 
               <p class="text-center">
-                <span>New on our platform?</span>
-                <a href="auth-register-basic.html">
-                  <span>Create an account</span>
+                <span>WithComm 방문이 처음이신가요?</span>
+                <a href="/account/register">
+                  <span>회원가입</span>
                 </a>
+               
               </p>
             </div>
           </div>
@@ -240,6 +252,13 @@
         </div>
       </div>
     </div>
+    
+   <!-- Loader -->
+	<!-- <div class="loader-container">
+	  <div class="spinner-border text-primary" role="status">
+	    <span class="visually-hidden">Loading...</span>
+	  </div>
+	</div> -->
     <!-- Core JS -->
     <!-- build:js assets/vendor/js/core.js -->
     <script src="/resources/assets/vendor/libs/jquery/jquery.js"></script>

@@ -3,6 +3,7 @@ package com.with.community.service;
 import java.util.List;
 
 import javax.inject.Inject;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
@@ -43,7 +44,7 @@ public class BoardServiceImpl implements BoardService {
 	@Transactional(isolation = Isolation.READ_COMMITTED)
 	@Override
 	public BoardVO BoardRead(int board_no) throws Exception {
-		
+				
 		boardDAO.BoardHit(board_no);
 		return boardDAO.BoardRead(board_no);
 	}

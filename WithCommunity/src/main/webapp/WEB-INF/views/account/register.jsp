@@ -35,43 +35,73 @@
     <link rel="stylesheet" href="/resources/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css" />
     <link rel="stylesheet" href="/resources/assets/vendor/libs/apex-charts/apex-charts.css" />
 
+	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="/resources/assets/vendor/js/helpers.js"></script>
     <script src="/resources/assets/js/config.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     
-  	    <script type="text/javascript">
+    <script type="text/javascript">
+    
+   
+	
+    
 	$(document).ready(function() {
 		var msg = "${msg}"
 		var emailInput = $("#me_email");
 		
 		if (msg != "") {
-			alert(msg);
+			swal(msg);
 		}
+		
+		$("#idChkBtn").on("click",function() {
+			duplicate();
+		});
+		
+		
+			
+		/*  function duplicate() {
+			 var idChk = "${idChk}"
+			 $.ajax({
+				url : "/account/idChk",
+				type : "POST",
+				data : {
+					
+				},
+				success : function(data) {
+					console.log("idChk:"+idChk);
+				},
+				error : function(error) {
+					console.log(error);
+					alert("요청 처리 중 오류가 발생하였습니다."+error);
+				}
+		});
+		} */
+		
 		
 		$("#submit").on("click", function(){
 			var email = emailInput.val();
 			
 			if(email === ""){
-				alert("아이디를 입력해주세요.");
+				swal.fire("email을 입력해주세요.");
 				//$("#me_email").focus();
 				emailInput.focus();
 				return false;
 			}
 			
 			if(email.substr(email.length - 9) !== "@with.com") {
-				alert("올바른 아이디 형식을 입력해 주세요.");
+				swal("올바른 email 형식을 입력해 주세요.");
 				//$("#me_email").focus();
 				emailInput.focus();
 				return false;
 			}
 			
 			if($("#me_pwd").val() === ""){
-				alert("비밀번호를 입력해주세요.");
+				swal.fire("비밀번호를 입력해주세요.");
 				$("#me_pwd").focus();
 				return false;
 			}
 			if($("#me_name").val() === ""){
-				alert("닉네임을 입력해주세요.");
+				swal.fire("닉네임을 입력해주세요.");
 				$("#me_name").focus();
 				return false;
 			}
@@ -80,10 +110,10 @@
 		//체크박스에 동의하지 않을경우는 회원가입  처리 되지 않도록 처리.
 		$("#formAuthentication").on("submit",function() {
 			if(!$("#terms-conditions").prop("checked")) {
-				alert("위드컴 회원가입 규칙에 동의해 주세요.");
+				swal.fire("위드컴 회원가입 규칙에 동의해 주세요.");
 				return false;
 			}
-		})
+		});
 		//끝
 	});
 </script> 
@@ -164,7 +194,14 @@
               <form id="formAuthentication" class="mb-3" action="/account/register" method="POST">
                 <div class="mb-3">
                   <label for="me_email" class="form-label">Email</label>
+                 <!--  <input type="hidden" id="me_id_yn" name="me_id_yn" value="N"/> -->
                   <input type="email" class="form-control" id="me_email" name="me_email" placeholder="Enter your email" />
+				  	<!-- <a href="#" class="btn btn-success btn-icon-split" style="text-align:center;" id="idChkBtn">
+				  		<span class="icon text-white-50">
+				  			<i class="fas fa-check"></i>
+				  		</span>
+				  		<span class="text">중복체크</span>
+				  	</a> -->
                 </div>
                 <div class="mb-3">
                   <label for="me_name" class="form-label">Username</label>

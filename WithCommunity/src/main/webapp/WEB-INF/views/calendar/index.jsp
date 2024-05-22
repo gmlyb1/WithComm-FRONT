@@ -12,62 +12,111 @@
 
 </script>
  <style>
-        /* Calendar container */
-        .calendar {
-            width: 100%;
-            margin: 20px auto;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            background-color: #f9f9f9;
-            box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
-        }
-        
-        /* Navigation */
-        .navigation {
-            text-align: center;
-            padding: 10px;
-            background-color: #A0D9E2;
-            color: #fff;
-            font-weight: bold;
-        }
-        
-        /* Month and Year */
-        .this_month {
-            font-size: 18px;
-            margin: 0 10px;
-        }
-        
-        /* Calendar table */
-        .calendar_body {
-            width: 100%;
-        }
-        
-        .day {
-            text-align: center;
-            padding: 10px;
-            font-weight: bold;
-            border-bottom: 1px solid #ccc;
-        }
-        
-        /* Days of the week */
-        .sun, .sat {
-            color: red;
-        }
-        
-        /* Today button */
-        .today_button_div {
-            margin: 20px auto;
-            text-align: center;
-        }
-        
-        /* Schedule links */
-        .date_subject {
-            text-decoration: none;
-        }
-        
-        .date_subject:hover {
-            text-decoration: underline;
-        }
+    /* Calendar container */
+    .calendar {
+        width: 100%;
+        margin: 20px auto;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        background-color: #fff;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        font-family: Arial, sans-serif;
+    }
+
+    /* Navigation */
+    .navigation {
+        text-align: center;
+        padding: 15px 0;
+        background-color: #007bff;
+        color: #fff;
+        font-weight: bold;
+        border-top-left-radius: 8px;
+        border-top-right-radius: 8px;
+    }
+
+    /* Month and Year */
+    .this_month {
+        font-size: 24px;
+        margin: 0 10px;
+    }
+
+    /* Calendar table */
+    .calendar_body {
+        width: 100%;
+    }
+
+    .day {
+        text-align: center;
+        padding: 10px;
+        font-weight: bold;
+        border-bottom: 1px solid #ddd;
+        color: #555;
+    }
+
+    /* Days of the week */
+    .sun {
+        color: #ff5252;
+    }
+
+    .mon {
+        color: #007bff;
+    }
+
+    .tue {
+        color: #009688;
+    }
+
+    .wed {
+        color: #673ab7;
+    }
+
+    .thu {
+        color: #ff9800;
+    }
+
+    .fri {
+        color: #f44336;
+    }
+
+    .sat {
+        color: #4caf50;
+    }
+
+    /* Today button */
+    .today_button_div {
+        margin: 20px auto;
+        text-align: center;
+    }
+
+    /* Schedule links */
+    .date_subject {
+        text-decoration: none;
+        color: #007bff;
+    }
+
+    .date_subject:hover {
+        text-decoration: underline;
+    }
+
+    /* Button styles */
+    .buttonstyle {
+        background-color: #007bff;
+        color: #fff;
+        border: none;
+        border-radius: 4px;
+        padding: 8px 16px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 14px;
+        margin-bottom: 10px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+    }
+
+    .buttonstyle:hover {
+        background-color: #0056b3;
+    }
     </style>
 <%@ include file="../include/header.jsp"%>
 <!--------------------------------- 캘린더 영역 ------------------------------>

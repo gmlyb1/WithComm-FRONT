@@ -17,5 +17,5 @@ public interface ReplyDAO {
 		
 		public void replyUpdate(BoardVO bvo) throws Exception;
 		
-		public void modifyReply(int reply_no,String edited_content) throws Exception;
+		public void modifyReply(int reply_no,int board_no, String reply_content) throws Exception;
 }

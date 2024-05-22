@@ -45,7 +45,7 @@ $("#list_btn").on("click", function(){ location.href = "/board/list?page=${scri.
 		if (!confirm("삭제 하시겠습니까?"))
 			return false;
 		else {
-			location.href = "/reply/delete?reply_no=" + data1 + "&board_no="
+			location.href = "/reply/delete?reply_no=" + data1 + "&inq_no="
 					+ data2;
 		}
 	}
@@ -78,7 +78,6 @@ $("#list_btn").on("click", function(){ location.href = "/board/list?page=${scri.
 					<input type="hidden" id="FILE_NO" name="FILE_NO" value="">
 					<input type="hidden" id="inq_no" name="inq_no"
 						value="${read.inq_no}" />
-					<%-- <input type="hidden" id="reply_no" name="reply_no" value="${replyList.board_no}"> --%>
 					<!-- 게시판 글보기  -->
 					<div class="container">
 						<div class="row">
@@ -118,10 +117,10 @@ $("#list_btn").on("click", function(){ location.href = "/board/list?page=${scri.
 				<div style="margin-left: 1px;">
 						<c:if test="${member.me_name == read.inq_name}">
 							<button type="button" class="btn btn-success"
-								onclick="location.href='/board/update?board_no=${read.board_no}';">수정</button>
+								onclick="location.href='/inquiry/update?inq_no=${read.inq_no}';">수정</button>
 							<button type="submit" class="btn btn-danger" id="delete_btn">삭제</button>
 						</c:if>
-						<button onclick="location.href='/board/list'" type="button"
+						<button onclick="location.href='/inquiry/list'" type="button"
 							id="list_btn" class="btn btn-primary">목록</button>
 						<br>
 						<hr>
@@ -239,7 +238,6 @@ $("#list_btn").on("click", function(){ location.href = "/board/list?page=${scri.
 			</div>
 		</div>
 	</div>
-</div>
 
 
 

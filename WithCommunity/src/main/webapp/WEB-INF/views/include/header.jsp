@@ -54,7 +54,7 @@
 	<link rel="stylesheet"
 		href="/resources/css/main.css">
 	
-	
+	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <script src="/resources/assets/vendor/js/helpers.js"></script>
     <script src="/resources/assets/js/config.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
@@ -156,7 +156,7 @@
 		connectWs();
 		
 		function connectWs() {
-			var ws = newe SockJS("/echo");
+			var ws = new SockJS("/echo");
 			sock = ws
 			
 			ws.onopen = function() {
@@ -196,7 +196,7 @@
 				type : 'post',
 				success : function(data){
 					console.log(data);
-					alert("성공");
+					swal.fire("성공");
 				}
 			});
 			
@@ -347,22 +347,8 @@
                 <div data-i18n="Tables">달력</div>
               </a>
             </li>
-            
-             <!-- Tables -->
-            <li class="menu-item">
-              <a href="/inquiry/list" class="menu-link">
-                <i class="menu-icon tf-icons bx bx-table"></i>
-                <div data-i18n="Tables">운영자 상담</div>
-              </a>
-            </li> 
             <!-- Misc -->
            <li class="menu-header small text-uppercase"><span class="menu-header-text">Misc</span></li>
-            <li class="menu-item">
-              <a href="#" target="_blank" class="menu-link">
-                <i class="menu-icon tf-icons bx bx-support"></i>
-                <div data-i18n="Support">운영진 상담</div>
-              </a>
-            </li>
             <li class="menu-item">
               <a href="#" target="_blank" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-file"></i>

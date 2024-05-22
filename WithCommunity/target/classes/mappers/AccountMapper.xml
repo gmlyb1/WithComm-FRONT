@@ -68,7 +68,7 @@
 	</select>
 	
 	<select id="selectHomeList" parameterType="AccountVO" resultType="AccountVO">
-		select * from tbl_member limit 6
+		select * from tbl_member where state = '관리자' or state = '일반회원' limit 6
 	</select>
 	
 	<!-- 회원 탈퇴 -->

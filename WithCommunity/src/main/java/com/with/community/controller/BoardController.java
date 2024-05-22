@@ -9,6 +9,7 @@ import javax.inject.Inject;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -102,27 +103,29 @@ public class BoardController {
 		@RequestMapping(value = "/read", method=RequestMethod.GET)
 		public String BoardRead(
 				/* @ModelAttribute("scri") SearchCriteria scri, */@RequestParam("board_no") int board_no,BoardVO vo, Model model,HttpServletRequest request,HttpServletResponse response) throws Exception {
-
-			Cookie[] cookies = request.getCookies();
-			String boardCookieValue = "";
-			if(cookies != null && cookies.length > 0) {
-				for(Cookie c : cookies) {
-					if(c.getName().equals("boardCookie")) {
-						boardCookieValue = c.getValue();
-					}
-				}
-			}
+			HttpSession session = request.getSession();
+			String boardKey = "board_" + board_no;
 			
-			if(boardCookieValue.contains(String.valueOf(board_no))) {
-				model.addAttribute("read", boardService.BoardRead(vo.getBoard_no()));
-				return "/board/read";
-			}
+			Long lastViewTime = (Long) session.getAttribute(boardKey);
+			Long currentTime =  System.currentTimeMillis();
 			
-			Cookie boardCookie = new Cookie("boardCookie", boardCookieValue + "|" + board_no);
-			boardCookie.setMaxAge(60 * 60 * 24);
+			logger.info("board_key: " + boardKey );
+			logger.info("lastViewTime: " + lastViewTime );
+			logger.info("currentTime: " + currentTime );
+			
+			
+//			if(lastViewTime == null || (currentTime - lastViewTime) >= 36000000) {
+//				logger.info("들어오나");
+//				boardService.updateReplyCount(board_no);
+//				
+//				session.setAttribute(boardKey, currentTime);
+//				Cookie boardCookie = new Cookie("boardCookie", boardKey);
+//				boardCookie.setMaxAge(3600);
+//				response.addCookie(boardCookie);
+//			}
 			
 			boardService.updateReplyCount(board_no);
-			 model.addAttribute("read", boardService.BoardRead(board_no));
+			model.addAttribute("read", boardService.BoardRead(board_no));
 			List<ReplyVO> replyList = replyService.replyList(vo.getBoard_no());
 			model.addAttribute("replyList", replyList);
 			// 이전글

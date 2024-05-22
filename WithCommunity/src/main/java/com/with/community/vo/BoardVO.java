@@ -29,6 +29,7 @@ public class BoardVO{
 	private int bgnoinsert;
 	
 	private int reply_no;
+	private String reply_content;
 
 	
 
