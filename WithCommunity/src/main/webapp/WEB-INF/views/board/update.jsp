@@ -5,24 +5,66 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-<script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-<script
-	src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<!-- Summernote CSS & JS -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.11/summernote-bs4.css" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.11/summernote-bs4.js"></script>
 
 <script type="text/javascript">
 	$(document).ready(function() {
-
+		
 		$(".cancel_btn").on("click", function() {
 			event.preventDefault();
 			location.href = "/board/list";
-		})
-	})
+		});
+		
+		
+		
+	});
+	
+	$('#summernote').summernote({
+	    	placeholder: 'content',
+        minHeight: 370,
+        maxHeight: null,
+        focus: true, 
+        lang : 'ko-KR'
+  	});
 
 	function _onSubmit() {
+		if ($("#board_writer").val().trim() == "") {
+			Swal.fire("작성자를 입력해주세요");
+			$("#board_writer").focus();
+			return false;
+		}
+			
+		if ($("#board_title").val().trim() == "") {
+			Swal.fire("제목을 입력해주세요");
+			$("#board_title").focus();
+			return false;
+		}
+
+		if ($("#board_content").val().trim() == "") {
+			Swal.fire("내용을 입력해주세요");
+			$("#board_content").focus();
+			return false;
+		}
+		
+		if($("#board_bgno").val().trim() == "") {
+			Swal.fire("카테고리를 선택해 주세요.");
+			$("#board_bgno").focus();
+			return false;
+		}
+		
 		if (!confirm("수정 하시겠습니까?")) {
 			return false;
 		}
+		
+		//pageNum 및 amount default 값을 폼 데이터에 추가
+		$('#write').append('<input type="hidden" name="pageNum" value="1" />');
+		$('#write').append('<input type="hidden" name="amount" value="10" />');
+		
+		return true;
 	}
 </script>
 <script type="text/javascript">
@@ -49,42 +91,8 @@ $("#update_btn").on("click", function(){
 		+"&page=${scri.page}"
 		+"&perPageNum=${scri.perPageNum}"
 		+"&searchType=${scri.searchType}&keyword=${scri.keyword}";
-})
-
-
+});
 </script>
-<script type="text/javascript">
-	function fn_addFile() {
-		var fileIndex = 1;
-		$("#fileAdd_btn")
-				.on(
-						"click",
-						function() {
-							$("#fileIndex")
-									.append(
-											"<div><input type='file' style='float:left;' name='file_"
-													+ (fileIndex++)
-													+ "'>"
-													+ "</button>"
-													+ "<button type='button' style='float:right;' id='fileDelBtn'>"
-													+ "삭제" + "</button></div>");
-						});
-		$(document).on("click", "#fileDelBtn", function() {
-			$(this).parent().remove();
-
-		});
-	}
-	var fileNoArry = new Array();
-	var fileNameArry = new Array();
-	function fn_del(value, name) {
-
-		fileNoArry.push(value);
-		fileNameArry.push(name);
-		$("#fileNoDel").attr("value", fileNoArry);
-		$("#fileNameDel").attr("value", fileNameArry);
-	}
-</script>
-
 
 <%@include file="../include/header.jsp"%>
 <br><br><br>
@@ -126,9 +134,9 @@ $("#update_btn").on("click", function(){
 							<tbody>
 								<tr>
 									<th class="active">작성자</th>
-									<td class="form-inline"><input type="text"
-										id="board_writer" name="board_writer" class="form-control"
-										style="width: 200px" value="${update.board_writer}" readonly /></td>
+									<td class="form-inline">
+										<input type="text" id="board_writer" name="board_writer" class="form-control" style="width: 200px" value="${update.board_writer}" readonly />
+									</td>
 								</tr>
 								<tr>
 									<th class="active">글 카테고리</th>
@@ -142,39 +150,28 @@ $("#update_btn").on("click", function(){
 								<tr>
 									<th class="active">제목</th>
 									<td class="form-inline">
-									<input type="text" id="board_title" placeholder="제목을 입력해주세요." name="board_title" class="form-control" style="width: 840px" value="${update.board_title}"/></td><br>
+										<input type="text" id="board_title" placeholder="제목을 입력해주세요." name="board_title" class="form-control" style="width: 840px" value="${update.board_title}"/>
+									</td>
+									<br>
 								</tr>
-
 								<tr>
 									<th class="active">내용</th>
 									<td class="form-inline">
-										<textarea id="board_content" name="board_content" cols="100" rows="10" placeholder="내용을 입력해주세요." class="form-control">
+										<textarea id="summernote" name="board_content" cols="100" rows="10" placeholder="내용을 입력해주세요." class="form-control">
 											<c:out value="${update.board_content}" />
 										</textarea>
 									</td>
 								</tr>
-								
-								<!-- <tr>
-									<td id="fileIndex">
-									<input type="file" name="file" />
-								<div>  
-			 						<button id="fileAdd_btn" class="btn btn-primary" type="button">파일추가+</button>
-								</div>
-									</td>
-								</tr> -->
-
 							</tbody>
 						</table>
 					</div>
-
-
-						<div style="margin-left: auto; margin-right: auto; width: fit-content;">
+				<div style="margin-left: auto; margin-right: auto; width: fit-content;">
 					<button type="submit" class="btn btn-primary">수정</button>
 					<a href="/board/list" class="btn btn-danger" id="cancel_btn">취소</a>
 				</div>
-				</form>
-			</div>
+			</form>
 		</div>
 	</div>
+</div>
 
 <%@include file="../include/footer.jsp"%>

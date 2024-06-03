@@ -18,28 +18,6 @@
 		});
 	})
 </script>
-<!-- <script type="text/javascript">
-$("#list_btn").on("click", function(){ location.href = "/board/list?page=${scri.page}" +"&perPageNum=${scri.perPageNum}" +"&searchType=${scri.searchType}&keyword=${scri.keyword}"; })
-</script> -->
-<!-- <script type="text/javascript">
-	$(document).ready(function() {
-		var formObj = $("form[name='replyForm']")
-		$(".replyWriteBtn").on("click", function() {
-			var formObj = $("form[name='replyForm']");
-			formObj.attr("action", "/board/WriteReply");
-			formObj.attr("method", "post");
-			formObj.submit();
-		});
-	})
-</script>
-<script type="text/javascript">
-	function fn_fileDown(fileNo) {
-		var formObj = $("form[name='readForm']");
-		$("#FILE_NO").attr("value", fileNo);
-		formObj.attr("action", "/board/fileDown");
-		formObj.submit();
-	}
-</script> -->
 <script type="text/javascript">
 	function remove_replyNo(data1, data2) {
 		if (!confirm("삭제 하시겠습니까?"))
@@ -79,41 +57,36 @@ $("#list_btn").on("click", function(){ location.href = "/board/list?page=${scri.
 					<input type="hidden" id="inq_no" name="inq_no"
 						value="${read.inq_no}" />
 					<!-- 게시판 글보기  -->
-					<div class="container">
-						<div class="row">
-							<table class="table table-striped"
-								style="text-align: center; border: 1px solid #dddddd">
-								<thead>
-									<tr>
-										<th colspan="2"
-											style="background-color: #eeeeee; text-align: center;">게시판
-											글 보기</th>
-									</tr>
-								</thead>
-
-								<tbody>
-									<tr>
-										<td style="width: 20%">글 제목</td>
-										<td colspan="2">${read.inq_title}</td>
-									</tr>
-									<tr>
-										<td>작성자</td>
-										<td colspan="2">${read.inq_name}</td>
-									</tr>
-									<tr>
-										<td>작성일자</td>
-										<td colspan="2">${read.inq_regdate}</td>
-									</tr>
-									<tr>
-										<td>내용</td>
-										<td colspan="2" style="height: 200px; text-align: left;">${read.inq_content}</td>
-									</tr>
-
-								</tbody>
-							</table>
-						</div>
+					<div class="container-fluid">
+					    <div class="row">
+					        <div class="col-lg-12">
+					            <div class="card shadow-sm">
+					                <div class="card-body">
+					                    <h5 class="card-title">게시판 글 보기</h5>
+					                    <hr>
+					                    <div class="mb-3">
+					                        <strong>글 제목:</strong>
+					                        <p>${read.inq_title}</p>
+					                    </div>
+					                    <div class="mb-3">
+					                        <strong>작성자:</strong>
+					                        <p>${read.inq_name}</p>
+					                    </div>
+					                    <div class="mb-3">
+					                        <strong>작성일자:</strong>
+					                        <p>${read.inq_regdate}</p>
+					                    </div>
+					                    <div class="mb-3">
+					                        <strong>내용:</strong>
+					                        <p>${read.inq_content}</p>
+					                    </div>
+					                </div>
+					            </div>
+					        </div>
+					    </div>
 					</div>
-					<!-- 게시판 글보기  -->
+				<br>
+				<!-- 게시판 글보기  -->
 				<div style="margin-left: 1px;">
 						<c:if test="${member.me_name == read.inq_name}">
 							<button type="button" class="btn btn-success"

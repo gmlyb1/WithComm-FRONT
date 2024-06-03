@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="com.with.community.dao.MessageDAO">
+	
+	<select id="message_list" parameterType="MessageVO" resultType="MessageVO">
+		select
+			 msg_no
+			,msg_room
+			,send_nick
+			,recv_nick
+			,date_format(send_time, '%Y-%m-%d %H:%i') AS send_time
+			,read_time
+			,msg_content
+			,read_chk
+		from tbl_msg
+		where msg_no in(select max(msg_no) from tbl_msg group_by msg_room) and (send_nick = #{nick) or recv_nick = #{nick})
+		order by msg_no desc
+	</select>
+	
+	<select id="get_other_profile" parameterType="MessageVO" resultType="String">
+		select me_name from tbl_member
+		<choose>
+			<when test="send_nick == nick">
+				where nick = #{recv_nick}
+			</when>
+			<otherwise>
+				where nick = #{send_nick}
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="count_unread" parameterType="MessageVO" resultType="int">
+		select count(msg_no) from tbl_msg
+		where recv_nick = #{nick} and read_chk = 0 and msg_room = #{msg_room}
+	</select>
+	
+	<select id="room_content_list" parameterType="MessageVO" resultType="MessageVO">
+		select 
+			 m.msg_no
+			,m.msg_room
+			,m.send_nick
+			,m_recv_nick
+			,date_format(m.send_time, '%Y-%m-%d %H:%i') as send_time
+			,m.read_time
+			,m.msg_content
+			,m.read_chk
+			,u.me_name
+		from tbl_msg m 
+		left join
+			 tbl_member u
+		on m.send_nick = u.member_name
+		<choose>
+			<when test="msg_room != 0">
+				where msg_room = #{msg_room}
+			</when>
+			<otherwise>
+				where (recv_nick = #{recv_nick) and send_nick = #{nick}) or (send_nick = #{recv_nick} and recv_nick = #{nick})
+			</otherwise>
+		</choose>
+	</select>	
+	
+	<update id="message_read_chk" parameterType="MessageVO">
+		update tbl_msg set read_chk=1
+		<choose>
+			<when test="msg_room != 0">
+				where msg_room = #{msg_room} 
+				and read_chk = 0 
+				and recv_nick = #{nick}
+			</when>
+			<otherwise>
+				where send_nick = #{recv_nick} 
+				and read_chk = 0
+				and recv_nick = #{nick}
+			</otherwise>
+		</choose>
+	</update>
+	
+	<insert id="messageSendInlist" parameterType="MessageVO">
+		<choose>
+			<when test= "msg_room !=0">
+				insert into tbl_msg values (0,#{msg_room}, #{send_nick}, #{recv_nick}, now(), now(), #{msg_content},0)
+			</when>
+			<otherwise>
+				insert into tbl_msg values (0,#{msg_room}, #{send_nick}, #{recv_nick}, now(), now(), #{msg_content},0)
+			</otherwise>
+		</choose>
+	</insert>
+	
+	<select id="max_room" parameterType="MessageVO" resultType="Int">
+		select count(msg_no) from tbl_msg
+		where (recv_nick = #{recv_nick} and send_nick = #{send_nick}) or (send_nick = #{recv_nick} and recv_nick = #{send_nick})
+	</select>
+	
+	<select id="select_room" parameterType="MessageVO" resultType="String">
+		select msg_room from tbl_msg
+		where (recv_nick = #{recv_nick} and send_nick=#{send_nick}) or (send_nick= #{recv_nick} and recv_nick = #{send_nick})
+		limit 0,1
+	</select>
+</mapper>

@@ -48,13 +48,13 @@ public class AccountController {
 	
 	private final static Logger logger = LoggerFactory.getLogger(AccountController.class);
 	
-//	@Autowired
-//	private BCryptPasswordEncoder passEncoder;
-//	
-//	 @Bean
-//    public BCryptPasswordEncoder passwordEncoder() {
-//        return new BCryptPasswordEncoder();
-//    }
+	@Autowired
+	private BCryptPasswordEncoder passEncoder;
+	
+	 @Bean
+    public BCryptPasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
 	
 	@RequestMapping(value="/idChk" , method= RequestMethod.POST)
 	@ResponseBody
@@ -79,16 +79,20 @@ public class AccountController {
 	public String registerPOST(AccountVO vo, Model model, HttpSession sesion, RedirectAttributes rttr)throws Exception
 	{
 		
-		int result = accountService.idChk(vo);
+//		String rawPw = "";
+//		String encodePw = "";
+//		
+//		rawPw = vo.getMe_pwd();
+//		encodePw = passEncoder.encode(rawPw);
+//		vo.setMe_pwd(encodePw);
 		
+		int result = accountService.idChk(vo);
+
 		try {
 			if(result == 1) {
 				rttr.addFlashAttribute("msg", "이미 존재하는 아이디입니다. 다시 확인해주세요.");
 				return "/account/register";
 			}else if(result == 0) {
-//				String inputPass = vo.getMe_pwd();
-//				String pwd = passEncoder.encode(inputPass);
-//				vo.setMe_pwd(pwd);
 				
 				accountService.register(vo);
 				rttr.addFlashAttribute("msg", "회원가입이 완료되었습니다.\n 관리자의 승인 이후에 서비스 사용이 가능합니다.");
@@ -116,6 +120,10 @@ public class AccountController {
 	
 			HttpSession session = request.getSession();
 			session.setMaxInactiveInterval(6000);
+			
+//			String rawPw = "";
+//			String encodePw = "";
+			
 			AccountVO login = accountService.login(vo);
 			
 			if(login == null)  {
@@ -133,11 +141,26 @@ public class AccountController {
 				rttr.addFlashAttribute("msg", "본 아이디는 관리자에 의해 중지된 아이디입니다.");
 				return "redirect:/account/login";
 				
-			}else{
-				session.setAttribute("member", login);
-				rttr.addFlashAttribute("msg", "로그인에 성공하였습니다.");
-				return "redirect:/home";
-			}
+			}else {
+				
+				 session.setAttribute("member", login);
+		            rttr.addFlashAttribute("msg", "로그인에 성공하였습니다.");
+		            return "redirect:/home";
+		            
+//				rawPw = vo.getMe_pwd();
+//		        encodePw = login.getMe_pwd();
+//		        System.out.println("rawPw:" + rawPw);
+//		        System.out.println("encodePw:"+ encodePw);
+//		        
+//		        System.out.println(passEncoder.matches(rawPw, encodePw) == true);
+//		        if (passEncoder.matches(rawPw, encodePw) == true) {
+//		           
+//		        } else {
+//		            session.setAttribute("member", null);
+//		            rttr.addFlashAttribute("msg", "비밀번호가 일치하지 않습니다.");
+//		            return "redirect:/account/login";
+//		        }
+		    }
 			
 	}
 	

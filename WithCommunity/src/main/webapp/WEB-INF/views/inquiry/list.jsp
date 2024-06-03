@@ -57,14 +57,20 @@
 									<td class="text-center">
 									<fmt:formatDate pattern="yyyy-MM-dd" value="${list.inq_regdate}"/></td>
 									<td class="text-center">
-									  <c:choose>
-									    <c:when test="${list.answerYn == true}">
-									      <i class="fas fa-check"></i> <!-- 'fas'는 Font Awesome Solid 스타일 아이콘입니다. -->
-									    </c:when>
-									    <c:otherwise>
-									      <i class="fas fa-times"></i>
-									    </c:otherwise>
-									  </c:choose>
+									    <c:choose>
+									        <c:when test="${list.answerYn == '대기중'}">
+									            <span class="text-danger"><strong>${list.answerYn}</strong></span>
+									        </c:when>
+									        <c:when test="${list.answerYn == '진행중'}">
+									            <span class="text-primary"><strong>${list.answerYn}</strong></span>
+									        </c:when>
+									        <c:when test="${list.answerYn == '답변완료'}">
+									            <span class="text-success"><strong>${list.answerYn}</strong></span>
+									        </c:when>
+									        <c:otherwise>
+									            <span>${list.answerYn}</span>
+									        </c:otherwise>
+									    </c:choose>
 									</td>
 								</tr>
 							</c:if>

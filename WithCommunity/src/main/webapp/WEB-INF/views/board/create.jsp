@@ -4,38 +4,36 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 
-<link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
 <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.css" rel="stylesheet">
 
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
 
 <script type="text/javascript">
 	
 	function _onSubmit() {
 	
-			if ($("#board_writer").val() == "") {
-				swal.fire("작성자를 입력해주세요");
+			if ($("#board_writer").val().trim() == "") {
+				Swal.fire("작성자를 입력해주세요");
 				$("#board_writer").focus();
 				return false;
 			}
 				
-			if ($("#board_title").val() == "") {
-				swal.fire("제목을 입력해주세요");
+			if ($("#board_title").val().trim() == "") {
+				Swal.fire("제목을 입력해주세요");
 				$("#board_title").focus();
 				return false;
 			}
 	
-			if ($("#board_content").val() == "") {
-				swal.fire("내용을 입력해주세요");
+			if ($("#board_content").val().trim() == "") {
+				Swal.fire("내용을 입력해주세요");
 				$("#board_content").focus();
 				return false;
 			}
 			
-			if($("#board_bgno").val() == "") {
-				swal.fire("카테고리를 선택해 주세요.");
+			if($("#board_bgno").val().trim() == "") {
+				Swal.fire("카테고리를 선택해 주세요.");
 				$("#board_bgno").focus();
 				return false;
 			}
@@ -124,16 +122,6 @@
 									<td class="form-inline">
 									<textarea id="board_content" name="board_content" cols="100" rows="10" placeholder="내용을 입력해주세요." class="form-control"></textarea></td>
 								</tr>
-								
-								<!-- <tr>
-									<td id="fileIndex">
-									<input type="file" name="file" />
-								<div>  
-			 						<button id="fileAdd_btn" class="btn btn-primary" type="button">파일추가+</button>
-								</div>
-									</td>
-								</tr> -->
-
 							</tbody>
 						</table>
 					</div>

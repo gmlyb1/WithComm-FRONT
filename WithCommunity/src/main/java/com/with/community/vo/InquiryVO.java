@@ -21,7 +21,7 @@ public class InquiryVO {
 	
 	private String me_name;
 	private int inqCount;
-	private boolean answerYn;
+	private String answerYn;
 	
 	
 	

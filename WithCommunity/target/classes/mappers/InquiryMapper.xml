@@ -12,6 +12,7 @@
 	   ,inq_title
 	   ,inq_content
 	   ,inq_name
+	   ,answerYn
 	   ,inq_regdate
 	from tbl_inquiry
 	order by inq_no desc

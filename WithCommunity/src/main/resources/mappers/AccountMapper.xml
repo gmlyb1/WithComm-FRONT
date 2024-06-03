@@ -22,7 +22,6 @@
 			me_email
 		,	me_pwd
 		,	me_name
-		,	aprvStts
 		,   me_regdate
 		)
 		values
@@ -30,8 +29,7 @@
 			#{me_email}
 		,	#{me_pwd}
 		,	#{me_name}
-		,	'승인요청'
-		,	current_timestamp()
+		,	now()
 		)
 	</insert>
 

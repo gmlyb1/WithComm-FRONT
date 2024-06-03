@@ -113,61 +113,28 @@
  		});
  	</script>
  	<script type="text/javascript">
-	var socket = null;
+	//소켓끝
+		const alarmUL = document.querySelector("#alarmUL");
+		const alarmI = document.querySelector("#alarmI");
+		const alarmDiv = document.querySelector("#alarmDiv");
+		var sock = null;
+		
 		$(document).ready(function(){
-		if(${login != null}){
 			connectWs();
-		}
-	});
+		});
 		
-		
-		//소켓
 		function connectWs(){
-		console.log("tttttt")
-		var ws = new SockJS("/alram");
-		socket = ws;
-		
-			ws.onopen = function() {
-		 console.log('open');
-		 };
-			ws.onmessage = function(event) {
-				console.log("onmessage"+event.data);
-				let $socketAlert = $('div#socketAlert');
-				$socketAlert.html(event.data)
-				$socketAlert.css('display', 'block');
-				
-				setTimeout(function(){
-					$socketAlert.css('display','none');
-					
-				}, 5000);
-		};
-			ws.onclose = function() {
-			    console.log('close');
-		 };
-	};
-	
-	const alarmUL = document.querySelector("#alarmUL");
-	const alarmI = document.querySelector("#alarmI");
-	const alarmDiv = document.querySelector("#alarmDiv");
-	var sock = null;
-	
-	$(document).ready(function() {
-		
-		connectWs();
-		
-		function connectWs() {
-			var ws = new SockJS("/echo");
-			sock = ws
+			var ws = new SockJS("http://localhost:8080/echo");
+			sock = ws;
 			
 			ws.onopen = function() {
-				console.log("연결완료.");
+				console.log("연결완료");
 				ws.send($('#socketuserID').val());
 			};
 			
 			ws.onmessage = function(event) {
-				// 받을 알람이 있을때 
 				console.log(event.data);
-				if(event.data.length > 0) {
+				if(event.data.length > 0 ) {
 					let newAlarm = '';
 					newAlarm += '<li scope="col">' + event.data + "</li>"
 					$('#alarmUL').append(newAlarm);
@@ -181,34 +148,31 @@
 		};
 		
 		// 알람창 추가
-		alarmI.addEventListener('click',function() {
+		alarmI.addEventListener('click',function(){
 			alarmUL.classList.toggle('visible');
 			$(this).stop(false,false);
 		});
 		
-		alarmUL.addEventListener('click',function(e) {
-			var endIdx =  e.target.textContent.indexOf(")");
-			var idx = e.target.textContent.substr(1,endIdx-1);
+		alarmUL.addEventListener('click',function(e){
+			var endIdx = e.target.textContent.indexOf(")");
+			var idx = e.target.textContent.substr(1, endIdx-1);
 			
 			$.ajax({
-				url : '/alarmDel',
-				data : {"idx" : idx},
-				type : 'post',
-				success : function(data){
+				url: '/alarmDel',
+				data: {"idx" : idx},
+				type: 'post',
+				success: function(data) {
+					
 					console.log(data);
-					swal.fire("성공");
+					alert("성공");
 				}
-			});
+			})
 			
 			$(e.target).remove();
-			if(alarm.children.length == 0) {
-				alarmDiv.stylel.visibility = "hidden";
+			if(alarmUL.children.lenth == 0){
+				alarmDiv.style.visibility = "hidden";
 			}
-			
-		});
-	});
-	
-	//소켓끝
+		})
 	</script>
  
  
@@ -452,6 +416,12 @@
 				                    <a class="dropdown-item" href="/mail/recevMail">
 				                        <i class="bx bx-cog me-2"></i>
 				                        <span class="align-middle" id="ready">메일</span>
+				                    </a>
+				                </li>
+				                <li>
+				                    <a class="dropdown-item" href="/message/list">
+				                        <i class="bx bx-cog me-2"></i>
+				                        <span class="align-middle" id="ready">쪽지</span>
 				                    </a>
 				                </li>
 				                <li>
