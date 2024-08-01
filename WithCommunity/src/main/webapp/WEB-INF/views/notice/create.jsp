@@ -4,7 +4,6 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <!-- include summernote css/js -->
 <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.css" rel="stylesheet">
@@ -21,19 +20,19 @@ $(document).ready(function() {
 	function _onSubmit() {
 
 		if ($("#notice_writer").val() == "") {
-			swal.fire("작성자를 입력해주세요");
+			alert("작성자를 입력해주세요");
 			$("#notice_writer").focus();
 			return false;
 		}
 
 		if ($("#notice_title").val() == "") {
-			swal.fire("제목을 입력해주세요");
+			alert("제목을 입력해주세요");
 			$("#notice_title").focus();
 			return false;
 		}
 
 		if ($("#notice_content").val() == "") {
-			swal.fire("내용을 입력해주세요");
+			alert("내용을 입력해주세요");
 			$("#notice_content").focus();
 			return false;
 		}
@@ -91,8 +90,7 @@ $(document).ready(function() {
 	<div id="contAreaBox">
 		<div class="panel">
 			<div class="panel-body">
-				<form action="/notice/create" method="post" name="write" id="write"
-					onsubmit="return _onSubmit();">
+				<form action="/notice/create" method="post" name="write" id="write" enctype="multipart/form-data" onsubmit="return _onSubmit();">
 					<div class="table-responsive" style="text-align: center;">
 						<table id="datatable-scroller"
 							class="table table-bordered tbl_Form">
@@ -122,6 +120,11 @@ $(document).ready(function() {
 									</td>
 								</tr>
 								<tr>
+									<td>
+										<input type="file" name="file" class="form-control">
+									</td>
+								</tr>
+								<tr>
 									 <td>
 										<input type="checkbox" class="form-check-input" id="isFixed" name="isFixed" onchange="YnCheck(this);"><label for="isFixed" >&nbsp;&nbsp;상단 고정</label>								
 									</td> 
@@ -130,7 +133,7 @@ $(document).ready(function() {
 						</table>
 					</div>
 							<div style="margin-left: auto; margin-right: auto; width: fit-content;">
-						<button type="submit" class="btn btn-primary">등록</button>
+						<button type="submit" class="btn btn-primary" onsubmit="_onSubmit();">등록</button>
 						<a id="cancelBtn" href="/notice/list" class="btn btn-danger">취소</a>
 					</div>
 				</form>

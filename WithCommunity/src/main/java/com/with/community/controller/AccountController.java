@@ -3,6 +3,7 @@ package com.with.community.controller;
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.Date;
 import java.util.UUID;
 
 import javax.inject.Inject;
@@ -17,6 +18,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.security.access.event.LoggerListener;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
@@ -49,12 +51,13 @@ public class AccountController {
 	private final static Logger logger = LoggerFactory.getLogger(AccountController.class);
 	
 	@Autowired
-	private BCryptPasswordEncoder passEncoder;
+	private PasswordEncoder passEncoder;
 	
-	 @Bean
-    public BCryptPasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
+	@Bean
+	public PasswordEncoder passwordEncoder() {
+	    return new BCryptPasswordEncoder();
+	}
+
 	
 	@RequestMapping(value="/idChk" , method= RequestMethod.POST)
 	@ResponseBody
@@ -79,12 +82,9 @@ public class AccountController {
 	public String registerPOST(AccountVO vo, Model model, HttpSession sesion, RedirectAttributes rttr)throws Exception
 	{
 		
-//		String rawPw = "";
-//		String encodePw = "";
-//		
-//		rawPw = vo.getMe_pwd();
-//		encodePw = passEncoder.encode(rawPw);
-//		vo.setMe_pwd(encodePw);
+		String cryptEncoderPw = passEncoder.encode(vo.getMe_pwd());
+		
+		vo.setMe_pwd(cryptEncoderPw);
 		
 		int result = accountService.idChk(vo);
 
@@ -121,10 +121,13 @@ public class AccountController {
 			HttpSession session = request.getSession();
 			session.setMaxInactiveInterval(6000);
 			
-//			String rawPw = "";
-//			String encodePw = "";
-			
 			AccountVO login = accountService.login(vo);
+			
+			if(vo.isUseCookie()) {
+				int amount = 60 * 60 * 24 * 7;
+				Date sessionLimit = new Date(System.currentTimeMillis() + (1000 * amount));
+				accountService.keepLogin(null, null, sessionLimit);
+			}
 			
 			if(login == null)  {
 				session.setAttribute("member", null);
@@ -142,27 +145,62 @@ public class AccountController {
 				return "redirect:/account/login";
 				
 			}else {
+				session.setAttribute("member", login);
+	            rttr.addFlashAttribute("msg", "로그인에 성공하였습니다.");
 				
-				 session.setAttribute("member", login);
-		            rttr.addFlashAttribute("msg", "로그인에 성공하였습니다.");
-		            return "redirect:/home";
-		            
-//				rawPw = vo.getMe_pwd();
-//		        encodePw = login.getMe_pwd();
-//		        System.out.println("rawPw:" + rawPw);
-//		        System.out.println("encodePw:"+ encodePw);
-//		        
-//		        System.out.println(passEncoder.matches(rawPw, encodePw) == true);
-//		        if (passEncoder.matches(rawPw, encodePw) == true) {
-//		           
-//		        } else {
-//		            session.setAttribute("member", null);
-//		            rttr.addFlashAttribute("msg", "비밀번호가 일치하지 않습니다.");
-//		            return "redirect:/account/login";
-//		        }
+				return "redirect:/home";
+				
 		    }
 			
 	}
+	
+//	//암호화 로직 테스트중
+//	@RequestMapping(value="/login", method=RequestMethod.POST)
+//	public String loginPOST(Model model, AccountVO vo, HttpServletRequest request, RedirectAttributes rttr) throws Exception {
+//	    HttpSession session = request.getSession();
+//	    session.setMaxInactiveInterval(6000);
+//
+//	    try {
+//	        // 사용자 입력 데이터 로깅
+//	        logger.info("사용자 입력 아이디: {}", vo.getMe_id());
+//
+//	        // 서비스 계층에서 로그인 처리
+//	        AccountVO login = accountService.login(vo);
+//
+//	        if (login == null) {
+//	            session.setAttribute("member", null);
+//	            rttr.addFlashAttribute("msg", "아이디 혹은 비밀번호를 다시 한번 확인해주세요!");
+//	            return "redirect:/account/login";
+//	        }
+//
+//	        logger.info("로그인 성공 - 사용자 정보: {}", login);
+//
+//	        String inputPassword = vo.getMe_pwd();
+//	        String encryptedPasswordFromDB = login.getMe_pwd();
+//	        
+//	        
+//	        Boolean result = passEncoder.matches(inputPassword, encryptedPasswordFromDB);
+//	        System.out.println("matchpwd:" + result);
+//	        // 입력된 비밀번호와 데이터베이스에서 조회한 암호화된 비밀번호 비교
+//	        if (result) {
+//	        	vo.setMe_pwd(encryptedPasswordFromDB);
+//	            session.setAttribute("member", login);
+//	            rttr.addFlashAttribute("msg", "로그인에 성공하였습니다.");
+//	        } else {
+//	            session.setAttribute("member", null);
+//	            rttr.addFlashAttribute("msg", "아이디 혹은 비밀번호를 다시 한번 확인해주세요!");
+//	            return "redirect:/account/login";
+//	        }
+//
+//	        return "redirect:/home";
+//	    } catch (Exception e) {
+//	        logger.error("로그인 처리 중 오류 발생", e);
+//	        rttr.addFlashAttribute("msg", "로그인 도중 오류가 발생했습니다. 관리자에게 문의하세요.");
+//	        return "redirect:/account/login";
+//	    }
+//	}
+
+
 	
 	@RequestMapping(value = "/logout", method=RequestMethod.GET)
 	public String logout(HttpSession session,RedirectAttributes rttr) {
@@ -184,10 +222,12 @@ public class AccountController {
 		
 	}
 	
-	@RequestMapping(value="/profileUdt" , method=RequestMethod.POST)
+	@RequestMapping(value="/imageUdt" , method=RequestMethod.POST)
 	public String profileUdt(MultipartHttpServletRequest multiRequest, Model model) throws Exception
 	{
 		logger.info("실행");
+		
+		logger.info("기존파일 : " + multiRequest.getParameter("default_file"));
 		
 		String me_image = "";
 		
@@ -196,28 +236,36 @@ public class AccountController {
 		if(file.getOriginalFilename() == "") {
 			logger.info("기존 파일에 넣기");
 			me_image = multiRequest.getParameter("default_file");
+			
+			logger.info("me_image : " + me_image);
 		} else {
 			logger.info("변경 파일에 넣기");
-		}
-		
-		String file_path = multiRequest.getSession().getServletContext().getRealPath("/resources/upload/mem_Image");
-		
-		String uuid = UUID.randomUUID().toString();
-		
-		me_image = uuid + "_" + file.getOriginalFilename();
-		
-		file.transferTo(new File(file_path + "/" + me_image));
-		
-		File f = new File(file_path + "/" + multiRequest.getParameter("default_file"));
-		if(f.exists()) {
-			f.delete();
+			
+			String file_path = multiRequest.getSession().getServletContext().getRealPath("/resources/assets/upload/mem_Image");
+			
+			String uuid = UUID.randomUUID().toString();
+			
+			me_image = uuid + "_" + file.getOriginalFilename();
+			
+			file.transferTo(new File(file_path + "/" + me_image));
+			
+			File f = new File(file_path + "/" + multiRequest.getParameter("default_file"));
+			
+			logger.info("f: " + f);
+			
+			if(f.exists()) {
+				f.delete();
+			}
 		}
 		
 		AccountVO avo = new AccountVO();
 		
-		avo.setMe_image((String) multiRequest.getParameter("me_image"));
+		avo.setMe_id(Integer.parseInt((String)multiRequest.getParameter("me_id")));
+		avo.setMe_image(me_image);
 		
-		int result = accountService.profileUdt(avo);
+		System.out.println(" C : 파라미터 값" + avo);
+		
+		int result = accountService.imageUdt(avo);
 		
 		logger.info("result : " + result);
 		model.addAttribute("updateAcc_result", result);
@@ -248,10 +296,11 @@ public class AccountController {
 	}
 	
 	//비밀번호 변경
-	@RequestMapping(value="/pwdUdt", method= RequestMethod.POST)
+	@RequestMapping(value="/profileUdt", method= RequestMethod.POST)
 	public String pwdUpdatePOST(AccountVO vo) throws Exception {
 
-		accountService.pwdUdt(vo);
+		accountService.profileUdt(vo);
+		
 		
 		return "redirect:/account/profile";
 	}
@@ -262,13 +311,5 @@ public class AccountController {
 		return "/account/forgotPass";
 	}
 	
-	@RequestMapping(value="/alram", method=RequestMethod.GET)
-	public void AlramGET() {
-		
-	}
 	
-	@RequestMapping(value="/IndNotice", method=RequestMethod.GET)
-	public void IndNoticeGET() {
-		
-	}
 }

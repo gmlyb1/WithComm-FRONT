@@ -2,6 +2,8 @@ package com.with.community.service;
 
 import java.util.List;
 
+import org.springframework.web.multipart.MultipartHttpServletRequest;
+
 import com.with.community.vo.Criteria;
 import com.with.community.vo.NoticeVO;
 
@@ -11,7 +13,7 @@ public interface NoticeService {
 		
 	public NoticeVO nextNoticeList(int notice_no) throws Exception;
 	
-	public void insertNotice(NoticeVO vo) throws Exception;
+	public void insertNotice(NoticeVO vo,MultipartHttpServletRequest mpRequest) throws Exception;
 	
 	public List<NoticeVO> NoticeList(Criteria cri) throws Exception;
 	

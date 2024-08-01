@@ -17,10 +17,12 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.support.RequestContextUtils;
 
 import com.with.community.service.NoticeService;
+import com.with.community.util.FileUtils;
 import com.with.community.vo.BoardVO;
 import com.with.community.vo.Criteria;
 import com.with.community.vo.NoticeVO;
@@ -33,6 +35,9 @@ public class NoticeController {
 
 	@Autowired
 	private NoticeService noticeService;
+	
+	@Autowired(required = false)
+	private FileUtils fileUtils;
 	
 	private static final Logger logger = LoggerFactory.getLogger(NoticeController.class);
 	
@@ -72,18 +77,13 @@ public class NoticeController {
 			
 			// 글쓰기 (POST)
 			@RequestMapping(value= "/create" , method = RequestMethod.POST)
-			public String insertNoticePOST(@ModelAttribute("vo") NoticeVO vo,HttpServletRequest request ,RedirectAttributes redirect) throws Exception 
+			public String insertNoticePOST(@ModelAttribute("vo") NoticeVO vo,HttpServletRequest request ,RedirectAttributes redirect,MultipartHttpServletRequest mpRequest) throws Exception 
 			{
 				
 			try {
 				SimpleDateFormat format1= new SimpleDateFormat("yyyy-MM-dd");
-//				
-//				Date time = new Date();
-//				
-//				String time1 = format1.format(time);
-//				vo.setNotice_regdate(time1);
-				
-				noticeService.insertNotice(vo);
+
+				noticeService.insertNotice(vo,mpRequest);
 				
 				redirect.addFlashAttribute("redirect", vo.getNotice_no());
 				redirect.addFlashAttribute("msg", "공지사항 등록을 성공하였습니다.");

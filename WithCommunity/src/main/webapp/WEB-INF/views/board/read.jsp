@@ -9,6 +9,10 @@
 	src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script type="text/javascript">
 	$(document).ready(function() {
+		//소켓
+		var socket = new WebSocket( 'ws://localhost:8090/alarm');
+		//console.log("socket:"+socket);
+		
 		var msg = "${msg}"
 			if (msg != "") {
 				alert(msg);
@@ -202,11 +206,11 @@
 						<hr>
 					</div>
 					
-					<form id="infoForm" action="/board/update" method="get">
+					<%-- <form id="infoForm" action="/board/update" method="get">
 						<input type="hidden" id="board_no" name="board_no" value='<c:out value="${pageInfo.board_no}"/>'>
 						<input type="hidden" id="pageNum" value='<c:out value="${cri.pageNum}"/>'>
 						<input type="hidden" id="amount" value='<c:out value="${cri.amount}"/>'>
-					</form>
+					</form> --%>
 				</form>
 				<!-- 게시판 끝 -->
 

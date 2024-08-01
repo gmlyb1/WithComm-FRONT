@@ -4,7 +4,17 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
     
 <%@include file="/WEB-INF/views/include/header.jsp"%>    
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<!-- Core JS -->
+ <script src="/resources/assets/vendor/libs/jquery/jquery.js"></script>
+ <script src="/resources/assets/vendor/libs/popper/popper.js"></script>
+ <script src="/resources/assets/vendor/js/bootstrap.js"></script>
+ <script src="/resources/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js"></script>
+ <script src="/resources/assets/vendor/js/menu.js"></script>
+ <script src="/resources/assets/js/main.js"></script>
+ <script src="/resources/assets/js/pages-account-settings-account.js"></script>
+
+ <!-- Place this tag in your head or just before your close body tag. -->
+ <script async defer src="https://buttons.github.io/buttons.js"></script>
 <script type="text/javascript">
 	$(document).ready(function() {
 		
@@ -27,11 +37,33 @@
     		}
     	}
 		
+		$("#submitBtn").click(function() {
+			var memberId = $(this).data("member-id");
+			
+			if (confirm("정말로 회원 정보를 변경 하시겠습니까?")) {
+				$.ajax({
+					url : "/account/profileUdt",
+					type : "POST",
+					data : {
+						me_id : memberId,
+					},
+					success : function(data) {
+						alert("회원 변경이 성공적으로 처리되었습니다.");
+						location.href = "/home";
+					},
+					error : function(error) {
+						console.log(error);
+						alert("요청 처리 중 오류가 발생하였습니다."+error);
+					}
+				});
+			}
+		});
+		
 		//회원 탈퇴
 		$("#delBtn").click(function() {
 			
 			if(!$("#accountActivation").prop("checked")) {
-		        swal.fire("동의란에 체크해 주십시오.");
+		        alert("동의란에 체크해 주십시오.");
 		        return;
 		    }
 			
@@ -45,19 +77,19 @@
 						me_id : memberId,
 					},
 					success : function(data) {
-						swal.fire("회원탈퇴가 성공적으로 처리되었습니다.");
+						alert("회원탈퇴가 성공적으로 처리되었습니다.");
 						location.href = "/home";
 					},
 					error : function(error) {
 						console.log(error);
-						swal.fire("요청 처리 중 오류가 발생하였습니다."+error);
+						alert("요청 처리 중 오류가 발생하였습니다."+error);
 					}
 				});
 			}
 		});
 
 </script>
-<form action="/account/profileUdt" method="post" id="udtForm" enctype="multipart/form-data">
+<!-- <form action="/account/profileUdt" method="post" id="udtForm" enctype="multipart/form-data"> -->
 <div class="container-xxl flex-grow-1 container-p-y">
   <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Account Settings /</span> Account</h4>
   <div class="row">
@@ -78,35 +110,47 @@
         </li>
       </ul>
        <!-- src="/resources/assets/img/avatars/1.png" -->
+       
       <div class="card mb-4">
         <h5 class="card-header">Profile Details</h5>
         <!-- Account -->
+   <%--  <form action="/account/imageUdt" method="post" enctype="multipart/form-data">
+       	<input type="hidden" name="me_id" id="me_id" value="${member.me_id }">
+        <input type="hidden" name="me_image" value="${member.me_image}"/>
          <div class="card-body">
-			<div class="d-flex align-items-start align-items-sm-center gap-4">
-			  <img
-			    src="${pageContext.request.contextPath}/resources/upload/mem_Image/${member.me_image}"
-			    alt="profile-pic"
-			    class="d-block rounded"
-			    height="100"
-			    width="100"
-			   <%--  onerror="this.src='${pageContext.request.contextPath }/resources/images/silhouette.png'" --%>
-			  />
-			  <div class="button-wrapper">
-			    <label for="upload" class="btn btn-primary me-2 mb-4" tabindex="0">
-			      <span class="d-none d-sm-block">Upload new photo</span>
-			      <input class="account-file-input" type="file" id="upload" name="me_image" accept="image/gif, image/jpeg, image/png" onchange="fileCh(this);" />
-              </label>
-              <button type="button" class="btn btn-outline-secondary account-image-reset mb-4">
-                <i class="bx bx-reset d-block d-sm-none"></i>
-                <span class="d-none d-sm-block">Reset</span>
-              </button>
-
-              <p class="text-muted mb-0">Allowed JPG, GIF or PNG. Max size of 800K</p>
-               <input type="hidden" name="default_file" value="${member.me_image}"/>            
-            
+              <div class="d-flex align-items-start align-items-sm-center gap-4">
+                <img
+                  src="${pageContext.request.contextPath }/resources/assets/upload/mem_Image/${member.me_image}" 
+                  onerror="${pageContext.request.contextPath }/resources/assets/img/avatars/1.png"
+                  alt="user-avatar"
+                  class="d-block rounded"
+                  height="100"
+                  width="100"
+                  id="uploadedAvatar"
+                />
+                <div class="button-wrapper">
+                  <label for="upload" class="btn btn-primary me-2 mb-4" tabindex="0">
+                    <span class="d-none d-sm-block">Upload new photo</span>
+                    <i class="bx bx-upload d-block d-sm-none"></i>
+                    <input
+                      type="file"
+                      id="upload"
+                      name="me_image"
+                      class="account-file-input"
+                      onchange="fileCh(this);"
+                      accept="image/png, image/jpeg"
+                    />
+                  </label>
+                  <button type="submit" class="btn btn-outline-secondary account-image-reset mb-4">
+                    <i class="bx bx-reset d-block d-sm-none"></i>
+                    <span class="d-none d-sm-block">변경</span>
+                  </button>
+                  <p class="text-muted mb-0">Allowed JPG, GIF or PNG. Max size of 800K</p>
+                </div>
+              </div>
             </div>
-          </div>
-        </div>
+	</form>           --%>
+	<form action="/account/profileUdt" method="post">
         <hr class="my-0" />
         <div class="card-body">
             <div class="row">
@@ -115,8 +159,8 @@
                 <input
                   class="form-control"
                   type="text"
-                  id="email"
-                  name="email"
+                  id="me_email"
+                  name="me_email"
                   value="${member.me_email}"
                   placeholder=""
                   readonly
@@ -136,7 +180,7 @@
               </div>
               <div class="mb-3 col-md-6">
                 <label for="me_name" class="form-label">닉네임</label>
-                <input class="form-control" type="text" name="me_name" id="me_name" value="${member.me_name}[${member.state}]" readonly />
+                <input class="form-control" type="text" name="me_name" id="me_name" value="${member.me_name}"/>
               </div>
               <div class="mb-3 col-md-6">
                 <label for="me_regDate" class="form-label">가입일자</label>
@@ -147,13 +191,14 @@
                 <input class="form-control" type="text" id="me_pwd" name="me_pwd">
               </div>
             <div class="mt-2">
-              <button id="submitBtn" type="submit" class="btn btn-primary me-2">변경</button>
+              <button id="submitBtn" type="submit" data-member-id="${member.me_id}" class="btn btn-primary me-2">변경</button>
               <button type="reset" class="btn btn-outline-secondary">취소</button>
             </div>
         </div>
        </div>
       </div>
-    </form>
+   </form>
+ <!--    </form> -->
         <!-- /Account -->
       <div class="card">
         <h5 class="card-header"><Strong>회원 탈퇴</Strong></h5>
@@ -178,4 +223,6 @@
           </form>
         </div>
       </div>
+      
+
 <%@include file="/WEB-INF/views/include/footer.jsp"%>

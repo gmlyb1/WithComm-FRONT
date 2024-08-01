@@ -141,6 +141,9 @@
 							</tr>
 						</thead>
 						<tbody>
+							<c:if test="${knowList.isEmpty()}">
+								<td class="text-center" colspan="6">조회된 게시글이 없습니다</td>
+							</c:if>
 							<c:forEach items="${knowList}" var="list">
 								<tr data-regdate = "${list.know_regdate}">
 									<td class="text-center">

@@ -6,6 +6,7 @@ import java.util.List;
 import javax.inject.Inject;
 
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.with.community.dao.AccountDAO;
 import com.with.community.vo.AccountVO;
@@ -30,8 +31,8 @@ public class AccountServiceImpl implements AccountService {
 		return result;
 	}
 	@Override
-	public int profileUdt(AccountVO avo) throws Exception {
-		accountDAO.profileUdt(avo);
+	public int imageUdt(AccountVO avo) throws Exception {
+		accountDAO.imageUdt(avo);
 		
 		return 1;
 	}
@@ -54,8 +55,12 @@ public class AccountServiceImpl implements AccountService {
 	
 	// 비밀번호 변경
 	@Override
-	public void pwdUdt(AccountVO vo) throws Exception {
-		 accountDAO.pwdUdt(vo);
+	public void profileUdt(AccountVO vo) throws Exception {
+		 accountDAO.profileUdt(vo);
+	}
+	@Override
+	public void updateImg(String me_id, String me_image) throws Exception {
+		accountDAO.updateImg(me_id,me_image);
 	}
 
 

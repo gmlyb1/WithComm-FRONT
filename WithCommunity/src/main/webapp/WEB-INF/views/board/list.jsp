@@ -148,6 +148,9 @@
 							</tr>
 						</thead>
 						<tbody>
+							<c:if test="${boardList.isEmpty()}">
+								<td class="text-center" colspan="6">조회된 게시글이 없습니다</td>
+							</c:if>
 							<c:forEach items="${boardList}" var="list">
 								<tr data-regdate = "${list.board_regdate}">
 									<td class="text-center"><c:out value="${list.board_no}" /></td>

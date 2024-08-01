@@ -13,9 +13,6 @@
 		<result property="me_image" column="me_image"/>
 	</resultMap>
 	
-		
-	
-
 	<insert id="register" parameterType="AccountVO">
 		insert into tbl_member
 		(
@@ -33,7 +30,7 @@
 		)
 	</insert>
 
-	<update id="profileUdt">
+	<update id="imageUdt">
 	update tbl_member set
 		me_image = #{me_image}
  	where me_id = #{me_id}
@@ -50,9 +47,9 @@
 
 	<update id="keepLogin">
 		update tbl_member
-		set session_key = #{sessionId},
-		session_limit = #{sessionLimit}
-		where me_id = #{me_id}
+		set session_key = #{param3},
+		session_limit = #{param1}
+		where me_id = #{param2}
 	
 	</update>
 	
@@ -75,9 +72,16 @@
 	</delete>
 	
 	<!-- 비밀번호 변경 -->
-	<update id="pwdUdt">
-		update tbl_member set me_pwd = #{me_pwd}
+	<update id="profileUdt">
+		update tbl_member set 
+			me_pwd = #{me_pwd}
+		   ,me_name = #{me_name}
 		where me_id = #{me_id}
+	</update>
+	
+	<update id="updateImg">
+		update tbl_member set me_image = #{me_image} where me_id = #{me_id}
+	
 	</update>
 	
 </mapper>  

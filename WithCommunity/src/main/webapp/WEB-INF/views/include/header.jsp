@@ -61,8 +61,41 @@
     <!-- socket lib -->
     <script src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
  	<script type="text/javascript">
+ 		var socket = null;
+ 		
  		$(document).ready(function() {
  			var path = window.location.pathname;
+ 			
+ 			const member = "${member}";
+ 			console.log('로그인 정보:' + member);
+ 			
+ 			if(member != null) {
+ 				connectWs();
+ 			}
+ 			
+ 			// 소켓 
+ 			function connectWs() {
+ 				console.log('tttt');
+ 				
+ 			var ws = new SockJS("/alarm");
+ 			socket = ws;
+ 			
+ 			ws.onopen = function(e) {
+ 				console.log("onmessage:"+e.data);
+ 				let $socketAlert = $('div#socketAlert');
+ 				$socketAlert.html(e.data);
+ 				$socketAlert.css('display','block');
+ 				
+ 				setTimeout(function() {
+ 					$socketAlert.css('display','none');
+ 				},5000);
+ 			};
+ 			
+ 			ws.onclose = function() {
+ 				console.log('close');
+ 			};
+		};
+
  			
  			// 메뉴 클릭시 css처리
  			$(".menu-item a").each(function() {
@@ -109,6 +142,8 @@
  				
  			});
  			
+ 		
+ 		
  			//끝
  		});
  	</script>
@@ -419,7 +454,7 @@
 				                    </a>
 				                </li>
 				                <li>
-				                    <a class="dropdown-item" href="/message/list">
+				                    <a class="dropdown-item" href="/msg/list">
 				                        <i class="bx bx-cog me-2"></i>
 				                        <span class="align-middle" id="ready">쪽지</span>
 				                    </a>

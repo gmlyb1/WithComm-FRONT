@@ -9,6 +9,7 @@ import javax.inject.Inject;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.with.community.vo.AccountVO;
 
@@ -39,7 +40,7 @@ public class AccountDAOImpl implements AccountDAO{
 	}
 
 	@Override
-	public int profileUdt(AccountVO avo) throws Exception {
+	public int imageUdt(AccountVO avo) throws Exception {
 		
 		int result = sqlSession.update("namespace.profileUdt", avo);
 		
@@ -75,9 +76,20 @@ public class AccountDAOImpl implements AccountDAO{
 	}
 
 	@Override
-	public void pwdUdt(AccountVO vo) throws Exception {
-		sqlSession.update("namespace.pwdUdt",vo);
+	public void profileUdt(AccountVO vo) throws Exception {
+		sqlSession.update("namespace.profileUdt",vo);
 	}
+
+	@Override
+	public void updateImg(String me_id, String me_image) throws Exception {
+		
+		Map<String, Object> paramMap = new HashMap<String, Object>();
+		paramMap.put("me_image", me_image);
+		paramMap.put("me_id", me_id);
+		
+		sqlSession.update("namespace.updateImg",paramMap);
+	}
+
 
 
 

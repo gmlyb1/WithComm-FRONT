@@ -3,7 +3,7 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
   
-<mapper namespace="com.with.community.dao.MessageDAO">
+<mapper namespace="com.with.community.dao.MsgDAO">
 	
 	<select id="message_list" parameterType="MessageVO" resultType="MessageVO">
 		select
@@ -16,7 +16,7 @@
 			,msg_content
 			,read_chk
 		from tbl_msg
-		where msg_no in(select max(msg_no) from tbl_msg group_by msg_room) and (send_nick = #{nick) or recv_nick = #{nick})
+		where msg_no in(select max(msg_no) from tbl_msg group_by msg_room) and (send_nick = #{nick} or recv_nick = #{nick})
 		order by msg_no desc
 	</select>
 	

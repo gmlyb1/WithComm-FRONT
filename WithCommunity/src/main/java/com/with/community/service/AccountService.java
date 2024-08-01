@@ -3,6 +3,8 @@ package com.with.community.service;
 import java.util.Date;
 import java.util.List;
 
+import org.springframework.web.multipart.MultipartHttpServletRequest;
+
 import com.with.community.vo.AccountVO;
 
 public interface AccountService {
@@ -17,13 +19,13 @@ public interface AccountService {
 	public int idChk(AccountVO vo) throws Exception;
 
 	// 프로필 사진 변경
-	public int profileUdt(AccountVO avo)throws Exception;
+	public int imageUdt(AccountVO avo)throws Exception;
 	
 	// 로그인 유지 처리
 	public void keepLogin(String me_id, String sessionId, Date sessionLimit) throws Exception;
 	
 	//비밀번호 변경 
-	public void pwdUdt(AccountVO vo) throws Exception;
+	public void profileUdt(AccountVO vo) throws Exception;
 	
 	// 세션 키 검증
 	public AccountVO checkUserWithSessionKey(String value) throws Exception;
@@ -32,4 +34,5 @@ public interface AccountService {
 	
 	public int deleteAccount(String me_id) throws Exception;
 	
+	public void updateImg(String me_id, String me_image ) throws Exception;
 }

@@ -109,9 +109,9 @@ public class BoardController {
 			Long lastViewTime = (Long) session.getAttribute(boardKey);
 			Long currentTime =  System.currentTimeMillis();
 			
-			logger.info("board_key: " + boardKey );
-			logger.info("lastViewTime: " + lastViewTime );
-			logger.info("currentTime: " + currentTime );
+//			logger.info("board_key: " + boardKey );
+//			logger.info("lastViewTime: " + lastViewTime );
+//			logger.info("currentTime: " + currentTime );
 			
 			
 //			if(lastViewTime == null || (currentTime - lastViewTime) >= 36000000) {
@@ -175,7 +175,7 @@ public class BoardController {
 		
 		
 		//삭제
-		@RequestMapping(value = "/delete", method=RequestMethod.POST)
+		@RequestMapping(value = "/delete", method= {RequestMethod.GET,RequestMethod.POST})
 		public String BoardDeletePOST(BoardVO vo, RedirectAttributes rttr) throws Exception
 		{
 			

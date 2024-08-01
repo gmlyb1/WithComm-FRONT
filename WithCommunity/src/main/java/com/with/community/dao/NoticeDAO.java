@@ -1,6 +1,9 @@
 package com.with.community.dao;
 
 import java.util.List;
+import java.util.Map;
+
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.with.community.vo.Criteria;
 import com.with.community.vo.NoticeVO;
@@ -28,4 +31,6 @@ public interface NoticeDAO {
 	public List<NoticeVO> HomeNoticeList() throws Exception;
 	
 	public List<NoticeVO> selectNoticeImportant(NoticeVO vo) throws Exception;
+	
+	public void insertFile(Map<String, Object> map ) throws Exception;
 }

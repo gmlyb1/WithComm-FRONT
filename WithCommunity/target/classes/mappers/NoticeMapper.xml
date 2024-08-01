@@ -30,7 +30,7 @@
 	</select>
 	
 	 <select id="selectNoticeImportant" resultType="NoticeVO" parameterType="NoticeVO">
-		select * from tbl_notice where isFixed = '1'
+		select * from tbl_notice where isFixed = '1' and useYn = '1'
 	</select>
 	
 	<!--  글 작성 -->
@@ -121,5 +121,24 @@
 	ORDER BY notice_no LIMIT 1
 	]]>
 	</select>
+	
+	<insert id="insertFile" parameterType="hashMap">
+		insert into tbl_file
+		(
+			file_no
+			,bno
+			,org_file_name
+			,stored_file_name
+			,file_size
+		) values
+		(
+			#{file_no}
+			,#{bno}
+			,#{org_file_name}
+			,#{stored_file_name}
+			,#{file_size}
+		)
+	
+	</insert>
 	
 </mapper>

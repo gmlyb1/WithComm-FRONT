@@ -123,6 +123,9 @@
 						</tr>
 					</thead>
 					<tbody>
+							<c:if test="${noticeList.isEmpty()}">
+								<td class="text-center" colspan="6">조회된 게시글이 없습니다</td>
+							</c:if>
 							<c:forEach items="${FixedList}" var="FixedList">
 								<tr style="background: LightGray">
 									<td class="text-center"><c:out value="" /><strong>[공지]</strong></td>

@@ -26,6 +26,28 @@
 		if (msg != "") {
 			alert(msg);
 		}
+		
+		
+		
+		$("#chatBtn").on("click",function(){
+		 const member = "${member}";
+		    console.log(member);
+		    
+		    if (member === "") {
+		        console.log('못간다!@');
+		        // 확인 대화 상자를 띄우고 사용자 응답을 확인
+		        if (confirm("로그인이 필요합니다. 로그인 페이지로 이동하시겠습니까?")) {
+		            // 사용자가 "확인"을 클릭하면 로그인 페이지로 이동
+		            location.href = "/account/login"; // 로그인 페이지 URL로 변경
+		        }
+		        // 사용자가 "취소"를 클릭한 경우 별도의 처리 없이 현재 페이지에 머무름
+		    } else {
+		        // 로그인 상태인 경우 채팅 페이지로 이동
+		        location.href = "/chat"; // 채팅 페이지 URL로 변경
+		    }
+			
+		});
+		
 	});
 </script>
 
@@ -52,10 +74,10 @@
 										공유하기 위한 커뮤니티입니다.
 									</p>
 									
-									<a href="chat" class = "btn btn-success">채팅방</a>
+									<a id="chatBtn" href="#" class = "btn btn-success">채팅방</a>
 								
-									<a href="javascript:;" class="btn btn-sm btn-outline-primary">View
-										Badges</a>
+									<!-- <a href="javascript:;" class="btn btn-sm btn-outline-primary">View
+										Badges</a> -->
 								</div>
 							</div>
 							<div class="col-sm-5 text-center text-sm-left">
@@ -126,7 +148,7 @@
 										</div>
 									</div>
 									<span><strong>주 방문자</strong></span>
-									<h3 class="card-title text-nowrap mb-1"><strong>${HomeVisitCnt.week} 명</strong></h3>
+									<h3 class="card-title text-nowrap mb-1">${HomeVisitCnt.week} 명</h3>
 									<small class="text-success fw-semibold"><i
 										class="bx bx-up-arrow-alt"></i> 전주 대비 ${HomeVisitCnt.last_week_diff} 명</small>
 								</div>

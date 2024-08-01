@@ -19,11 +19,9 @@
 			formObj.submit();
 			}
 		});
-	})
-</script>
-
-<script type="text/javascript">
-	$(document).ready(function() {
+		
+		
+		// 댓글 작성
 		var formObj = $("form[name='replyForm']")
 		$(".replyWriteBtn").on("click", function() {
 			var formObj = $("form[name='replyForm']");
@@ -31,9 +29,11 @@
 			formObj.attr("method", "post");
 			formObj.submit();
 		});
-	})
-</script>
-<script type="text/javascript">
+		
+	});
+	
+	//jquery 끝 
+	// 댓글 삭제 로직
 	function remove_replyNo(data1,data2) {
 		if(!confirm("삭제 하시겠습니까?")) return false;
 		else {
@@ -42,18 +42,12 @@
 	}
 </script>
 
-
-
 <div class="row" style="margin-bottom: 20px; margin-left: 1px;">
 	<c:if test="${member == null}">
 		<span style="color: red" class="text-center"><strong>
 				현재 페이지의 글쓰기,수정,삭제는 회원만 이용 가능합니다.</strong></span>
 	</c:if>
 
-	<%-- <c:if test="${member != null}">
-		<span style="color: blue" class="text-center"><strong>
-				댓글작성은 관리자만 가능합니다.</strong></span>
-	</c:if> --%>
 	<div class="col-lg-12">
 		<h1 class="page-header text-center">상세 페이지</h1>
 		<c:if test="${member != null}">
@@ -68,9 +62,7 @@
 		<div class="panel">
 			<div class="panel-body">
 				<form role="form" method="post" name="readForm">
-				<input type="hidden" id="FILE_NO" name="FILE_NO" value="">
-					<input type="hidden" id="notice_no" name="notice_no"
-						value="${read.notice_no}" />
+					<input type="hidden" id="notice_no" name="notice_no" value="${read.notice_no}" />
 					<%-- <input type="hidden" id="reply_no" name="reply_no" value="${replyList.board_no}"> --%>
 					<div class="container-fluid">
 					    <div class="row">
@@ -108,25 +100,16 @@
 					<!-- 게시판 글보기  -->
 					<div style="margin-left: 1px;">
 						<c:if test="${member.me_name == read.notice_writer}">
-							<button type="button" class="btn btn-success"
-								onclick="location.href='/notice/update?notice_no=${read.notice_no}';">수정</button>
+							<button type="button" class="btn btn-success" onclick="location.href='/notice/update?notice_no=${read.notice_no}';">수정</button>
 							<button type="submit" class="btn btn-danger" id="delete_btn">삭제</button>
 						</c:if>
-						<button type="button" onclick="location.href='/notice/list';"
-							class="btn btn-primary">목록</button>
+						<button type="button" onclick="location.href='/notice/list';" class="btn btn-primary">목록</button>
 						<br>
 						<hr>
 					</div>
 				</form>
 				<!-- 게시판 끝 -->
 				
-				<!-- 첨부파일 -->
-					<%-- <span>파일 목록</span>
-					<div class="form-group" style="border: 1px solid #dbdbdb;">
-						<c:forEach var="file" items="${file}">
-							<a href="#" onclick="fn_fileDown('${file.FILE_NO}'); return false;">${file.ORG_FILE_NAME}</a>(${file.FILE_SIZE}kb)<br>
-						</c:forEach>
-					</div> --%>
 				
 				<!-- 댓글 작성 끝 -->
 				<div class="my-3 p-3 bg-white rounded shadow-sm">

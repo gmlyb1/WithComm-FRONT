@@ -4,37 +4,36 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 
-<script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
+<!-- include summernote css/js -->
 <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
 
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
 <script type="text/javascript">
 	
-	function _onSubmit() {
+	$(document).ready(function () {
 	
-			if ($("#board_writer").val().trim() == "") {
-				Swal.fire("작성자를 입력해주세요");
-				$("#board_writer").focus();
+	
+	});
+	
+	function _onSubmit() {
+			
+			if($("#board_bgno").val().trim() == "") {
+				alert("카테고리를 선택해 주세요.");
+				$("#board_bgno").focus();
 				return false;
 			}
 				
 			if ($("#board_title").val().trim() == "") {
-				Swal.fire("제목을 입력해주세요");
+				alert("제목을 입력해주세요");
 				$("#board_title").focus();
 				return false;
 			}
 	
 			if ($("#board_content").val().trim() == "") {
-				Swal.fire("내용을 입력해주세요");
+				alert("내용을 입력해주세요");
 				$("#board_content").focus();
-				return false;
-			}
-			
-			if($("#board_bgno").val().trim() == "") {
-				Swal.fire("카테고리를 선택해 주세요.");
-				$("#board_bgno").focus();
 				return false;
 			}
 	
@@ -120,13 +119,13 @@
 								<tr>
 									<th class="active">내용</th><br>
 									<td class="form-inline">
-									<textarea id="board_content" name="board_content" cols="100" rows="10" placeholder="내용을 입력해주세요." class="form-control"></textarea></td>
+									<textarea name="board_content" cols="100" rows="10" placeholder="내용을 입력해주세요." class="form-control"></textarea></td>
 								</tr>
 							</tbody>
 						</table>
 					</div>
 					<div style="margin-left: auto; margin-right: auto; width: fit-content;">
-						<button type="submit" class="btn btn-primary">등록</button>
+						<button type="submit" class="btn btn-primary" onsubmit="_onSubmit();">등록</button>
 						<a href="/board/list" class="btn btn-danger">취소</a>
 					</div>
 				</form>

@@ -1,11 +1,13 @@
 package com.with.community.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.inject.Inject;
 
 import org.apache.ibatis.session.RowBounds;
 import org.apache.ibatis.session.SqlSession;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.with.community.vo.Criteria;
 import com.with.community.vo.NoticeVO;
@@ -73,6 +75,11 @@ public class NoticeDAOImpl implements NoticeDAO {
 	@Override
 	public List<NoticeVO> HomeNoticeList() throws Exception {
 		return sqlSession.selectList("namespace.HomeNoticeList");
+	}
+
+	@Override
+	public void insertFile(Map<String, Object> map) throws Exception {
+		sqlSession.insert("namespace.insertFile",map);
 	}
 
 
