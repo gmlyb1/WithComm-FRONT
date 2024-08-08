@@ -25,14 +25,14 @@ public class AccountServiceImpl implements AccountService {
 	public AccountVO login(AccountVO vo) throws Exception {
 		return accountDAO.login(vo);
 	}
-//	@Override
+	@Override
 	public int idChk(AccountVO vo) throws Exception {
 		int result = accountDAO.idChk(vo);
 		return result;
 	}
 	@Override
-	public int imageUdt(AccountVO avo) throws Exception {
-		accountDAO.imageUdt(avo);
+	public int updateImg(AccountVO avo) throws Exception {
+		accountDAO.updateImg(avo);
 		
 		return 1;
 	}

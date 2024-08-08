@@ -18,11 +18,11 @@
 <script type="text/javascript">
 	$(document).ready(function() {
 		
+		var msg = "${msg}";
+		if (msg != "") {
+			alert(msg);
+		}
 		
-	 /* $("#submitBtn").click(function() {
-	
-		 
-	 });  */
    }); 
     
      	
@@ -39,15 +39,23 @@
 		
 		$("#submitBtn").click(function() {
 			var memberId = $(this).data("member-id");
+			var meName = $('#me_name').val();
+		    var mePwd = $('#me_pwd').val();
 			
-			if (confirm("정말로 회원 정보를 변경 하시겠습니까?")) {
+		    console.log(meName);
+		    console.log(mePwd)
+		    
+		    if (confirm("정말로 회원 정보를 변경 하시겠습니까?")) {
 				$.ajax({
 					url : "/account/profileUdt",
 					type : "POST",
 					data : {
 						me_id : memberId,
+						me_name: meName,
+			            me_pwd: mePwd
 					},
 					success : function(data) {
+						console.log(data);
 						alert("회원 변경이 성공적으로 처리되었습니다.");
 						location.href = "/home";
 					},
@@ -57,7 +65,7 @@
 					}
 				});
 			}
-		});
+		}); 
 		
 		//회원 탈퇴
 		$("#delBtn").click(function() {
@@ -114,20 +122,19 @@
       <div class="card mb-4">
         <h5 class="card-header">Profile Details</h5>
         <!-- Account -->
-   <%--  <form action="/account/imageUdt" method="post" enctype="multipart/form-data">
+   <form action="/account/updateImg" method="post" enctype="multipart/form-data">
        	<input type="hidden" name="me_id" id="me_id" value="${member.me_id }">
-        <input type="hidden" name="me_image" value="${member.me_image}"/>
          <div class="card-body">
               <div class="d-flex align-items-start align-items-sm-center gap-4">
-                <img
-                  src="${pageContext.request.contextPath }/resources/assets/upload/mem_Image/${member.me_image}" 
+                <%-- <img
+                  src="/image/${member.me_image}" 
                   onerror="${pageContext.request.contextPath }/resources/assets/img/avatars/1.png"
                   alt="user-avatar"
                   class="d-block rounded"
                   height="100"
                   width="100"
                   id="uploadedAvatar"
-                />
+                /> --%>
                 <div class="button-wrapper">
                   <label for="upload" class="btn btn-primary me-2 mb-4" tabindex="0">
                     <span class="d-none d-sm-block">Upload new photo</span>
@@ -149,7 +156,7 @@
                 </div>
               </div>
             </div>
-	</form>           --%>
+	</form>        
 	<form action="/account/profileUdt" method="post">
         <hr class="my-0" />
         <div class="card-body">
@@ -187,15 +194,14 @@
                 <input class="form-control" type="text" id="me_regDate" name="me_regDate" value="<fmt:formatDate value="${member.me_regDate}" pattern = "yyyy-MM-dd"/>"readonly>
               </div>
               <div class="mb-3 col-md-6">
-                <label for="me_pwd" class="form-label">비밀번호</label>
-                <input class="form-control" type="text" id="me_pwd" name="me_pwd">
+                <label for="me_pwd" class="form-label" >비밀번호</label>
+                <input class="form-control" type="password" id="me_pwd" name="me_pwd">
               </div>
             <div class="mt-2">
               <button id="submitBtn" type="submit" data-member-id="${member.me_id}" class="btn btn-primary me-2">변경</button>
               <button type="reset" class="btn btn-outline-secondary">취소</button>
             </div>
         </div>
-       </div>
       </div>
    </form>
  <!--    </form> -->

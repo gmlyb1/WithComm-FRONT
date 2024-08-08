@@ -9,6 +9,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
+import javax.servlet.ServletContext;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
@@ -16,9 +19,12 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 import com.with.community.vo.BoardVO;
 import com.with.community.vo.NoticeVO;
 
-@Component("fileUtils")
+@Component
 public class FileUtils {
 
+	@Autowired
+	private ServletContext servletContext;
+	
 //	private static final String filePath = "C:\\Users\\lee\\git\\WithComm-FRONT\\WithCommunity\\src\\main\\webapp\\resources\\upload";
 	private static final String filePath = "/resources/upload/mem_Image";
 	

@@ -31,10 +31,9 @@
 		
 		$("#chatBtn").on("click",function(){
 		 const member = "${member}";
-		    console.log(member);
+		    //console.log(member);
 		    
 		    if (member === "") {
-		        console.log('못간다!@');
 		        // 확인 대화 상자를 띄우고 사용자 응답을 확인
 		        if (confirm("로그인이 필요합니다. 로그인 페이지로 이동하시겠습니까?")) {
 		            // 사용자가 "확인"을 클릭하면 로그인 페이지로 이동
@@ -44,6 +43,7 @@
 		    } else {
 		        // 로그인 상태인 경우 채팅 페이지로 이동
 		        location.href = "/chat"; // 채팅 페이지 URL로 변경
+		        //location.href = "/msg/message_list";
 		    }
 			
 		});

@@ -175,7 +175,7 @@ public class BoardController {
 		
 		
 		//삭제
-		@RequestMapping(value = "/delete", method= {RequestMethod.GET,RequestMethod.POST})
+		@RequestMapping(value = "/delete", method= RequestMethod.POST)
 		public String BoardDeletePOST(BoardVO vo, RedirectAttributes rttr) throws Exception
 		{
 			

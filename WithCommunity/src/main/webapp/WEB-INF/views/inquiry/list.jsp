@@ -61,7 +61,7 @@
 									        <c:when test="${list.answerYn == '대기중'}">
 									            <span class="text-danger"><strong>${list.answerYn}</strong></span>
 									        </c:when>
-									        <c:when test="${list.answerYn == '진행중'}">
+									        <c:when test="${list.answerYn == '확인중'}">
 									            <span class="text-primary"><strong>${list.answerYn}</strong></span>
 									        </c:when>
 									        <c:when test="${list.answerYn == '답변완료'}">
@@ -76,6 +76,9 @@
 							</c:if>
 						</c:forEach>
 					</c:if>
+					<c:if test="${member == null }">
+						<td colspan="6" class="text-center">데이터가 없습니다.</td>
+					</c:if>
 					</tbody>
 				</table>
 				<input type="hidden" name="page" value="1">
@@ -86,38 +89,40 @@
 				</c:if>
 				
 				<!-- 페이징 -->
-				<form name="form2">
-				    <div id="pagination" class="d-flex justify-content-center align-items-center">
-				        <ul id="pageUL" class="pagination">
-				            <c:if test="${pageMaker.prev}">
-				                <li class="page-item">
-				                    <a class="page-link" href='<c:url value="/inquiry/list?page=${pageMaker.startPage-1}"/>' aria-label="Previous">
-				                        <span aria-hidden="true">&laquo;</span>
-				                        <span class="sr-only">Previous</span>
-				                    </a>
-				                </li>
-				            </c:if>
-				            
-				            <c:forEach begin="${pageMaker.startPage}" end="${pageMaker.endPage}" var="pageNum" varStatus="loop">
-						    <li id="page${loop.index}" class="page-item <c:if test='${pageNum eq pageMaker.cri.page}'>active</c:if>'">
-						        <a class="page-link" href='<c:url value="/inquiry/list?page=${pageNum}"/>'><c:out value="${pageNum}"/></a>
-						    </li>
-							</c:forEach>
-							
-				            <c:if test="${pageMaker.next && pageMaker.endPage > 0}">
-				                <li class="page-item">
-				                    <a class="page-link" href='<c:url value="/inquiry/list?page=${pageMaker.endPage+1}"/>' aria-label="Next">
-				                        <span aria-hidden="true">&raquo;</span>
-				                        <span class="sr-only">Next</span>
-				                    </a>
-				                </li>
-				            </c:if>
-				        </ul>
-				    </div>
-				    <input id="pageH" type="hidden" name="page" value="${pageMaker.cri.page}">
-				    <input id="keywordH" type="hidden" name="keyword" value="${pageMaker.cri.keyword}">
-				    <input id="optionH" type="hidden" name="option" value="${pageMaker.cri.option}">
-				</form>
+				<c:if test="${member != null}">
+					<form name="form2">
+					    <div id="pagination" class="d-flex justify-content-center align-items-center">
+					        <ul id="pageUL" class="pagination">
+					            <c:if test="${pageMaker.prev}">
+					                <li class="page-item">
+					                    <a class="page-link" href='<c:url value="/inquiry/list?page=${pageMaker.startPage-1}"/>' aria-label="Previous">
+					                        <span aria-hidden="true">&laquo;</span>
+					                        <span class="sr-only">Previous</span>
+					                    </a>
+					                </li>
+					            </c:if>
+					            
+					            <c:forEach begin="${pageMaker.startPage}" end="${pageMaker.endPage}" var="pageNum" varStatus="loop">
+							    <li id="page${loop.index}" class="page-item <c:if test='${pageNum eq pageMaker.cri.page}'>active</c:if>'">
+							        <a class="page-link" href='<c:url value="/inquiry/list?page=${pageNum}"/>'><c:out value="${pageNum}"/></a>
+							    </li>
+								</c:forEach>
+								
+					            <c:if test="${pageMaker.next && pageMaker.endPage > 0}">
+					                <li class="page-item">
+					                    <a class="page-link" href='<c:url value="/inquiry/list?page=${pageMaker.endPage+1}"/>' aria-label="Next">
+					                        <span aria-hidden="true">&raquo;</span>
+					                        <span class="sr-only">Next</span>
+					                    </a>
+					                </li>
+					            </c:if>
+					        </ul>
+					    </div>
+					    <input id="pageH" type="hidden" name="page" value="${pageMaker.cri.page}">
+					    <input id="keywordH" type="hidden" name="keyword" value="${pageMaker.cri.keyword}">
+					    <input id="optionH" type="hidden" name="option" value="${pageMaker.cri.option}">
+					</form>
+				</c:if>
 			</div>
 		</div>
 	</div>

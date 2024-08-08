@@ -133,7 +133,7 @@ $(document).ready(function() {
 						</table>
 					</div>
 							<div style="margin-left: auto; margin-right: auto; width: fit-content;">
-						<button type="submit" class="btn btn-primary" onsubmit="_onSubmit();">등록</button>
+						<button type="submit" class="btn btn-primary">등록</button>
 						<a id="cancelBtn" href="/notice/list" class="btn btn-danger">취소</a>
 					</div>
 				</form>

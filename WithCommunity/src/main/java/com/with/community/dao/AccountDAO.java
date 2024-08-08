@@ -19,7 +19,7 @@ public interface AccountDAO {
 	public int idChk(AccountVO vo) throws Exception;
 	
 	// 프로필 사진 변경
-	public int imageUdt(AccountVO avo)throws Exception;
+	public int updateImg(AccountVO avo)throws Exception;
 	
 	// 로그인 유지 처리
 	public void keepLogin(String me_id, String sessionId, Date sessionLimit) throws Exception;

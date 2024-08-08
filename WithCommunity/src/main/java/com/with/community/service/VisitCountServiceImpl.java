@@ -14,18 +14,19 @@ public class VisitCountServiceImpl implements VisitCountService{
 	private VisitCountDAO visitCountDAO;
 	
 	@Override
-	public void insertVisitCount() {
-		visitCountDAO.insertVisitCount();
+	public void insertVisitCount(VisitCountVO vvo) {
+		visitCountDAO.insertVisitCount(vvo);
 	}
 
 	@Override
-	public void updateVisitCount() {
-		visitCountDAO.updateVisitCount();
+	public void updateVisitCount(VisitCountVO vvo) {
+		visitCountDAO.updateVisitCount(vvo);
 	}
 
 	@Override
 	public VisitCountVO selectVisitCount(VisitCountVO vvo) {
 		return visitCountDAO.selectVisitCount(vvo);
 	}
+
 
 }

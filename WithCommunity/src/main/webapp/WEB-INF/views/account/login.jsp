@@ -34,12 +34,32 @@
     <link rel="stylesheet" href="/resources/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css" />
     <link rel="stylesheet" href="/resources/assets/vendor/libs/apex-charts/apex-charts.css" />
 	
-	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="/resources/assets/vendor/js/helpers.js"></script>
     <script src="/resources/assets/js/config.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
 	<script type="text/javascript">
+	
+	$(document).ready(function(){
+		var msg = "${msg}"
+			
+		if (msg != "") {
+			alert(msg);
+		}
+		
+		$("#submit").on("click", function(){
+			if($("#me_email").val()==""){
+				alert("아이디를 입력해주세요.");
+				$("#me_email").focus();
+				return false;
+			}
+			if($("#me_pwd").val()==""){
+				alert("비밀번호를 입력해주세요.");
+				$("#me_pwd").focus();
+				return false;
+			}
+		});
+	});
 	//쿠키 이름 정하기
 	const COOKIE_NAME = "rememberMe";
 	
@@ -56,6 +76,8 @@
 	
 	// Remember Me 체크 박스에 따라 쿠키 값 저장하기
 	const rememberMe = document.querySelector('#remember-me');
+	
+	console.log(rememberMe)
 	if (rememberMe) {
 	    rememberMe.addEventListener('change', function() {
 	        if(this.checked) {
@@ -80,36 +102,12 @@
 	
 	// Remember Me 체크 박스 상태 설정하기
 	const useCookie = getCookie(COOKIE_NAME);
+	
 	if (useCookie === "true") {
 	    document.querySelector('#remember-me').setAttribute('checked', true);
 	}
 	</script>
 	
-	<script type="text/javascript">
-	$(document).ready(function(){
-		var msg = "${msg}"
-			
-		if (msg != "") {
-			swal(msg);
-		}
-		
-		$("#submit").on("click", function(){
-			if($("#me_email").val()==""){
-				swal.fire("아이디를 입력해주세요.");
-				$("#me_email").focus();
-				return false;
-			}
-			if($("#me_pwd").val()==""){
-				swal.fire("비밀번호를 입력해주세요.");
-				$("#me_pwd").focus();
-				return false;
-			}
-			
-			
-			
-		});
-	})
-	</script>
 	<style type="text/css">
 		.loader-container {
 		  position: fixed; /* 화면에 고정되도록 설정 */

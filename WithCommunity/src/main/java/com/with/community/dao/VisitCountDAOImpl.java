@@ -14,18 +14,19 @@ public class VisitCountDAOImpl implements VisitCountDAO{
 	private static final String namespace = "com.with.community.dao.VisitCountDAO";
 	
 	@Override
-	public void insertVisitCount() {
-		sqlSession.insert("namespace.insertVisitCount");
+	public void insertVisitCount(VisitCountVO vvo) {
+		sqlSession.insert("namespace.insertVisitCount",vvo);
 	}
 
 	@Override
-	public void updateVisitCount() {
-		sqlSession.update("namespace.updateVisitCount");
+	public void updateVisitCount(VisitCountVO vvo) {
+		sqlSession.update("namespace.updateVisitCount",vvo);
 	}
 
 	@Override
 	public VisitCountVO selectVisitCount(VisitCountVO vvo) {
 		return sqlSession.selectOne("namespace.selectVisitCount",vvo);
 	}
+
 
 }

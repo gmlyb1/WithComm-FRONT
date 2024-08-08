@@ -160,8 +160,7 @@
 			<div class="panel-body">
 				<form role="form" method="post" name="readForm">
 					<input type="hidden" id="FILE_NO" name="FILE_NO" value="">
-					<input type="hidden" id="board_no" name="board_no"
-						value="${read.board_no}" />
+					<input type="hidden" id="board_no" name="board_no" value="${read.board_no}" />
 					<%-- <input type="hidden" id="reply_no" name="reply_no" value="${replyList.board_no}"> --%>
 					<!-- 게시판 글보기  -->
 					<div class="container-fluid">

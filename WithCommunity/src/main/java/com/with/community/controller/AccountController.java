@@ -135,6 +135,7 @@ public class AccountController {
 				return "redirect:/account/login";
 			
 			}else if(login.getState().equals("승인대기중")) {
+				System.out.println("들어옴");
 				session.setAttribute("member", null);
 				rttr.addFlashAttribute("msg", "승인되지 않은 회원입니다.\n 관리자에게 문의해 주시기 바랍니다.");
 				return "redirect:/account/login";
@@ -222,53 +223,19 @@ public class AccountController {
 		
 	}
 	
-	@RequestMapping(value="/imageUdt" , method=RequestMethod.POST)
-	public String profileUdt(MultipartHttpServletRequest multiRequest, Model model) throws Exception
+	@RequestMapping(value="/updateImg" , method=RequestMethod.POST)
+	public String profileUdt(HttpSession session,MultipartHttpServletRequest multiRequest, Model model,String me_id) throws Exception
 	{
-		logger.info("실행");
 		
-		logger.info("기존파일 : " + multiRequest.getParameter("default_file"));
+		logger.info("this.filUtil :" +this.fileUtil);
+		String me_image = fileUtil.updateImg(multiRequest);
 		
-		String me_image = "";
 		
-		MultipartFile file = multiRequest.getFile("me_image");
+		AccountVO accountVO = (AccountVO) session.getAttribute("member");
 		
-		if(file.getOriginalFilename() == "") {
-			logger.info("기존 파일에 넣기");
-			me_image = multiRequest.getParameter("default_file");
+		accountService.updateImg(me_image,me_id);
+		session.setAttribute("member", accountVO);
 			
-			logger.info("me_image : " + me_image);
-		} else {
-			logger.info("변경 파일에 넣기");
-			
-			String file_path = multiRequest.getSession().getServletContext().getRealPath("/resources/assets/upload/mem_Image");
-			
-			String uuid = UUID.randomUUID().toString();
-			
-			me_image = uuid + "_" + file.getOriginalFilename();
-			
-			file.transferTo(new File(file_path + "/" + me_image));
-			
-			File f = new File(file_path + "/" + multiRequest.getParameter("default_file"));
-			
-			logger.info("f: " + f);
-			
-			if(f.exists()) {
-				f.delete();
-			}
-		}
-		
-		AccountVO avo = new AccountVO();
-		
-		avo.setMe_id(Integer.parseInt((String)multiRequest.getParameter("me_id")));
-		avo.setMe_image(me_image);
-		
-		System.out.println(" C : 파라미터 값" + avo);
-		
-		int result = accountService.imageUdt(avo);
-		
-		logger.info("result : " + result);
-		model.addAttribute("updateAcc_result", result);
 		
 		return "redirect:/account/profile";
 		
@@ -290,17 +257,25 @@ public class AccountController {
 	}
 	
 	//비밀번호 변경 GET
-	@RequestMapping(value="/pwdUdt", method= RequestMethod.GET)
+	@RequestMapping(value="/profileUdt", method= RequestMethod.GET)
 	public void pwdUpdate(AccountVO vo) {
 		
 	}
 	
 	//비밀번호 변경
 	@RequestMapping(value="/profileUdt", method= RequestMethod.POST)
-	public String pwdUpdatePOST(AccountVO vo) throws Exception {
-
-		accountService.profileUdt(vo);
+	public String pwdUpdatePOST(AccountVO vo,RedirectAttributes rttr) throws Exception {
 		
+		try {
+			vo.setMe_pwd(vo.getMe_pwd());
+			vo.setMe_name(vo.getMe_name());
+			
+			accountService.profileUdt(vo);
+			rttr.addFlashAttribute("msg", "회원 정보 변경에 성공하였습니다.");
+		} catch (Exception e) {
+			rttr.addFlashAttribute("msg", "에러가 발생하였습니다.");
+			e.printStackTrace();
+		}
 		
 		return "redirect:/account/profile";
 	}

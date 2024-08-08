@@ -24,7 +24,7 @@ public class MsgController {
 	@Autowired
 	private MsgDAO msgDAO;
 	
-	@RequestMapping(value = "/list" , method = {RequestMethod.GET,RequestMethod.POST})
+	@RequestMapping(value = "/message_list" , method = {RequestMethod.GET,RequestMethod.POST})
 	public String messageList(HttpServletRequest request, HttpSession session, Model model) throws Exception 
 	{
 		String nick = (String) session.getAttribute("nick");
@@ -35,7 +35,7 @@ public class MsgController {
 		
 		request.setAttribute("list", list);
 		
-		return "/msg/list";
+		return "/msg/message_list";
 	}
 	
 	

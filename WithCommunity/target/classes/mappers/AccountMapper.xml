@@ -72,7 +72,7 @@
 	</delete>
 	
 	<!-- 비밀번호 변경 -->
-	<update id="profileUdt">
+	<update id="profileUdt" parameterType="AccountVO">
 		update tbl_member set 
 			me_pwd = #{me_pwd}
 		   ,me_name = #{me_name}

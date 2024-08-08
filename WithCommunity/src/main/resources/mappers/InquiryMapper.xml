@@ -30,7 +30,8 @@
 	
 	<!-- 프로필 나의 문의 개수 -->
 	<select id="selectInqCnt" resultType="int">
-		select count(inq_no) from tbl_inquiry 
+		select COALESCE(COUNT(inq_no), 0)  from tbl_inquiry 
+		
 	</select>
 	
 	<!-- 글쓰기 -->

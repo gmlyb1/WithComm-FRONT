@@ -33,14 +33,14 @@ public class AccountDAOImpl implements AccountDAO{
 		return sqlSession.selectOne("namespace.login", vo);
 	}
 
-//	@Override
+	@Override
 	public int idChk(AccountVO vo) throws Exception {
 		int result = sqlSession.selectOne("namespace.idChk", vo);
 		return result;
 	}
 
 	@Override
-	public int imageUdt(AccountVO avo) throws Exception {
+	public int updateImg(AccountVO avo) throws Exception {
 		
 		int result = sqlSession.update("namespace.profileUdt", avo);
 		

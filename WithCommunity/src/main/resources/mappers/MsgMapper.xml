@@ -6,18 +6,30 @@
 <mapper namespace="com.with.community.dao.MsgDAO">
 	
 	<select id="message_list" parameterType="MessageVO" resultType="MessageVO">
-		select
-			 msg_no
-			,msg_room
-			,send_nick
-			,recv_nick
-			,date_format(send_time, '%Y-%m-%d %H:%i') AS send_time
-			,read_time
-			,msg_content
-			,read_chk
-		from tbl_msg
-		where msg_no in(select max(msg_no) from tbl_msg group_by msg_room) and (send_nick = #{nick} or recv_nick = #{nick})
-		order by msg_no desc
+		SELECT 
+		    msg_no,
+		    msg_room,
+		    send_nick,
+		    recv_nick,
+		    DATE_FORMAT(send_time, '%Y-%m-%d %H:%i') AS send_time,
+		    read_time,
+		    msg_content,
+		    read_chk
+		FROM 
+		    tbl_msg
+		WHERE 
+		    msg_no IN (
+		        SELECT 
+		            MAX(msg_no)
+		        FROM 
+		            tbl_msg
+		        GROUP BY 
+		            msg_room
+		    )
+		AND 
+		    (send_nick = #{nick} OR recv_nick = #{nick})
+		ORDER BY 
+		    msg_no DESC;
 	</select>
 	
 	<select id="get_other_profile" parameterType="MessageVO" resultType="String">

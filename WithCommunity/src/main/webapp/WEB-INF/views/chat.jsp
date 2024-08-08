@@ -25,8 +25,9 @@
 <script type="text/javascript">
 $(document).ready(function() {
 	//채팅 서버 주소
-	let url = "ws://localhost:8090/chatserver";
-	   		
+	//let url = "ws://localhost:8090/chatserver";
+	 var contextPath = '${pageContext.request.contextPath}';
+ 	 var url = 'ws://' + location.host + contextPath + '/chatserver';	   		
 	// 웹 소켓
 	let ws;
 
@@ -174,7 +175,7 @@ $(document).ready(function() {
         <tr>
             <td>
                 <div class="input-group">
-                    <input type="text" name="user" id="user" class="form-control" value="${member.me_name}" readonly>
+                    <input type="text" name="user" id="user" class="form-control" value="${member.me_name}">
                     <span class="input-group-btn">
                         <button type="button" class="btn btn-success" id="btnConnect">연결</button>
                         <button type="button" class="btn btn-danger" id="btnDisconnect" disabled>종료</button>

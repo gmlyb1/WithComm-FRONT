@@ -9,16 +9,19 @@
 		INSERT INTO TBL_VISIT
 		(
 			visit_id
+		,	visit_ip
 		,	regDate
 		,	visitCount
 		)
 		VALUES
 		(
 			#{visit_id}
+		,	#{visit_ip}
 		,	NOW()
 		,	1
 		)
 	</insert>
+	
 	
 	<update id="updateVisitCount">
 		update
