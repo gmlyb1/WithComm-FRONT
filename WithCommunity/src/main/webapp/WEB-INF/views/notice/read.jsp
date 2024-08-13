@@ -99,7 +99,7 @@
 					<br>
 					<!-- 게시판 글보기  -->
 					<div style="margin-left: 1px;">
-						<c:if test="${member.me_name == read.notice_writer}">
+						<c:if test="${member.state == '관리자' || member.state == '최고관리자'}">
 							<button type="button" class="btn btn-success" onclick="location.href='/notice/update?notice_no=${read.notice_no}';">수정</button>
 							<button type="submit" class="btn btn-danger" id="delete_btn">삭제</button>
 						</c:if>

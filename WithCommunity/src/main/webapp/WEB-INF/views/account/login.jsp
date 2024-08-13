@@ -208,12 +208,6 @@
                   />
                 </div>
                 <div class="mb-3 form-password-toggle">
-                  <div class="d-flex justify-content-between">
-                    <label class="form-label" for="password">Password</label>
-                    <a href="/account/forgotPass">
-                      <small>비밀번호 찾기</small>
-                    </a>
-                  </div>
                   <div class="input-group input-group-merge">
                     <input
                       type="password"
@@ -241,6 +235,20 @@
                 <span>WithComm 방문이 처음이신가요?</span>
                 <a href="/account/register">
                   <span>회원가입</span>
+                </a>
+              </p>
+              <br>
+              <p class="text-center">
+                <span>아이디를 잊으셨나요?</span>
+                <a href="/account/forgotId">
+                  <span>아이디 찾기</span>
+                </a>
+              </p>
+              <br>
+              <p class="text-center">
+                <span>비밀번호를 잊으셨나요?</span>
+                <a href="/account/forgotPass">
+                  <span>비밀번호 찾기</span>
                 </a>
                
               </p>

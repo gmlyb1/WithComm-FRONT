@@ -62,6 +62,18 @@ public class AccountServiceImpl implements AccountService {
 	public void updateImg(String me_id, String me_image) throws Exception {
 		accountDAO.updateImg(me_id,me_image);
 	}
+	@Override
+	public int memberPwdCheck(AccountVO aVO) throws Exception {
+		return accountDAO.memberPwdCheck(aVO);
+	}
+	@Override
+	public void passwordUpdate(AccountVO aVO) throws Exception {
+		accountDAO.passwordUpdate(aVO);
+	}
+	@Override
+	public AccountVO memberIdSearch(AccountVO aVO) throws Exception {
+		return accountDAO.memberIdSearch(aVO);
+	}
 
 
 }

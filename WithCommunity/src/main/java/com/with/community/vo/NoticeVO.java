@@ -25,6 +25,8 @@ public class NoticeVO {
 	private Boolean isFixed;
 	private Boolean useYn;
 	
+	private Boolean isNew; 
+	
 	
 	
 	

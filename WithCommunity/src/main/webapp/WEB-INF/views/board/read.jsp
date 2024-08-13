@@ -110,9 +110,6 @@
 		form.attr("action", "/board/update");
 		form.submit();
 	});
-	
-	
-	
 </script>
 <style type="text/css">
  .comment-form {
@@ -194,22 +191,15 @@
 					<br>
 					
 					<!-- 게시판 글보기  -->
-					&nbsp;&nbsp;&nbsp;<div style="margin-left: 1px;">
-						<c:if test="${member.me_name == read.board_writer}">
+	&nbsp;&nbsp;&nbsp;<div style="margin-left: 1px;">
+						<c:if test="${member.state == '최고관리자' || member.me_name == read.board_writer}">
 							&nbsp;&nbsp;&nbsp;<button type="button" class="btn btn-success" onclick="location.href='/board/update?board_no=${read.board_no}';">수정</button>
 							&nbsp;&nbsp;&nbsp;<button type="submit" class="btn btn-danger" id="delete_btn">삭제</button>
 						</c:if>
-						<button onclick="location.href='/board/list'" type="button"
-							id="list_btn" class="btn btn-primary">목록</button>
+						<button onclick="location.href='/board/list'" type="button" id="list_btn" class="btn btn-primary">목록</button>
 						<br>
 						<hr>
 					</div>
-					
-					<%-- <form id="infoForm" action="/board/update" method="get">
-						<input type="hidden" id="board_no" name="board_no" value='<c:out value="${pageInfo.board_no}"/>'>
-						<input type="hidden" id="pageNum" value='<c:out value="${cri.pageNum}"/>'>
-						<input type="hidden" id="amount" value='<c:out value="${cri.amount}"/>'>
-					</form> --%>
 				</form>
 				<!-- 게시판 끝 -->
 
@@ -228,17 +218,18 @@
 										<td style="font-weight: bold;" colspan="3">${replyList.reply_writer}</td>
 									</tr>
 									<tr>
-										<td style="width: 60%; height: 50px;"><pre
-												style="font-family: arial;">${replyList.reply_content}</pre>
-											<p>
-												<c:if test="${member.adminCk == 1  || member.me_name == replyList.reply_writer}">
-													<!-- <a class="btn btn-primary" href="#">댓글 수정</a> -->
-													<a class="btn btn-primary" href="javascript:void(0);" onclick="openEditModal(${replyList.reply_no}, '${replyList.reply_content}')">수정</a>
-													<a class="btn btn-danger" href="javascript:remove_replyNo(${replyList.reply_no},${replyList.board_no});">삭제</a>
-												</c:if>
-											</p></td>
-										<td style="width: 35%; text-align: right;"><fmt:formatDate
-												value="${replyList.reply_regdate}" pattern="yy-MM-dd hh:mm:ss" /></td>
+										<td style="width: 60%; height: 50px;">
+											<pre style="font-family: arial;">${replyList.reply_content}</pre>
+												<p>
+													<c:if test="${member.state == '최고관리자'  || member.me_name == replyList.reply_writer}">
+														<!-- <a class="btn btn-primary" href="#">댓글 수정</a> -->
+														<a class="btn btn-primary" href="javascript:void(0);" onclick="openEditModal(${replyList.reply_no}, '${replyList.reply_content}')">수정</a>
+														<a class="btn btn-danger" href="javascript:remove_replyNo(${replyList.reply_no},${replyList.board_no});">삭제</a>
+													</c:if>
+												</p></td>
+										<td style="width: 35%; text-align: right;">
+											<fmt:formatDate value="${replyList.reply_regdate}" pattern="yy-MM-dd hh:mm:ss" />
+										</td>
 										<td style="width: 5%;">&nbsp;</td>
 									</tr>
 								</c:forEach>
@@ -246,41 +237,27 @@
 						</c:choose>
 					</table>
 				</div>
-
 				<!-- 댓글 끝 -->
 
-
 				<!-- 댓글 작성 시작 -->
-				<%-- <c:if test="${member.me_grade == '최고관리자' }"> --%>
-					<div>
-						<form method="post" action="/reply/write">
-							<input type="hidden" name="board_no" value="${read.board_no}">
-							<input type="hidden" name="reply_no" value="${read.reply_no}">
-							<%-- 						<input type="hidden" name="page" name="page" value="${scri.page}">
-						<input type="hidden" name="perPageNum" name="perPageNum" value="${scri.perPageNum }">
-						<input type="hidden" name="searchType" name="searchType" value="${scri.searchType }">
-						<input type="hidden" name="keyword" name="keyword" value="${scri.keyword}">+
- --%>
-							<%-- <input type="hidden" id="reply_no" name="reply_no" value="${replyList.board_no}"> --%>
-						<div class="comment-form">
-							<p>
-								<label>댓글 작성자:</label> <input type="text" name="reply_writer"
-									value="${member.me_name}" readonly>
-							</p>
-						</div>
-							<p>
-								댓글 내용:
-								<textarea class="form-control" rows="3" cols="155"
-									placeholder="댓글을 남겨주세요." name="reply_content"></textarea>
-							</p>
-
-							<p>
-
-								<button type="submit" class="btn btn-success"
-									style="margin: 55px 0 0 10px;">댓글 작성</button>
-							</p>
-						</form>
+				<div>
+					<form method="post" action="/reply/write">
+						<input type="hidden" name="board_no" value="${read.board_no}">
+						<input type="hidden" name="reply_no" value="${read.reply_no}">
+					<div class="comment-form">
+						<p>
+							<label>댓글 작성자:</label> 
+							<input type="text" name="reply_writer" value="${member.me_name}" readonly>
+						</p>
 					</div>
+						<p>
+							댓글 내용: <textarea class="form-control" rows="3" cols="155" placeholder="댓글을 남겨주세요." name="reply_content"></textarea>
+						</p>
+						<p>
+							<button type="submit" class="btn btn-success" style="margin: 55px 0 0 10px;">댓글 작성</button>
+						</p>
+					</form>
+				</div>
 
 				<!-- 댓글 작성 끝 -->
 				<div class="my-3 p-3 bg-white rounded shadow-sm">

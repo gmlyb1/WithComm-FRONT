@@ -41,30 +41,41 @@
     
     <script type="text/javascript">
     
-   
-	
-    
 	$(document).ready(function() {
 		var msg = "${msg}"
-			
+		var result = $("#result").val();
+	
 		if (msg != "") {
 			alert(msg);
 		}
+		
+		if (result === 1) {
+	      $("#email-error").text("Account already exists.").show();
+	    } else {
+	      $("#email-error").hide(); 
+	    }
 		
 		var emailInput = $("#me_email");
 		
 		$("#submit").on("click", function(){
 			var email = emailInput.val();
 			
-			if(email === ""){
+			if($("#me_email").val() === ""){
 				alert("아이디로 사용하실 이메일을 입력해주세요.");
 				$("#me_email").focus();
 				emailInput.focus();
 				return false;
 			}
 			
+			if($("#me_real_name").val() === ""){
+				alert("이름을 입력해주세요.");
+				$("#me_real_name").focus();
+				emailInput.focus();
+				return false;
+			}
+			
 			if(email.substr(email.length - 9) !== "@with.com") {
-				alert("올바른 email 형식을 입력해 주세요.");
+				alert("올바른 email 형식을 입력해 주세요. \n 예시) example@with.com");
 				$("#me_email").focus();
 				emailInput.focus();
 				return false;
@@ -73,6 +84,13 @@
 			if($("#me_name").val() === ""){
 				alert("닉네임을 입력해주세요.");
 				$("#me_name").focus();
+				return false;
+			}
+			
+			
+			if($("#me_phone").val() === ""){
+				alert("전화번호를 입력해주세요.");
+				$("#me_phone").focus();
 				return false;
 			}
 			
@@ -169,8 +187,9 @@
               <p class="mb-4">Make your app management easy and fun!</p>
 
               <form id="formAuthentication" class="mb-3" action="/account/register" method="POST">
+              	<input type="hidden" id="result" value="${result}" />
                 <div class="mb-3">
-                  <label for="me_email" class="form-label">Email</label>
+                  <label for="me_email" class="form-label">이메일</label>
                  <!--  <input type="hidden" id="me_id_yn" name="me_id_yn" value="N"/> -->
                   <input type="email" class="form-control" id="me_email" name="me_email" placeholder="Enter your email" />
 				  	<!-- <a href="#" class="btn btn-success btn-icon-split" style="text-align:center;" id="idChkBtn">
@@ -181,11 +200,20 @@
 				  	</a> -->
                 </div>
                 <div class="mb-3">
-                  <label for="me_name" class="form-label">Username</label>
+                  <label for="me_real_name" class="form-label">이름</label>
+                  <input type="text" class="form-control" id="me_real_name" name="me_real_name" placeholder="Enter your name" autofocus/>
+                </div>
+                <div class="mb-3">
+                  <label for="me_name" class="form-label">닉네임</label>
                   <input type="text" class="form-control" id="me_name" name="me_name" placeholder="Enter your username" autofocus/>
+                  <div id="email-error" class="text-danger mt-2" style="display: none;">Account already exists.</div>
+                </div>
+                <div class="mb-3">
+                  <label for="me_phone" class="form-label">전화번호</label>
+                  <input type="text" class="form-control" id="me_phone" name="me_phone" placeholder="전화번호를 입력하세요" autofocus/>
                 </div>
                 <div class="mb-3 form-password-toggle">
-                  <label class="form-label" for="me_pwd">Password</label>
+                  <label class="form-label" for="me_pwd">패스워드</label>
                   <div class="input-group input-group-merge">
                     <input type="password" id="me_pwd" class="form-control" name="me_pwd"
                       placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;"
@@ -193,7 +221,6 @@
                     <span class="input-group-text cursor-pointer"><i class="bx bx-hide"></i></span>
                   </div>
                 </div>
-
                 <div class="mb-3">
                   <div class="form-check">
                     <input class="form-check-input" type="checkbox" id="terms-conditions" name="terms" />
@@ -203,7 +230,7 @@
                     </label>
                   </div>
                 </div>
-                <button type="submit" id="submit" class="btn btn-primary d-grid w-100">Sign up</button>
+                <button type="submit" id="submit" onclick="fnSubmit(); return false;" class="btn btn-primary d-grid w-100">Sign up</button>
               </form>
 
               <p class="text-center">

@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.lang.RandomStringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +26,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
@@ -82,21 +84,16 @@ public class AccountController {
 	public String registerPOST(AccountVO vo, Model model, HttpSession sesion, RedirectAttributes rttr)throws Exception
 	{
 		
-		String cryptEncoderPw = passEncoder.encode(vo.getMe_pwd());
+//		String cryptEncoderPw = passEncoder.encode(vo.getMe_pwd());
+//		
+//		vo.setMe_pwd(cryptEncoderPw);
 		
-		vo.setMe_pwd(cryptEncoderPw);
-		
-		int result = accountService.idChk(vo);
+//		int result = accountService.idChk(vo);
 
+//		model.addAttribute("result", result);
 		try {
-			if(result == 1) {
-				rttr.addFlashAttribute("msg", "이미 존재하는 아이디입니다. 다시 확인해주세요.");
-				return "/account/register";
-			}else if(result == 0) {
-				
-				accountService.register(vo);
-				rttr.addFlashAttribute("msg", "회원가입이 완료되었습니다.\n 관리자의 승인 이후에 서비스 사용이 가능합니다.");
-			}
+			accountService.register(vo);
+			rttr.addFlashAttribute("msg", "회원가입이 완료되었습니다.\n 관리자의 승인 이후에 서비스 사용이 가능합니다.");
 		} catch (Exception e) {
 			rttr.addFlashAttribute("msg", "회원가입 도중 에러가 발생했습니다!");
 			logger.error("에러" + e);
@@ -135,7 +132,6 @@ public class AccountController {
 				return "redirect:/account/login";
 			
 			}else if(login.getState().equals("승인대기중")) {
-				System.out.println("들어옴");
 				session.setAttribute("member", null);
 				rttr.addFlashAttribute("msg", "승인되지 않은 회원입니다.\n 관리자에게 문의해 주시기 바랍니다.");
 				return "redirect:/account/login";
@@ -280,10 +276,77 @@ public class AccountController {
 		return "redirect:/account/profile";
 	}
 	
+	//아이디 찾기 페이지
+	@RequestMapping(value="/forgotId" , method=RequestMethod.GET)
+	public void forgotIdPage() {
+		
+	}
+	
 	//비밀번호 찾기 페이지
+	@RequestMapping(value="/forgotId" , method=RequestMethod.POST)
+	public String forgotId(HttpServletRequest request, Model model,
+		    @RequestParam(required = true, value = "me_real_name") String me_real_name, 
+		    @RequestParam(required = true, value = "me_phone") String me_phone,
+		    AccountVO aVO,RedirectAttributes rttr) throws Exception{
+		
+		try {
+			aVO.setMe_real_name(me_real_name);
+			aVO.setMe_phone(me_phone);
+
+			AccountVO memberSearch = accountService.memberIdSearch(aVO);
+			
+			if(memberSearch == null) {
+				rttr.addFlashAttribute("msg", "정보가 일치하지 않습니다");
+			}else {
+				model.addAttribute("aVO", memberSearch);
+				rttr.addFlashAttribute("msg", "회원님의 아이디는" + memberSearch.getMe_email() + "입니다.");
+			}
+			
+		}catch (Exception e) {
+			e.printStackTrace();
+			rttr.addFlashAttribute("msg", "에러가 발생했습니다");
+		}
+		
+		return "redirect:/account/forgotId";
+	}
+	
+	//	비밀번호 찾기 페이지
 	@RequestMapping(value="/forgotPass" , method=RequestMethod.GET)
-	public String forgotPassPage() {
-		return "/account/forgotPass";
+	public void forgotPassPage() {
+	}
+	
+	
+	//비밀번호 찾기 페이지
+	@RequestMapping(value="/forgotPass" , method= RequestMethod.POST)
+	public String forgotPass(HttpServletRequest request, Model model, RedirectAttributes rttr,
+		    @RequestParam(required = true, value = "me_email") String me_email, 
+		    @RequestParam(required = true, value = "me_phone") String me_phone, 
+		    AccountVO aVO) throws Exception{
+		
+	try {
+		aVO.setMe_email(me_email);
+		aVO.setMe_phone(me_phone);
+		int memberSearch = accountService.memberPwdCheck(aVO);
+		
+		if(memberSearch == 0) {
+			
+			rttr.addFlashAttribute("msg", "가입된 정보가 잘못되었습니다 다시 입력해 주세요!"  );
+			return "redirect:/account/forgotPass";
+		} else if(memberSearch == 1) {
+			String newPwd = RandomStringUtils.randomAlphanumeric(10);
+			
+			aVO.setMe_pwd(newPwd);
+			
+			accountService.passwordUpdate(aVO);
+			rttr.addFlashAttribute("msg", "비밀번호 초기화! 초기화 된 비밀번호: "+newPwd );
+			model.addAttribute("newPwd", newPwd);
+		}
+		
+	} catch (Exception e) {
+		e.printStackTrace();
+		rttr.addFlashAttribute("msg", "에러가 발생했습니다.");
+	}
+		return "redirect:/account/forgotPass";
 	}
 	
 	

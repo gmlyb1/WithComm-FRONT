@@ -53,13 +53,13 @@ public class EchoHandler extends TextWebSocketHandler {
 		for(WebSocketSession single : sessions) {
 			
 			// 세션아이디 
-			String hsid = (String)single.getAttributes().get("me_id");
+			String hsid = (String)single.getAttributes().get("member");
 			
 			//세션값이 같을때, 알람보낼 것이 있을 때만 전송 -> 로그인 한 사용자가 처음으로 알람 받는 순간임
 	        //해당 sendMsg에 DB정보 넣어서 체크 안된 알람 전부 전송하기
-			if(single.getAttributes().get("me_id").equals(session.getAttributes().get("me_id"))) {
+			if(single.getAttributes().get("member").equals(session.getAttributes().get("member"))) {
 				List<AlaramVO> aVO = new ArrayList<>();
-				aVO = AlaramDAO.selectAlaram(hsid);
+				aVO = alaramDAO.selectAlarm(hsid);
 				
 				for(AlaramVO alaram : aVO) {
 					int idx = alaram.getIdx();
@@ -86,7 +86,7 @@ public class EchoHandler extends TextWebSocketHandler {
 	
 	private String currentUserName(WebSocketSession session) {
 		Map<String, Object> httpSession = session.getAttributes();
-		AccountVO loginUser = (AccountVO)httpSession.get("login");
+		AccountVO loginUser = (AccountVO)httpSession.get("member");
 		
 		if(loginUser == null) {
 			String mid = session.getId();

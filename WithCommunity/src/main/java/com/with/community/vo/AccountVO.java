@@ -19,6 +19,8 @@ public class AccountVO {
 	private String me_email;
 	private String me_pwd;
 	private String me_name;
+	private String me_real_name;
+	private String me_phone;
 	private Date me_regDate;
 	private String me_image;
 	private int adminCk;

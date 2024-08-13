@@ -19,6 +19,8 @@
 			me_email
 		,	me_pwd
 		,	me_name
+		,	me_real_name
+		,   me_phone
 		,   me_regdate
 		)
 		values
@@ -26,6 +28,8 @@
 			#{me_email}
 		,	#{me_pwd}
 		,	#{me_name}
+		,	#{me_real_name}
+		,	#{me_phone}
 		,	now()
 		)
 	</insert>
@@ -76,6 +80,7 @@
 		update tbl_member set 
 			me_pwd = #{me_pwd}
 		   ,me_name = #{me_name}
+		   ,me_phone = #{me_phone}
 		where me_id = #{me_id}
 	</update>
 	
@@ -83,5 +88,43 @@
 		update tbl_member set me_image = #{me_image} where me_id = #{me_id}
 	
 	</update>
+	
+	<select id="memberPwdCheck" parameterType="AccountVO" resultType="java.lang.Integer">
+	<![CDATA[
+	    select
+	        count(*)
+	    from
+	        tbl_member
+	    where
+	        me_email = #{me_email}
+	    and
+	        me_phone = #{me_phone}
+	    and
+	        me_email = #{me_email}
+	]]>    
+	</select>
+	 
+	    
+	<update id="passwordUpdate" parameterType="AccountVO" >
+	    UPDATE 
+	        tbl_member 
+	    SET 
+	        me_pwd = #{me_pwd}
+	    where
+	        me_email = #{me_email}
+	    and me_phone = #{me_phone}
+	</update>
+	
+	<select id="memberIdSearch" parameterType="AccountVO" resultType="AccountVO">
+		<![CDATA[
+		    select
+		        CONCAT(LEFT(me_email, 3), REPEAT('*', CHAR_LENGTH(me_email) - 3)) AS me_email
+		    from
+		        tbl_member
+		    where
+		        me_real_name = #{me_real_name}
+		    and me_phone = #{me_phone}
+		]]>    
+	</select>
 	
 </mapper>  

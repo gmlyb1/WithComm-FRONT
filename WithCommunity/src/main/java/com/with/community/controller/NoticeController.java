@@ -1,8 +1,6 @@
 package com.with.community.controller;
 
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -17,17 +15,14 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.support.RequestContextUtils;
 
 import com.with.community.service.NoticeService;
 import com.with.community.util.FileUtils;
-import com.with.community.vo.BoardVO;
 import com.with.community.vo.Criteria;
 import com.with.community.vo.NoticeVO;
 import com.with.community.vo.PageMaker;
-import com.with.community.vo.ReplyVO;
 
 @Controller
 @RequestMapping("/notice/*")
@@ -62,11 +57,6 @@ public class NoticeController {
 		model.addAttribute("noticeList", noticeList);
 		
 		model.addAttribute("FixedList", noticeService.selectNoticeImportant(vo));
-//		if(vo.getIsFixed() > 0 ) {
-//			List<NoticeVO> ImportantList =  noticeService.selectNoticeImportant(vo);
-//			model.addAttribute("ImportantList", ImportantList);
-//		}
-		
 		
 		return "/notice/list";
 	}
@@ -77,11 +67,14 @@ public class NoticeController {
 	
 	// 글쓰기 (POST)
 	@RequestMapping(value= "/create" , method = RequestMethod.POST)
-	public String insertNoticePOST(@ModelAttribute("vo") NoticeVO vo,HttpServletRequest request ,RedirectAttributes redirect,MultipartHttpServletRequest mpRequest) throws Exception 
+	public String insertNoticePOST(@ModelAttribute("vo") NoticeVO vo,HttpServletRequest request ,RedirectAttributes redirect) throws Exception 
 	{
 		
 	try {
-		noticeService.insertNotice(vo,mpRequest);
+		logger.info("title:"+ vo.getNotice_title());
+		logger.info("content:"+ vo.getNotice_content());
+		
+		noticeService.insertNotice(vo);
 		redirect.addFlashAttribute("msg", "공지사항 등록을 성공하였습니다.");
 		
 	} catch (Exception e) {
@@ -142,9 +135,11 @@ public class NoticeController {
 	{
 		
 		try {
+			logger.info("실행1");
 			noticeService.NoticeDelete(vo.getNotice_no());
-		rttr.addFlashAttribute("msg", "공지사항 삭제를 완료하였습니다.");
-		
+			logger.info("실행2");
+			rttr.addFlashAttribute("msg", "공지사항 삭제를 완료하였습니다.");
+	
 		}catch(Exception e) {
 		rttr.addFlashAttribute("msg", "오류가 발생하였습니다.");
 		logger.error("오류 : " + e);

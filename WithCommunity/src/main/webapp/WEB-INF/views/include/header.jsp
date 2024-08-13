@@ -37,53 +37,85 @@
     <link rel="stylesheet" href="/resources/assets/vendor/libs/apex-charts/apex-charts.css" />
 	
 	<!-- FullCalendar 2 -->
-	<link rel="stylesheet"
-		href="/resources/vendor/css/fullcalendar.min.css" />
-	<%--  <link rel="stylesheet"
-		href="${pageContext.request.contextPath }/resources/vendor/css/bootstrap.min.css" />  --%>
-	<link rel="stylesheet"
-		href='/resources/vendor/css/select2.min.css' />
-	<link rel="stylesheet"
-		href='/resources/vendor/css/bootstrap-datetimepicker.min.css' />
+	<link rel="stylesheet" href="/resources/vendor/css/fullcalendar.min.css" />
+	<link rel="stylesheet" href='/resources/vendor/css/select2.min.css' />
+	<link rel="stylesheet" href='/resources/vendor/css/bootstrap-datetimepicker.min.css' />
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,500,600">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+	<link rel="stylesheet" href="/resources/css/main.css">
 	
-	<link rel="stylesheet"
-		href="https://fonts.googleapis.com/css?family=Open+Sans:400,500,600">
-	<link rel="stylesheet"
-		href="https://fonts.googleapis.com/icon?family=Material+Icons">
-	
-	<link rel="stylesheet"
-		href="/resources/css/main.css">
-	
-	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <script src="/resources/assets/vendor/js/helpers.js"></script>
     <script src="/resources/assets/js/config.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script> 
+	<script src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
     <!-- socket lib -->
-    <script src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
  	<script type="text/javascript">
- 		var socket = null;
- 		
  		$(document).ready(function() {
+		
+ 			const alarmUL = document.querySelector("#alarmUL");
+ 			const alarmI = document.querySelector("#alarmI");
+ 		 	const alarmDiv = document.querySelector("#alarmDiv");
+ 		 	var sock = null;
  			
- 			 // 메뉴 클릭시 css처리
- 			$(".menu-item a").each(function() {
- 				var href = $(this).attr("href");
- 			      if (path === href) {
- 			        $(this).closest(".menu-item").addClass("active");
- 			      
- 			      } else if (path.startsWith(href) && href !== "/") {
- 			        // Handle cases where the URL path starts with the menu item's URL
- 			        $(this).closest(".menu-item").addClass("active");
- 				}
+ 		 //소켓
+ 			function connectWs(){
+ 				var ws = new SockJS("http://localhost:8081/echo");
+ 				sock = ws;
+
+ 				ws.onopen = function() {
+ 					console.log("연결완료");
+ 			 		ws.send($('#socketuserID').val());
+ 				};
+
+ 				ws.onmessage = function(event) {
+ 					/* 받을 알람이 있을 때 */
+ 					console.log(event.data);
+ 					if(event.data.length>0){
+ 						let newAlarm = '';
+ 						newAlarm += '<li scope="col">' + event.data + "</li>"
+ 						$('#alarmUL').append(newAlarm);
+ 						alarmDiv.style.visibility = "visible";
+ 					}
+ 				};
+
+ 				ws.onclose = function() {
+ 				    console.log('close');
+ 				};
+
+ 			};
+
+ 			/* 알람창 추가 */
+ 			alarmI.addEventListener('click', function(){
+ 				console.log('클릭1');
+ 				alarmUL.classList.toggle('visible');
+ 				$(this).stop(false, false);
  			});
+
+ 			alarmUL.addEventListener('click', function(e){
+ 				console.log('클릭2');
+ 				var endIdx = e.target.textContent.indexOf(")");
+ 				var idx = e.target.textContent.substr(1, endIdx-1);
+
+ 				$.ajax({
+ 					url : '/alarmDel',
+ 					data : {"idx" : idx},
+ 					type : 'post',
+ 					success : function(data){
+ 						console.log(data);
+ 						alert("성공");
+ 					}
+ 				})
+ 				
+ 				$(e.target).remove();
+ 				if(alarmUL.children.length == 0){
+ 					alarmDiv.style.visibility = "hidden";
+ 				}
+ 				
+ 			});
+ 		 	
+ 			connectWs();
+ 	
  			
- 			$(".menu-item").click(function() {
- 				$(".menu-item").removeClass("active");
- 		
- 			$(this).addClass("active");	
-			
- 			
- 			}); 
  			
  			// 자유게시판 클릭했을때 list를 get으로 넘겼기 때문에 default로 pageNum & amount를 설정한다.
  			$("#BoardLink").click(function(e) {
@@ -108,6 +140,8 @@
  			});
  			// 제이쿼리 끝
  		});
+ 		
+ 		
  		
  	</script>
  
@@ -265,11 +299,8 @@
           </ul>
         </aside>
 
-        <div class="layout-page">
-        <nav
-            class="layout-navbar container-xxl navbar navbar-expand-xl navbar-detached align-items-center bg-navbar-theme"
-            id="layout-navbar"
-          >
+       <div class="layout-page">
+	 	  <nav class="layout-navbar container-xxl navbar navbar-expand-xl navbar-detached align-items-center bg-navbar-theme" id="layout-navbar">
             <div class="layout-menu-toggle navbar-nav align-items-xl-center me-3 me-xl-0 d-xl-none">
               <a class="nav-item nav-link px-0 me-xl-4" href="javascript:void(0)">
                 <i class="bx bx-menu bx-sm"></i>
@@ -316,8 +347,6 @@
 				                        </div>
 				                    </a>
 				                </li>
-				                
-				                
 				                
 				                <li>
 				                    <div class="dropdown-divider"></div>
@@ -376,6 +405,17 @@
 				        <li class="nav-item">
 				            <span class="nav-link" style="color: black;"><strong>${member.me_name}</strong>님, 환영합니다!</span>
 				        </li>
+				        <div id="alarmDiv" class="nav-item me-3">
+						    <a id="alarmI" class="nav-link" href="#">
+						        <i class="bx bx-bell fs-4"></i>
+						        <span class="badge bg-danger" id="alarmCount">0</span>
+						    </a>
+						    <ul id="alarmUL" class="dropdown-menu" style="display: none;">
+						        <li><a class="dropdown-item" href="#">Notification 1</a></li>
+						        <li><a class="dropdown-item" href="#">Notification 2</a></li>
+						        <!-- More items here -->
+						    </ul>
+						</div>
 				    </c:if>
 				    <c:if test="${member == null}">
 				        <li class="nav-item">
@@ -388,9 +428,3 @@
 				</ul>
             </div>
           </nav>
-          
-		<div id="spinnerDiv" style="display: none;">
-		  <div class="spinner-border spinner-border-lg text-primary" role="status">
-		    <span class="visually-hidden">Loading...</span>
-		  </div>
-		</div>

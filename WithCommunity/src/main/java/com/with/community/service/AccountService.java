@@ -35,4 +35,10 @@ public interface AccountService {
 	public int deleteAccount(String me_id) throws Exception;
 	
 	public void updateImg(String me_id, String me_image ) throws Exception;
+
+	public int memberPwdCheck(AccountVO aVO)throws Exception;
+	
+	public void passwordUpdate(AccountVO aVO)throws Exception;
+
+	public AccountVO memberIdSearch(AccountVO aVO)throws Exception;
 }

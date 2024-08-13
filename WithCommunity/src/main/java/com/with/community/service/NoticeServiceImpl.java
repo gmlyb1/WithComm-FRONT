@@ -28,14 +28,9 @@ public class NoticeServiceImpl implements NoticeService {
 	private NoticeDAO noticeDAO;
 
 	@Override
-	public void insertNotice(NoticeVO vo,MultipartHttpServletRequest mpRequest) throws Exception {
+	public void insertNotice(NoticeVO vo) throws Exception {
 		noticeDAO.insertNotice(vo);
 		
-//		List<Map<String, Object>> list = fileUtils.parseInsertFileInfo(vo, mpRequest);
-//		int size = list.size();
-//		for(int i=0; i < size; i++) {
-//			noticeDAO.insertFile(list.get(i));
-//		}
 	}
 
 	@Override

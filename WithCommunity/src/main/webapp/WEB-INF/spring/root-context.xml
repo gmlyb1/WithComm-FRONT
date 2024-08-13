@@ -16,9 +16,15 @@
 	
 	<!-- DB연결객체(DataSource) -->
 	
-		<!-- DB연결객체(DataSource) -->
 	<!-- Root Context: defines shared resources visible to all other web components -->
 	<!-- 프로젝트 전체에 필요한 설정정보를 지정하는파일(웹정보 제외)  -->
+	
+	<!-- MultipartResolver 설정 : 파일 업로드 -->
+    <bean id="multipartResolver"
+        class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+        <property name="maxUploadSize" value="100000000" />
+        <property name="maxInMemorySize" value="100000000" />
+    </bean>
 	
 	<!-- DB연결객체(DataSource) -->
 	<bean id="dataSource" 

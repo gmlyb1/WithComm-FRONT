@@ -102,7 +102,7 @@
 				<!-- 게시판 끝 -->
 
 				<!-- 댓글 시작 -->
-				<%--  <div class="mb-3" style="height: 270px; OVERFLOW-Y: auto;">
+				<div class="mb-3" style="height: 270px; OVERFLOW-Y: auto;">
 					<table class="table table-striped">
 						<c:choose>
 							<c:when test="${replyList == null}">
@@ -134,79 +134,42 @@
 							</c:otherwise>
 						</c:choose>
 					</table>
-				</div> --%>
+				</div>
 
 				<!-- 댓글 끝 -->
-
-
-				<!-- 댓글 작성 시작 -->
-			<%-- <c:if test="${member.me_grade == '최고관리자'}"> 
-					<div>
-						<form method="post" action="/reply/write">
-							<input type="hidden" name="board_no" value="${read.inq_no}">
-													<input type="hidden" name="page" name="page" value="${scri.page}">
-						<input type="hidden" name="perPageNum" name="perPageNum" value="${scri.perPageNum }">
-						<input type="hidden" name="searchType" name="searchType" value="${scri.searchType }">
-						<input type="hidden" name="keyword" name="keyword" value="${scri.keyword}">+
-
-							<input type="hidden" id="reply_no" name="reply_no" value="${replyList.board_no}">
-							<p>
-								<label>댓글 작성자:</label> <input type="text" name="reply_writer"
-									value="${member.me_name}" readonly>
-							</p>
-							<p>
-								댓글 내용:
-								<textarea class="form-control" rows="3" cols="155"
-									placeholder="댓글을 남겨주세요." name="reply_content"></textarea>
-							</p>
-
-							<p>
-
-								<button type="submit" class="btn btn-success"
-									style="margin: 55px 0 0 10px;">댓글 작성</button>
-							</p>
-						</form>
-					</div>
-				</c:if>  --%>
-
-			
-				<!-- 댓글 수정 -->
-
-				<!-- 댓글 작성 끝 -->
-			<%--  <div class="my-3 p-3 bg-white rounded shadow-sm">
+				<div class="my-3 p-3 bg-white rounded shadow-sm">
 					<c:choose>
-						<c:when test="${nextBoardList.board_no != null}">
+						<c:when test="${nextBoardList.inq_no != null}">
 
 							<button type="button" class="btn btn-warning mr-3 mb-3"
-								onclick="location.href='/board/read?board_no=${nextBoardList.board_no}'">
+								onclick="location.href='/board/read?board_no=${nextBoardList.inq_no}'">
 								<span class="glyphicon glyphicon-menu-up" aria-hidden="true"></span>다음글
 							</button>
-							<a href="/board/read?board_no=${nextBoardList.board_no}"
-								style="color: black"> ${nextBoardList.board_title} </a>
+							<a href="/board/read?board_no=${nextBoardList.inq_no}"
+								style="color: black"> ${nextBoardList.inq_title} </a>
 						</c:when>
 
-						<c:when test="${nextBoardList.board_no == null}">
+						<c:when test="${nextBoardList.inq_no == null}">
 							<button type="button" class="btn btn-warning mr-3 mb-3" disabled>다음글이
 								없습니다</button>
 						</c:when>
 					</c:choose>
 					<br />
 					<c:choose>
-						<c:when test="${lastBoardList.board_no != null}">
+						<c:when test="${lastBoardList.inq_no != null}">
 							<button type="button" class="btn btn-info mr-3 "
-								onclick="location.href='/board/read?board_no=${lastBoardList.board_no}'">
+								onclick="location.href='/board/read?board_no=${lastBoardList.inq_no}'">
 								<span class="glyphicon glyphicon-menu-down" aria-hidden="true"></span>이전글
 							</button>
-							<a href="/board/read?board_no=${lastBoardList.board_no}"
-								style="color: black"> ${lastBoardList.board_title} </a>
+							<a href="/board/read?board_no=${lastBoardList.inq_no}"
+								style="color: black"> ${lastBoardList.inq_title} </a>
 						</c:when>
 
-						<c:when test="${lastBoardList.board_no == null}">
+						<c:when test="${lastBoardList.inq_no == null}">
 							<button type="button" class="btn btn-info mr-3" disabled>이전글이
 								없습니다</button>
 						</c:when>
-					</c:choose> --%>
-
+					</c:choose> 
 				</div> 
 			</div>
 		</div>

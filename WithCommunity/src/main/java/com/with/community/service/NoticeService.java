@@ -13,7 +13,7 @@ public interface NoticeService {
 		
 	public NoticeVO nextNoticeList(int notice_no) throws Exception;
 	
-	public void insertNotice(NoticeVO vo,MultipartHttpServletRequest mpRequest) throws Exception;
+	public void insertNotice(NoticeVO vo) throws Exception;
 	
 	public List<NoticeVO> NoticeList(Criteria cri) throws Exception;
 	

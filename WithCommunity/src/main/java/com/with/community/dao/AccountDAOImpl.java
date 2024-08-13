@@ -90,6 +90,21 @@ public class AccountDAOImpl implements AccountDAO{
 		sqlSession.update("namespace.updateImg",paramMap);
 	}
 
+	@Override
+	public int memberPwdCheck(AccountVO aVO) throws Exception {
+		return sqlSession.selectOne("namespace.memberPwdCheck", aVO);
+	}
+
+	@Override
+	public void passwordUpdate(AccountVO aVO) throws Exception {
+		sqlSession.update("namespace.passwordUpdate",aVO);
+	}
+
+	@Override
+	public AccountVO memberIdSearch(AccountVO aVO) throws Exception {
+		return sqlSession.selectOne("namespace.memberIdSearch",aVO);
+	}
+
 
 
 

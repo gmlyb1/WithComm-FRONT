@@ -89,7 +89,7 @@
 				</c:if>
 				
 				<!-- 페이징 -->
-				<c:if test="${member != null}">
+				<c:if test="${member != null || member.me_name == inquiry.inq_name}">
 					<form name="form2">
 					    <div id="pagination" class="d-flex justify-content-center align-items-center">
 					        <ul id="pageUL" class="pagination">

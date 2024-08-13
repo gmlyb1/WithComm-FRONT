@@ -10,7 +10,7 @@
  <script src="/resources/assets/vendor/js/bootstrap.js"></script>
  <script src="/resources/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js"></script>
  <script src="/resources/assets/vendor/js/menu.js"></script>
- <script src="/resources/assets/js/main.js"></script>
+<!--  <script src="/resources/assets/js/main.js"></script> -->
  <script src="/resources/assets/js/pages-account-settings-account.js"></script>
 
  <!-- Place this tag in your head or just before your close body tag. -->
@@ -23,78 +23,64 @@
 			alert(msg);
 		}
 		
-   }); 
-    
-     	
-		function fileCh(f) {
-    		if(f.files && f.files[0]) {
-    			
-    			var reader = new FileReader();
-    			reader.onload = function(event) {
-    			$("#uploadedAvatar").attr('src', event.target.result);
-    			}
-    			reader.readAsDataURL(f.files[0]);
-    		}
-    	}
 		
-		$("#submitBtn").click(function() {
-			var memberId = $(this).data("member-id");
-			var meName = $('#me_name').val();
-		    var mePwd = $('#me_pwd').val();
-			
-		    console.log(meName);
-		    console.log(mePwd)
-		    
-		    if (confirm("정말로 회원 정보를 변경 하시겠습니까?")) {
-				$.ajax({
-					url : "/account/profileUdt",
-					type : "POST",
-					data : {
-						me_id : memberId,
-						me_name: meName,
-			            me_pwd: mePwd
-					},
-					success : function(data) {
-						console.log(data);
-						alert("회원 변경이 성공적으로 처리되었습니다.");
-						location.href = "/home";
-					},
-					error : function(error) {
-						console.log(error);
-						alert("요청 처리 중 오류가 발생하였습니다."+error);
-					}
-				});
-			}
-		}); 
-		
-		//회원 탈퇴
-		$("#delBtn").click(function() {
-			
-			if(!$("#accountActivation").prop("checked")) {
-		        alert("동의란에 체크해 주십시오.");
-		        return;
-		    }
-			
-			var memberId = $(this).data("member-id");
+	$("#submitBtn").click(function() {
+	    // 데이터 가져오기
+	    var memberId = $(this).data("member-id");
+	    var meName = $('#me_name').val();
+	    var mePwd = $('#me_pwd').val();
 
-			if (confirm("회원 탈퇴 하시겠습니까?")) {
-				$.ajax({
-					url : "/account/delete",
-					type : "POST",
-					data : {
-						me_id : memberId,
-					},
-					success : function(data) {
-						alert("회원탈퇴가 성공적으로 처리되었습니다.");
-						location.href = "/home";
-					},
-					error : function(error) {
-						console.log(error);
-						alert("요청 처리 중 오류가 발생하였습니다."+error);
-					}
-				});
-			}
-		});
+	    console.log(meName);
+	    console.log(mePwd);
+		
+	 // 입력 검증
+	    if (meName == "") {
+	        alert('변경하실 닉네임을 입력해 주세요.');
+	        return false; // 입력이 없으면 함수를 종료하여 AJAX 요청이 발생하지 않도록 합니다.
+	    }
+
+	    if (mePwd == "") {
+	        alert('변경하실 비밀번호를 입력해 주세요.');
+	        return false; // 비밀번호가 없으면 함수를 종료합니다.
+	    }
+	    
+
+	    // Confirm 창에서 사용자가 '확인'을 클릭했을 때만 AJAX 요청을 보내도록 합니다.
+	    if (confirm("정말로 회원 정보를 변경 하시겠습니까?")) {
+	        $.ajax({
+	            url: "/account/profileUdt",
+	            type: "POST",
+	            data: {
+	                me_id: memberId,
+	                me_name: meName,
+	                me_pwd: mePwd
+	            },
+	            success: function(data) {
+	                console.log(data);
+	                alert("회원 변경이 성공적으로 처리되었습니다. \n 로그아웃 후 재접속 하시면 변경된 계정으로 접속 가능합니다.");
+	                location.reload(); // 페이지를 새로 고쳐서 변경된 내용을 반영합니다.
+	            },
+	            error: function(error) {
+	                console.log(error);
+	                alert("요청 처리 중 오류가 발생하였습니다: " + error.responseText); // 오류 메시지에 대한 더 자세한 정보 출력
+	            }
+	        });
+	    }
+	});
+  }); 
+     	
+	/* function fileCh(f) {
+   		if(f.files && f.files[0]) {
+   			
+   			var reader = new FileReader();
+   			reader.onload = function(event) {
+   			$("#uploadedAvatar").attr('src', event.target.result);
+   			}
+   			reader.readAsDataURL(f.files[0]);
+   		}
+   	} */
+	
+	
 
 </script>
 <!-- <form action="/account/profileUdt" method="post" id="udtForm" enctype="multipart/form-data"> -->

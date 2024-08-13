@@ -47,9 +47,23 @@
 		var msg = "${msg}";
 		if (msg != "") {
 			alert(msg);
+		};
+		
+	$("#submit").on("click", function(){
+		if($("#me_real_name").val() === ""){
+			alert("이름을 입력해주세요.");
+			$("#me_real_name").focus();
+			return false;
 		}
-		;
+		
+		if($("#me_phone").val() === ""){
+			alert("전화번호를 입력해주세요.");
+			$("#me_phone").focus();
+			return false;
+		}
+	
 	});
+});
 </script>
 </head>
 
@@ -121,21 +135,22 @@
 						</div>
 						<!-- /Logo -->
 
-						<h4 class="mb-2">비밀번호를 잊으셨습니까?</h4>
-						<p class="mb-4">이메일을 입력해서 비밀번호를 초기화 하십시오</p>
-						<form id="createForm" action="/account/forgotPass" method="post">
+						<h4 class="mb-2">아이디를 잊으셨습니까?</h4>
+						<p class="mb-4">이름과 전화번호를 가지고 아이디를 찾으십시오</p>
+						<form id="createForm" action="/account/forgotId" method="post">
 							<div class="form-group">
 								<input type="text" class="form-control form-control-user"
-									id="me_email" name="me_email" placeholder="Enter email...">
+									id="me_real_name" name="me_real_name"
+									placeholder="이름을 입력하세요">
 							</div>
 							<br>
 							<div class="form-group">
 								<input type="text" class="form-control form-control-user"
 									id="me_phone" name="me_phone"
-									placeholder="Enter phone number...">
+									placeholder="전화번호를 입력하세요">
 							</div>
 							<br>
-							<button type="submit" class="btn btn-primary btn-user btn-block">초기화</button>
+							<button type="submit" class="btn btn-primary btn-user btn-block" id="submit">아이디 찾기</button>
 							<a href="/account/login"
 								class="d-flex align-items-center justify-content-center">
 								Back to login</a>

@@ -25,6 +25,14 @@
 		<beans:property name="prefix" value="/WEB-INF/views/" />
 		<beans:property name="suffix" value=".jsp" />
 	</beans:bean>
+	<!-- 웹소켓 -->
+	<!-- <websocket:handlers>
+	    <websocket:mapping handler="echoHandler" path="/echo"/>
+	    <websocket:handshake-interceptors>
+	        <beans:bean class="org.springframework.web.socket.server.support.HttpSessionHandshakeInterceptor"/>
+	    </websocket:handshake-interceptors>
+	    <websocket:sockjs />
+	</websocket:handlers> -->
 	
 		<!-- 파일 업로드 설정 -->
 	<beans:bean id="multipartResolver"
