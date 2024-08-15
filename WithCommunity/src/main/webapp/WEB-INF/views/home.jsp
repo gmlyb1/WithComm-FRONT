@@ -350,7 +350,6 @@
 												
 										<div class="d-flex w-100 flex-wrap align-items-center justify-content-between gap-2">
 											<div class="me-2">
-												<small class="text-muted d-block mb-1">${mmList.me_email}</small>
 												<h6 class="mb-0">${mmList.me_name}</h6>
 											</div>
 											<div class="user-progress d-flex align-items-center gap-1">

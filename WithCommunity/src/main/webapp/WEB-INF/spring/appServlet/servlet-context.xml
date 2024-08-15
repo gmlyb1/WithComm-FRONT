@@ -7,7 +7,7 @@
 	xsi:schemaLocation="http://www.springframework.org/schema/mvc https://www.springframework.org/schema/mvc/spring-mvc.xsd
 		http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
 		http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd
-		http://www.springframework.org/schema/websocket http://www.springframework.org/schema/websocket/spring-websocket-4.3.xsd">
+		http://www.springframework.org/schema/websocket http://www.springframework.org/schema/websocket/spring-websocket-5.3.xsd">
 
 	<!-- DispatcherServlet Context: defines this servlet's request-processing infrastructure -->
 	
@@ -26,13 +26,14 @@
 		<beans:property name="suffix" value=".jsp" />
 	</beans:bean>
 	<!-- 웹소켓 -->
-	<!-- <websocket:handlers>
+	<!-- <websocket:handlers allowed-origins="http://192.168.0.3, http://localhost:8081">
 	    <websocket:mapping handler="echoHandler" path="/echo"/>
 	    <websocket:handshake-interceptors>
 	        <beans:bean class="org.springframework.web.socket.server.support.HttpSessionHandshakeInterceptor"/>
 	    </websocket:handshake-interceptors>
 	    <websocket:sockjs />
-	</websocket:handlers> -->
+	</websocket:handlers> 
+	<beans:bean id="echoHandler" class="com.with.community.handler"/> -->
 	
 		<!-- 파일 업로드 설정 -->
 	<beans:bean id="multipartResolver"

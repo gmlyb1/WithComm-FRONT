@@ -4,6 +4,8 @@ import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Date;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.UUID;
 
 import javax.inject.Inject;
@@ -16,6 +18,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.event.LoggerListener;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -61,18 +65,54 @@ public class AccountController {
 	}
 
 	
-	@RequestMapping(value="/idChk" , method= RequestMethod.POST)
-	@ResponseBody
-	public String idChk(@RequestBody String filterJSON,HttpServletResponse response, Model model) throws Exception {
-		
-		
-	AccountVO avo = new AccountVO();
-	int idChk = accountService.idChk(avo);
+//	@RequestMapping(value="/idChk" , method=RequestMethod.POST)
+//	public String idChk(HttpServletRequest request, Model model,
+//		    @RequestParam(required = true, value = "me_email") String me_email, 
+//		    AccountVO aVO,RedirectAttributes rttr) throws Exception{
+//		
+//		try {
+//			AccountVO idChk = accountService.idChk(aVO);
+//			
+//			logger.info("idChk:"+idChk);
+//			logger.info("email:"+idChk.getMe_email());
+//			
+//			model.addAttribute("idChk", idChk);
+//			
+//		}catch (Exception e) {
+//			e.printStackTrace();
+//			rttr.addFlashAttribute("msg", "에러가 발생했습니다");
+//		}
+//		
+//		return "/account/idChk";
+//	}
 	
-	model.addAttribute("idChk", idChk);
-		
-		return null;
-	}
+	 @RequestMapping(value="/idChk", method=RequestMethod.POST)
+    public ResponseEntity<Map<String, Object>> idChk(
+            @RequestParam("me_email") String me_email) throws Exception {
+
+        Map<String, Object> response = new HashMap<>();
+
+        try {
+            AccountVO aVO = new AccountVO();
+            aVO.setMe_email(me_email);
+
+            AccountVO idChk = accountService.idChk(aVO);
+
+            if (idChk != null && idChk.getMe_email() != null) {
+                response.put("result", 1); // Email already exists
+                response.put("msg", "이미 존재하는 아이디 입니다.");
+            } else {
+                response.put("result", 0); // Email available
+                response.put("msg", "사용 가능한 아이디 입니다.");
+            }
+        } catch (Exception e) {
+            response.put("result", -1); // Error occurred
+            response.put("msg", "서버 오류가 발생했습니다.");
+            e.printStackTrace();
+        }
+
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
 	
 	
 	@RequestMapping(value="/register", method=RequestMethod.GET)
@@ -81,17 +121,23 @@ public class AccountController {
 	}
 	
 	@RequestMapping(value="/register", method=RequestMethod.POST)
-	public String registerPOST(AccountVO vo, Model model, HttpSession sesion, RedirectAttributes rttr)throws Exception
+	public String registerPOST(AccountVO vo, Model model, HttpSession sesion, RedirectAttributes rttr,@RequestParam(required = true, value = "me_email") String me_email )throws Exception
 	{
 		
 //		String cryptEncoderPw = passEncoder.encode(vo.getMe_pwd());
 //		
 //		vo.setMe_pwd(cryptEncoderPw);
 		
-//		int result = accountService.idChk(vo);
-
-//		model.addAttribute("result", result);
 		try {
+//			AccountVO result = accountService.memberIdSearch(vo);
+//			logger.info("result:"+result);
+//			if(result != null ) {
+//				rttr.addFlashAttribute("msg", "중복된 아이디 입니다");
+//			}else {
+//				rttr.addFlashAttribute("msg", "사용할 수 있는 아이디 입니다.");
+//			}
+//			
+//			model.addAttribute("result", result);
 			accountService.register(vo);
 			rttr.addFlashAttribute("msg", "회원가입이 완료되었습니다.\n 관리자의 승인 이후에 서비스 사용이 가능합니다.");
 		} catch (Exception e) {

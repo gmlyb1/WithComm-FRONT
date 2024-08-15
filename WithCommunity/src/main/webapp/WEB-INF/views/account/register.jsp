@@ -43,22 +43,45 @@
     
 	$(document).ready(function() {
 		var msg = "${msg}"
-		var result = $("#result").val();
-	
+		var emailInput = $("#me_email");
+		var email = emailInput.val();
+		
+		
 		if (msg != "") {
 			alert(msg);
 		}
 		
-		if (result === 1) {
-	      $("#email-error").text("Account already exists.").show();
-	    } else {
-	      $("#email-error").hide(); 
-	    }
-		
-		var emailInput = $("#me_email");
+		$("#idChkBtn").on("click", function(e) {
+		    e.preventDefault(); // Prevent the default action of the button
+		    
+		    var emailId = $("#me_email").val();
+		    
+		    if (emailId === "") {
+		        alert("이메일을 입력해 주세요.");
+		        return;
+		    }
+		    
+		    $.ajax({
+		        url: '/account/idChk',
+		        type: 'POST',
+		        data: { me_email: emailId }, // Send emailId as me_email
+		        success: function(response) {
+		            if (response.result === 1) {
+		                alert("중복된 이메일입니다.\n다른 이메일을 사용하세요.");
+		            } else if (response.result === 0) {
+		                alert("사용 가능한 아이디입니다.");
+		            } else {
+		                alert(response.msg); // Display server error message
+		            }
+		        },
+		        error: function(xhr, status, error) {
+		            alert("서버 오류가 발생했습니다. " + error);
+		        }
+		    });
+		});
 		
 		$("#submit").on("click", function(){
-			var email = emailInput.val();
+			
 			
 			if($("#me_email").val() === ""){
 				alert("아이디로 사용하실 이메일을 입력해주세요.");
@@ -74,12 +97,12 @@
 				return false;
 			}
 			
-			if(email.substr(email.length - 9) !== "@with.com") {
+			/* if(email.substr(email.length - 9) !== "@with.com") {
 				alert("올바른 email 형식을 입력해 주세요. \n 예시) example@with.com");
 				$("#me_email").focus();
 				emailInput.focus();
 				return false;
-			}
+			} */
 			
 			if($("#me_name").val() === ""){
 				alert("닉네임을 입력해주세요.");
@@ -191,7 +214,8 @@
                 <div class="mb-3">
                   <label for="me_email" class="form-label">이메일</label>
                  <!--  <input type="hidden" id="me_id_yn" name="me_id_yn" value="N"/> -->
-                  <input type="email" class="form-control" id="me_email" name="me_email" placeholder="Enter your email" />
+                  <input type="email" class="form-control" id="me_email" name="me_email" placeholder="Enter your email" /> 
+                  <button type="button" id="idChkBtn" class="btn btn-success">종복체크</button>
 				  	<!-- <a href="#" class="btn btn-success btn-icon-split" style="text-align:center;" id="idChkBtn">
 				  		<span class="icon text-white-50">
 				  			<i class="fas fa-check"></i>
@@ -230,7 +254,7 @@
                     </label>
                   </div>
                 </div>
-                <button type="submit" id="submit" onclick="fnSubmit(); return false;" class="btn btn-primary d-grid w-100">Sign up</button>
+                <button type="submit" id="submit" class="btn btn-primary d-grid w-100">Sign up</button>
               </form>
 
               <p class="text-center">

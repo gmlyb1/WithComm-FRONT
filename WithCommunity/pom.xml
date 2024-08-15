@@ -290,6 +290,13 @@
 
 		<!-- 첨부파일 END -->
 
+		<!-- https://mvnrepository.com/artifact/org.springframework/org.springframework.transaction -->
+		<!-- <dependency>
+		    <groupId>org.springframework</groupId>
+		    <artifactId>org.springframework.transaction</artifactId>
+		    <version>${org.springframework-version}</version>
+		</dependency> -->
+
 	</dependencies>
 	<build>
 		<plugins>

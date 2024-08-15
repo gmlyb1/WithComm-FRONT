@@ -16,7 +16,7 @@ public interface AccountDAO {
 	public AccountVO login(AccountVO vo) throws Exception;
 	
 	//아이디 중복체크
-	public int idChk(AccountVO vo) throws Exception;
+	public AccountVO idChk(AccountVO aVO)throws Exception;
 	
 	// 프로필 사진 변경
 	public int updateImg(AccountVO avo)throws Exception;

@@ -61,9 +61,15 @@
 		select * from tbl_member where session_key = #{value}
 	</select>
 
-	<select id="idChk" resultType="int">
-		select count(*) from tbl_member
-		where me_email = #{me_email}
+	<select id="idChk" parameterType="AccountVO" resultType="AccountVO">
+		<![CDATA[
+		    select
+				*
+		    from
+		        tbl_member
+		    where
+		        me_email = #{me_email}
+		]]>    
 	</select>
 	
 	<select id="selectHomeList" parameterType="AccountVO" resultType="AccountVO">

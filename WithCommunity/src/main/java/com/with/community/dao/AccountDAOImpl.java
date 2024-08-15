@@ -33,11 +33,6 @@ public class AccountDAOImpl implements AccountDAO{
 		return sqlSession.selectOne("namespace.login", vo);
 	}
 
-	@Override
-	public int idChk(AccountVO vo) throws Exception {
-		int result = sqlSession.selectOne("namespace.idChk", vo);
-		return result;
-	}
 
 	@Override
 	public int updateImg(AccountVO avo) throws Exception {
@@ -103,6 +98,11 @@ public class AccountDAOImpl implements AccountDAO{
 	@Override
 	public AccountVO memberIdSearch(AccountVO aVO) throws Exception {
 		return sqlSession.selectOne("namespace.memberIdSearch",aVO);
+	}
+
+	@Override
+	public AccountVO idChk(AccountVO aVO) throws Exception {
+		return sqlSession.selectOne("namespace.idChk", aVO);
 	}
 
 

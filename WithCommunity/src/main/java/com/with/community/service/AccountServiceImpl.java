@@ -26,11 +26,6 @@ public class AccountServiceImpl implements AccountService {
 		return accountDAO.login(vo);
 	}
 	@Override
-	public int idChk(AccountVO vo) throws Exception {
-		int result = accountDAO.idChk(vo);
-		return result;
-	}
-	@Override
 	public int updateImg(AccountVO avo) throws Exception {
 		accountDAO.updateImg(avo);
 		
@@ -73,6 +68,10 @@ public class AccountServiceImpl implements AccountService {
 	@Override
 	public AccountVO memberIdSearch(AccountVO aVO) throws Exception {
 		return accountDAO.memberIdSearch(aVO);
+	}
+	@Override
+	public AccountVO idChk(AccountVO aVO) throws Exception {
+		return accountDAO.idChk(aVO);
 	}
 
 
