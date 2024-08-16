@@ -36,4 +36,9 @@ public class InquiryServiceImpl implements InquiryService {
 	public int selectInqCnt(Criteria cri) throws Exception {
 		return inquiryDAO.selectInqCnt(cri);
 	}
+
+	@Override
+	public List<InquiryVO> HomeInquiryList(InquiryVO ivo) throws Exception {
+		return inquiryDAO.HomeInquiryList(ivo);
+	}
 }

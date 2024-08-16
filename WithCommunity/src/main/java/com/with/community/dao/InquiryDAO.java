@@ -18,4 +18,6 @@ public interface InquiryDAO {
 	
 	//나의 문의 개수
 	public int selectInqCnt(Criteria cri) throws Exception;
+	
+	public List<InquiryVO> HomeInquiryList(InquiryVO ivo)throws Exception;
 }

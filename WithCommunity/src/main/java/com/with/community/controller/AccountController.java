@@ -51,8 +51,7 @@ public class AccountController {
 	@Autowired
 	private AccountService accountService;
 	
-	@Autowired(required = false)
-	private FileUtils fileUtil;
+	private final FileUtils fileUtil = new FileUtils();
 	
 	private final static Logger logger = LoggerFactory.getLogger(AccountController.class);
 	
@@ -65,26 +64,6 @@ public class AccountController {
 	}
 
 	
-//	@RequestMapping(value="/idChk" , method=RequestMethod.POST)
-//	public String idChk(HttpServletRequest request, Model model,
-//		    @RequestParam(required = true, value = "me_email") String me_email, 
-//		    AccountVO aVO,RedirectAttributes rttr) throws Exception{
-//		
-//		try {
-//			AccountVO idChk = accountService.idChk(aVO);
-//			
-//			logger.info("idChk:"+idChk);
-//			logger.info("email:"+idChk.getMe_email());
-//			
-//			model.addAttribute("idChk", idChk);
-//			
-//		}catch (Exception e) {
-//			e.printStackTrace();
-//			rttr.addFlashAttribute("msg", "에러가 발생했습니다");
-//		}
-//		
-//		return "/account/idChk";
-//	}
 	
 	 @RequestMapping(value="/idChk", method=RequestMethod.POST)
     public ResponseEntity<Map<String, Object>> idChk(
@@ -121,31 +100,15 @@ public class AccountController {
 	}
 	
 	@RequestMapping(value="/register", method=RequestMethod.POST)
-	public String registerPOST(AccountVO vo, Model model, HttpSession sesion, RedirectAttributes rttr,@RequestParam(required = true, value = "me_email") String me_email )throws Exception
+	public String registerPOST(AccountVO vo, Model model, HttpSession session, RedirectAttributes rttr)throws Exception
 	{
-		
-//		String cryptEncoderPw = passEncoder.encode(vo.getMe_pwd());
-//		
-//		vo.setMe_pwd(cryptEncoderPw);
-		
 		try {
-//			AccountVO result = accountService.memberIdSearch(vo);
-//			logger.info("result:"+result);
-//			if(result != null ) {
-//				rttr.addFlashAttribute("msg", "중복된 아이디 입니다");
-//			}else {
-//				rttr.addFlashAttribute("msg", "사용할 수 있는 아이디 입니다.");
-//			}
-//			
-//			model.addAttribute("result", result);
 			accountService.register(vo);
 			rttr.addFlashAttribute("msg", "회원가입이 완료되었습니다.\n 관리자의 승인 이후에 서비스 사용이 가능합니다.");
 		} catch (Exception e) {
 			rttr.addFlashAttribute("msg", "회원가입 도중 에러가 발생했습니다!");
 			logger.error("에러" + e);
 		}
-//			accountService.register(vo);
-//			rttr.addFlashAttribute("msg", "회원가입을 완료하였습니다.");
 			
 		return "redirect:/home";
 	}
@@ -160,90 +123,38 @@ public class AccountController {
 	@RequestMapping(value="/login", method=RequestMethod.POST)
 	public String loginPOST(Model model,AccountVO vo, HttpServletRequest request, RedirectAttributes rttr) throws Exception
 	{
-	
-			HttpSession session = request.getSession();
-			session.setMaxInactiveInterval(6000);
+		HttpSession session = request.getSession();
+		session.setMaxInactiveInterval(6000);
+		
+		AccountVO login = accountService.login(vo);
+		System.out.println(vo.isUseCookie());
+		if(vo.isUseCookie() == true) {
+			System.out.println("입장");
+			int amount = 60 * 60 * 24 * 7;
+			Date sessionLimit = new Date(System.currentTimeMillis() + (1000 * amount));
+			accountService.keepLogin(null, null, sessionLimit);
+		}
+		
+		if(login == null)  {
+			session.setAttribute("member", null);
+			rttr.addFlashAttribute("msg", "아이디 혹은 비밀번호를 다시 한번 확인해주세요!");
+			return "redirect:/account/login";
+		}else if(login.getState().equals("승인대기중")) {
+			session.setAttribute("member", null);
+			rttr.addFlashAttribute("msg", "승인되지 않은 회원입니다.\n 관리자에게 문의해 주시기 바랍니다.");
+			return "redirect:/account/login";
+		
+		}else if(login.getState().equals("활동중지")) {
+			session.setAttribute("member", null);
+			rttr.addFlashAttribute("msg", "본 아이디는 관리자에 의해 중지된 아이디입니다.");
+			return "redirect:/account/login";
 			
-			AccountVO login = accountService.login(vo);
-			
-			if(vo.isUseCookie()) {
-				int amount = 60 * 60 * 24 * 7;
-				Date sessionLimit = new Date(System.currentTimeMillis() + (1000 * amount));
-				accountService.keepLogin(null, null, sessionLimit);
-			}
-			
-			if(login == null)  {
-				session.setAttribute("member", null);
-				rttr.addFlashAttribute("msg", "아이디 혹은 비밀번호를 다시 한번 확인해주세요!");
-				return "redirect:/account/login";
-			
-			}else if(login.getState().equals("승인대기중")) {
-				session.setAttribute("member", null);
-				rttr.addFlashAttribute("msg", "승인되지 않은 회원입니다.\n 관리자에게 문의해 주시기 바랍니다.");
-				return "redirect:/account/login";
-			
-			}else if(login.getState().equals("활동중지")) {
-				session.setAttribute("member", null);
-				rttr.addFlashAttribute("msg", "본 아이디는 관리자에 의해 중지된 아이디입니다.");
-				return "redirect:/account/login";
-				
-			}else {
-				session.setAttribute("member", login);
-	            rttr.addFlashAttribute("msg", "로그인에 성공하였습니다.");
-				
-				return "redirect:/home";
-				
-		    }
-			
+		}else {
+			session.setAttribute("member", login);
+	        rttr.addFlashAttribute("msg", "로그인에 성공하였습니다.");
+			return "redirect:/home";
+	    }
 	}
-	
-//	//암호화 로직 테스트중
-//	@RequestMapping(value="/login", method=RequestMethod.POST)
-//	public String loginPOST(Model model, AccountVO vo, HttpServletRequest request, RedirectAttributes rttr) throws Exception {
-//	    HttpSession session = request.getSession();
-//	    session.setMaxInactiveInterval(6000);
-//
-//	    try {
-//	        // 사용자 입력 데이터 로깅
-//	        logger.info("사용자 입력 아이디: {}", vo.getMe_id());
-//
-//	        // 서비스 계층에서 로그인 처리
-//	        AccountVO login = accountService.login(vo);
-//
-//	        if (login == null) {
-//	            session.setAttribute("member", null);
-//	            rttr.addFlashAttribute("msg", "아이디 혹은 비밀번호를 다시 한번 확인해주세요!");
-//	            return "redirect:/account/login";
-//	        }
-//
-//	        logger.info("로그인 성공 - 사용자 정보: {}", login);
-//
-//	        String inputPassword = vo.getMe_pwd();
-//	        String encryptedPasswordFromDB = login.getMe_pwd();
-//	        
-//	        
-//	        Boolean result = passEncoder.matches(inputPassword, encryptedPasswordFromDB);
-//	        System.out.println("matchpwd:" + result);
-//	        // 입력된 비밀번호와 데이터베이스에서 조회한 암호화된 비밀번호 비교
-//	        if (result) {
-//	        	vo.setMe_pwd(encryptedPasswordFromDB);
-//	            session.setAttribute("member", login);
-//	            rttr.addFlashAttribute("msg", "로그인에 성공하였습니다.");
-//	        } else {
-//	            session.setAttribute("member", null);
-//	            rttr.addFlashAttribute("msg", "아이디 혹은 비밀번호를 다시 한번 확인해주세요!");
-//	            return "redirect:/account/login";
-//	        }
-//
-//	        return "redirect:/home";
-//	    } catch (Exception e) {
-//	        logger.error("로그인 처리 중 오류 발생", e);
-//	        rttr.addFlashAttribute("msg", "로그인 도중 오류가 발생했습니다. 관리자에게 문의하세요.");
-//	        return "redirect:/account/login";
-//	    }
-//	}
-
-
 	
 	@RequestMapping(value = "/logout", method=RequestMethod.GET)
 	public String logout(HttpSession session,RedirectAttributes rttr) {
@@ -309,6 +220,7 @@ public class AccountController {
 	public String pwdUpdatePOST(AccountVO vo,RedirectAttributes rttr) throws Exception {
 		
 		try {
+			
 			vo.setMe_pwd(vo.getMe_pwd());
 			vo.setMe_name(vo.getMe_name());
 			

@@ -112,7 +112,7 @@
        	<input type="hidden" name="me_id" id="me_id" value="${member.me_id }">
          <div class="card-body">
               <div class="d-flex align-items-start align-items-sm-center gap-4">
-                <%-- <img
+                <img
                   src="/image/${member.me_image}" 
                   onerror="${pageContext.request.contextPath }/resources/assets/img/avatars/1.png"
                   alt="user-avatar"
@@ -120,7 +120,7 @@
                   height="100"
                   width="100"
                   id="uploadedAvatar"
-                /> --%>
+                />
                 <div class="button-wrapper">
                   <label for="upload" class="btn btn-primary me-2 mb-4" tabindex="0">
                     <span class="d-none d-sm-block">Upload new photo</span>

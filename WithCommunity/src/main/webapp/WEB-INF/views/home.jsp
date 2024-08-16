@@ -326,7 +326,7 @@
 					<div class="card h-100">
 						<div
 							class="card-header d-flex align-items-center justify-content-between">
-							<h5 class="card-title m-0 me-2">회원 리스트</h5>
+							<h5 class="card-title m-0 me-2">1:1 문의 완료 리스트</h5>
 							<div class="dropdown">
 								<button class="btn p-0" type="button" id="transactionID"
 									data-bs-toggle="dropdown" aria-haspopup="true"
@@ -344,21 +344,36 @@
 						</div>
 						
 						<div class="card-body">
-							<c:forEach items="${HomeMemberList}" var="mmList">
-								<ul class="p-0 m-0">
-									<li class="d-flex mb-4 pb-1">
-												
-										<div class="d-flex w-100 flex-wrap align-items-center justify-content-between gap-2">
-											<div class="me-2">
-												<h6 class="mb-0">${mmList.me_name}</h6>
-											</div>
-											<div class="user-progress d-flex align-items-center gap-1">
-												<h6 class="mb-0">+${mmList.state}</h6>
-											</div>
-										</div>
-									</li>
-								</ul>
-							</c:forEach>
+							<table class="table table-bordered col-md-12">
+									<thead>
+										<tr>
+											<th class="text-center">번호</th>
+											<th class="text-center">주제</th>
+											<th class="text-center">작성자</th>
+											<th class="text-center">수정일자</th>
+										</tr>
+									</thead>
+									<tbody>
+										<c:forEach items="${HomeInquiryList}" var="ilist">
+											<c:if test="${ilist.inq_name eq member.me_name}">
+												<tr>
+													<td class="text-center">
+														<c:out value="${ilist.inq_no}" />
+													</td>
+													<td><strong><a href="/inquiry/detail?inq_no=${ilist.inq_no}">
+														<c:out value="${ilist.inq_title}" /></a></strong>
+													</td>
+													<td class="text-center">
+														<c:out value="${ilist.inq_name}" />
+													</td>
+													<td class="text-center">
+														<fmt:formatDate pattern="yyyy-MM-dd" value="${ilist.inq_updateDate}" />
+													</td>
+												</tr>
+											</c:if>
+										</c:forEach>
+								</tbody>
+							</table>
 						</div>
 					</div>
 				</div>

@@ -23,7 +23,7 @@
 	select * 
 		from tbl_board 
 		order by board_no asc
-		 LIMIT 10;
+		 LIMIT 10
 	</select>
 
 	<!-- 글 목록 -->

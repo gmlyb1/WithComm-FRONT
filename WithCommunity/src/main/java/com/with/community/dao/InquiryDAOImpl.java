@@ -35,4 +35,9 @@ public class InquiryDAOImpl implements InquiryDAO {
 	public int selectInqCnt(Criteria cri) throws Exception {
 		return sqlSession.selectOne("namespace.selectInqCnt",cri);
 	}
+
+	@Override
+	public List<InquiryVO> HomeInquiryList(InquiryVO ivo) throws Exception {
+		return sqlSession.selectList("namespace.HomeInquiryList", ivo);
+	}
 }

@@ -52,4 +52,21 @@
 	  ,now()
 	)
 	</insert>
+	
+	<select id="HomeInquiryList" resultType="InquiryVO" parameterType="InquiryVO">
+	SELECT 
+	    inq_no,
+	    inq_title,
+	    inq_content,
+	    inq_name,
+	    answerYn,
+	    DATE_FORMAT(inq_regdate, '%Y-%m-%d') AS inq_regdate,
+	    DATE_FORMAT(inq_updateDate, '%Y-%m-%d') AS inq_updateDate
+	FROM tbl_inquiry
+	WHERE answerYn = '답변완료'
+	AND DATE(inq_updateDate) = CURDATE()
+	order by inq_updateDate desc
+	LIMIT 4
+	
+	</select>
 </mapper>

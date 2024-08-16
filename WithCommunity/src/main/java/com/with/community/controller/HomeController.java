@@ -67,6 +67,7 @@ public class HomeController {
 		model.addAttribute("HomeNoticeList", noticeService.HomeNoticeList());
 		model.addAttribute("HomeBoardList", boardService.HomeBoardList());
 		model.addAttribute("HomeMemberList", accountService.selectHomeList(vo));
+		model.addAttribute("HomeInquiryList", inquiryService.HomeInquiryList(Ivo));
 		model.addAttribute("HomeVisitCnt", visitCountService.selectVisitCount(vvo));
 		
 		return "home";

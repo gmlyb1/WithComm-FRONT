@@ -18,6 +18,7 @@ public class InquiryVO {
 	private String inq_content;
 	private String inq_name;
 	private Timestamp inq_regdate;
+	private Timestamp inq_updateDate;
 	
 	private String me_name;
 	private int inqCount;
