@@ -34,6 +34,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
+import org.springframework.web.multipart.MultipartRequest;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -186,6 +187,23 @@ public class AccountController {
 		
 		AccountVO accountVO = (AccountVO) session.getAttribute("member");
 		
+		MultipartFile file = multiRequest.getFile(me_image);
+		
+		System.out.println("파일값: " + file.getOriginalFilename());
+		
+		String filePath = multiRequest.getSession().getServletContext().getRealPath("/resources/upload/mem_Image");
+		
+		if(file.getOriginalFilename() != "") {
+			String uuid = UUID.randomUUID().toString();
+			
+			String fileNewName = uuid + "_" + file.getOriginalFilename();
+			file.transferTo(new File(filePath + "/" + fileNewName));
+			
+			System.out.println("파일 업로드 완료!");
+			
+			accountVO.setMe_image(fileNewName);
+		}
+		
 		accountService.updateImg(me_image,me_id);
 		session.setAttribute("member", accountVO);
 			
@@ -216,13 +234,38 @@ public class AccountController {
 	}
 	
 	//비밀번호 변경
-	@RequestMapping(value="/profileUdt", method= RequestMethod.POST)
-	public String pwdUpdatePOST(AccountVO vo,RedirectAttributes rttr) throws Exception {
+	@RequestMapping(value="/profileUdt",method= RequestMethod.POST)
+	public String pwdUpdatePOST(AccountVO vo,RedirectAttributes rttr,MultipartHttpServletRequest multiRequest) throws Exception {
 		
 		try {
+			String me_image = "";
+			
+			MultipartFile file = multiRequest.getFile("me_image");
+			
+			if(file.getOriginalFilename() == "") {
+				System.out.print("11 : 기존파일이 넣기");
+				me_image = multiRequest.getParameter("default_file");
+			}else {
+				System.out.print("11 : 변경파일이 넣기");
+				
+				String filePath = multiRequest.getSession().getServletContext().getRealPath("/resources/upload/mem_Image");
+				
+				String uuid = UUID.randomUUID().toString();
+				
+				me_image = uuid + "_" + file.getOriginalFilename();
+				
+				file.transferTo(new File(filePath + "/" + me_image));
+				
+				File f = new File(filePath + "/" + multiRequest.getParameter("default_file"));
+				
+				if(f.exists()) {
+					f.delete();
+				}
+			}
 			
 			vo.setMe_pwd(vo.getMe_pwd());
 			vo.setMe_name(vo.getMe_name());
+			vo.setMe_image(me_image);
 			
 			accountService.profileUdt(vo);
 			rttr.addFlashAttribute("msg", "회원 정보 변경에 성공하였습니다.");
@@ -307,5 +350,14 @@ public class AccountController {
 		return "redirect:/account/forgotPass";
 	}
 	
+	@RequestMapping(value="/IndNotice" , method=RequestMethod.GET)
+	public String indNotice() throws Exception {
+		return "/account/IndNotice";
+	}
+	
+	@RequestMapping(value="/alram" , method=RequestMethod.GET)
+	public String alarm() throws Exception {
+		return "/account/alram";
+	}
 	
 }

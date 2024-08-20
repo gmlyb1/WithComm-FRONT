@@ -29,7 +29,7 @@
 	    var memberId = $(this).data("member-id");
 	    var meName = $('#me_name').val();
 	    var mePwd = $('#me_pwd').val();
-
+		var meImage = $('#me_image').val();
 	    console.log(meName);
 	    console.log(mePwd);
 		
@@ -53,7 +53,8 @@
 	            data: {
 	                me_id: memberId,
 	                me_name: meName,
-	                me_pwd: mePwd
+	                me_pwd: mePwd,
+	                me_image: meImage
 	            },
 	            success: function(data) {
 	                console.log(data);
@@ -61,15 +62,15 @@
 	                location.reload(); // 페이지를 새로 고쳐서 변경된 내용을 반영합니다.
 	            },
 	            error: function(error) {
-	                console.log(error);
-	                alert("요청 처리 중 오류가 발생하였습니다: " + error.responseText); // 오류 메시지에 대한 더 자세한 정보 출력
+	                console.log(error.responseText);
+	                alert("요청 처리 중 오류가 발생하였습니다"); // 오류 메시지에 대한 더 자세한 정보 출력
 	            }
 	        });
 	    }
 	});
   }); 
      	
-	/* function fileCh(f) {
+	function fileCh(f) {
    		if(f.files && f.files[0]) {
    			
    			var reader = new FileReader();
@@ -78,7 +79,7 @@
    			}
    			reader.readAsDataURL(f.files[0]);
    		}
-   	} */
+   	} 
 	
 	
 
@@ -108,8 +109,9 @@
       <div class="card mb-4">
         <h5 class="card-header">Profile Details</h5>
         <!-- Account -->
-   <form action="/account/updateImg" method="post" enctype="multipart/form-data">
-       	<input type="hidden" name="me_id" id="me_id" value="${member.me_id }">
+   	<%-- <form action="/account/profileUdt" method="post" enctype="multipart/form-data">
+       	<input type="hidden" name="me_id" id="me_id" value="${member.me_id }"> --%>
+       	
          <div class="card-body">
               <div class="d-flex align-items-start align-items-sm-center gap-4">
                 <img
@@ -128,22 +130,21 @@
                     <input
                       type="file"
                       id="upload"
-                      name="me_image"
+                      name="file"
                       class="account-file-input"
                       onchange="fileCh(this);"
                       accept="image/png, image/jpeg"
                     />
                   </label>
-                  <button type="submit" class="btn btn-outline-secondary account-image-reset mb-4">
+                 <!--  <button type="submit" class="btn btn-outline-secondary account-image-reset mb-4">
                     <i class="bx bx-reset d-block d-sm-none"></i>
                     <span class="d-none d-sm-block">변경</span>
                   </button>
-                  <p class="text-muted mb-0">Allowed JPG, GIF or PNG. Max size of 800K</p>
+                  <p class="text-muted mb-0">Allowed JPG, GIF or PNG. Max size of 800K</p> -->
                 </div>
               </div>
             </div>
-	</form>        
-	<form action="/account/profileUdt" method="post">
+
         <hr class="my-0" />
         <div class="card-body">
             <div class="row">
@@ -189,7 +190,7 @@
             </div>
         </div>
       </div>
-   </form>
+  <!--  </form> -->
  <!--    </form> -->
         <!-- /Account -->
       <div class="card">

@@ -5,21 +5,29 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 
 <!-- include summernote css/js -->
-<link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.css" rel="stylesheet">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.18/lang/summernote-ko-KR.min.js"></script>
+<script src="/resources/summernote/summernote-lite.js"></script>
+<script src="/resources/summernote/lang/summernote-ko-KR.js"></script>
+<link rel="stylesheet" href="/resources/summernote/summernote-lite.css">
 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
 <script type="text/javascript">
 	
 	$(document).ready(function () {
-	
-	
+		  $('.summernote').summernote({
+		        height: 150,  // Set the height of the editor
+		        lang: 'ko-KR' // Set the language
+		    });
 	});
 	
 	function _onSubmit() {
+			var bgno = $("#board_bgno").val();
 			
-			if($("#board_bgno").val().trim() == "") {
+		
+			if(bgno == 0) {
 				alert("카테고리를 선택해 주세요.");
 				$("#board_bgno").focus();
 				return false;
@@ -119,7 +127,7 @@
 								<tr>
 									<th class="active">내용</th><br>
 									<td class="form-inline">
-									<textarea name="board_content" cols="100" rows="10" placeholder="내용을 입력해주세요." class="form-control"></textarea></td>
+									<textarea name="board_content" cols="100" rows="10" placeholder="내용을 입력해주세요." id="board_content" class="summernote form-control"></textarea></td>
 								</tr>
 							</tbody>
 						</table>
