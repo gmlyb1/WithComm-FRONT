@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import com.with.community.service.AccountService;
 import com.with.community.service.BoardService;
 import com.with.community.service.InquiryService;
+import com.with.community.service.MessageService;
 import com.with.community.service.NoticeService;
 import com.with.community.service.VisitCountService;
 import com.with.community.vo.AccountVO;
@@ -47,6 +48,8 @@ public class HomeController {
 	@Autowired
 	private VisitCountService visitCountService;
 	
+	@Autowired
+	private MessageService messageService;
 	/**
 	 * Simply selects the home view to render by returning its name.
 	 * @throws Exception 
@@ -59,7 +62,6 @@ public class HomeController {
 		DateFormat dateFormat = DateFormat.getDateTimeInstance(DateFormat.LONG, DateFormat.LONG, locale);
 		
 		String formattedDate = dateFormat.format(date);
-		
 		
 		model.addAttribute("serverTime", formattedDate );
 		//상담내용 개수 - 1:1 문의 count 개수 표시하기

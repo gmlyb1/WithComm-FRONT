@@ -56,8 +56,6 @@
  			
  			var sessionId = $("#session_id").val();
  			
- 			console.log("sessionId:"+sessionId);
- 			
  			if(sessionId !== null) {
  				connectWS();
  			}
@@ -80,8 +78,7 @@
  				sock.onmessage = function(e) {
  					var splitdata = e.data.split(":");
  					if(splitdata[0].indexOf("recMs") > -1) {
- 						console.log('통신');
- 						$("#recMs").append("["+splitdata[1]+"통의 쪽지가 왔습니다.]");
+ 						$("#alarmCount").append("["+splitdata[1]+"통의 쪽지가 도착 했습니다.]");
  					}else {
  						$("#chat").append(e.data + "<br/>");
  					}
@@ -103,6 +100,10 @@
  				$("#message").val('').focus();
  			}); 
  			
+ 			
+ 			$("#alarmCount").on("click",function() {
+ 				console.log('클릭');
+ 			});
  			
  			
  			// 자유게시판 클릭했을때 list를 get으로 넘겼기 때문에 default로 pageNum & amount를 설정한다.
@@ -325,10 +326,10 @@
 				    <!-- User -->
 			    <c:if test="${member != null}">
 				    <input type="hidden" value="${member.me_email}" id="session_id">
-				      <span id="recMs" name="recMs" style="float:right;cursor:pointer;margin-right:10px;color:pink;"></span>
-				      		<ul style="height:30px;float:right;margin-bottom:20px;" class="fn-font">
+				       <%-- <span id="recMs" name="recMs" style="float:right;cursor:pointer;margin-right:10px;color:red;"></span> 
+				      		 <ul style="height:30px;float:right;margin-bottom:20px;" class="fn-font">
 				      			<li><a style="color:blue;" class="">${member.me_name}'s come in</a></li>
-				      		</ul>
+				      		</ul>  --%>
 				        <li class="nav-item navbar-dropdown dropdown-user dropdown">
 				            <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown">
 				                <div class="avatar avatar-online">
@@ -412,7 +413,7 @@
 				        <div id="alarmDiv" class="nav-item me-3">
 						    <a id="alarmI" class="nav-link" href="#">
 						        <i class="bx bx-bell fs-4"></i>
-						        <span class="badge bg-danger" id="alarmCount">0</span>
+						        <span class="badge bg-danger" id="alarmCount"></span>
 						    </a>
 						    <ul id="alarmUL" class="dropdown-menu" style="display: none;">
 						        <li><a class="dropdown-item" href="#">Notification 1</a></li>
