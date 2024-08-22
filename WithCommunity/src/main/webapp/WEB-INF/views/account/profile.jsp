@@ -3,7 +3,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
     
-<%@include file="/WEB-INF/views/include/header.jsp"%>    
+<%@ include file="/WEB-INF/views/include/header.jsp" %>
 <!-- Core JS -->
  <script src="/resources/assets/vendor/libs/jquery/jquery.js"></script>
  <script src="/resources/assets/vendor/libs/popper/popper.js"></script>
@@ -56,10 +56,9 @@
 	                me_pwd: mePwd,
 	                me_image: meImage
 	            },
-	            success: function(data) {
-	                console.log(data);
+	            success: function() {
 	                alert("회원 변경이 성공적으로 처리되었습니다. \n 로그아웃 후 재접속 하시면 변경된 계정으로 접속 가능합니다.");
-	                location.reload(); // 페이지를 새로 고쳐서 변경된 내용을 반영합니다.
+	               // location.reload(); // 페이지를 새로 고쳐서 변경된 내용을 반영합니다.
 	            },
 	            error: function(error) {
 	                console.log(error.responseText);
@@ -70,6 +69,13 @@
 	});
   }); 
      	
+	document.addEventListener('DOMContentLoaded', function () {
+        var dropdownElementList = [].slice.call(document.querySelectorAll('.dropdown-toggle'))
+        var dropdownList = dropdownElementList.map(function (dropdownToggleEl) {
+            return new bootstrap.Dropdown(dropdownToggleEl)
+        })
+    });
+	
 	function fileCh(f) {
    		if(f.files && f.files[0]) {
    			
@@ -112,7 +118,7 @@
    	<%-- <form action="/account/profileUdt" method="post" enctype="multipart/form-data">
        	<input type="hidden" name="me_id" id="me_id" value="${member.me_id }"> --%>
        	
-         <div class="card-body">
+         <%-- <div class="card-body">
               <div class="d-flex align-items-start align-items-sm-center gap-4">
                 <img
                   src="/image/${member.me_image}" 
@@ -143,7 +149,7 @@
                   <p class="text-muted mb-0">Allowed JPG, GIF or PNG. Max size of 800K</p> -->
                 </div>
               </div>
-            </div>
+            </div> --%>
 
         <hr class="my-0" />
         <div class="card-body">

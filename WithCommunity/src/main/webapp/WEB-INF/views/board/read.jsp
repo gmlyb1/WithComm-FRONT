@@ -10,7 +10,7 @@
 <script type="text/javascript">
 	$(document).ready(function() {
 		//소켓
-		var socket = new WebSocket( 'ws://localhost:8090/alarm');
+		//var socket = new WebSocket( 'ws://localhost:8090/alarm');
 		//console.log("socket:"+socket);
 		
 		var msg = "${msg}"
@@ -156,7 +156,6 @@
 		<div class="panel">
 			<div class="panel-body">
 				<form role="form" method="post" name="readForm">
-					<input type="hidden" id="FILE_NO" name="FILE_NO" value="">
 					<input type="hidden" id="board_no" name="board_no" value="${read.board_no}" />
 					<%-- <input type="hidden" id="reply_no" name="reply_no" value="${replyList.board_no}"> --%>
 					<!-- 게시판 글보기  -->
@@ -194,7 +193,7 @@
 	&nbsp;&nbsp;&nbsp;<div style="margin-left: 1px;">
 						<c:if test="${member.state == '최고관리자' || member.me_name == read.board_writer}">
 							&nbsp;&nbsp;&nbsp;<button type="button" class="btn btn-success" onclick="location.href='/board/update?board_no=${read.board_no}';">수정</button>
-							&nbsp;&nbsp;&nbsp;<button type="submit" class="btn btn-danger" id="delete_btn">삭제</button>
+							&nbsp;&nbsp;&nbsp;<button type="button" class="btn btn-danger" id="delete_btn">삭제</button>
 						</c:if>
 						<button onclick="location.href='/board/list'" type="button" id="list_btn" class="btn btn-primary">목록</button>
 						<br>

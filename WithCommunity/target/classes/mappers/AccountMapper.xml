@@ -51,14 +51,13 @@
 
 	<update id="keepLogin">
 		update tbl_member
-		set session_key = #{param3},
-		session_limit = #{param1}
-		where me_id = #{param2}
-	
+		set session_key = #{sessionId},
+		session_limit = #{next}
+		where me_id = #{me_id}
 	</update>
 	
-	<select id="check" resultMap="AccountVOResultMap">
-		select * from tbl_member where session_key = #{value}
+	<select id="checkUserSessionKey" resultType="AccountVO">
+		select * from tbl_member where session_key = #{sessionId} and sessionLimit > now()
 	</select>
 
 	<select id="idChk" parameterType="AccountVO" resultType="AccountVO">

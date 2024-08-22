@@ -22,13 +22,13 @@ public interface AccountService {
 	public int updateImg(AccountVO avo)throws Exception;
 	
 	// 로그인 유지 처리
-	public void keepLogin(String me_id, String sessionId, Date sessionLimit) throws Exception;
+	public void keepLogin(int me_id, String sessionId, Date next) throws Exception;
 	
 	//비밀번호 변경 
 	public void profileUdt(AccountVO vo) throws Exception;
 	
 	// 세션 키 검증
-	public AccountVO checkUserWithSessionKey(String value) throws Exception;
+	public AccountVO checkUserWithSessionKey(String sessionId) throws Exception;
 	
 	public List<AccountVO> selectHomeList(AccountVO vo) throws Exception;
 	

@@ -1,7 +1,9 @@
 package com.with.community.service;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.inject.Inject;
 
@@ -32,12 +34,18 @@ public class AccountServiceImpl implements AccountService {
 		return 1;
 	}
 	@Override
-	public void keepLogin(String me_id, String sessionId, Date sessionLimit) throws Exception {
-		accountDAO.keepLogin(me_id, sessionId, sessionLimit);
+	public void keepLogin(int me_id, String sessionId, Date next) throws Exception {
+		
+		Map<String, Object> map = new HashMap<String,Object>();
+		map.put("me_id", me_id);
+		map.put("sessionId", sessionId);
+		map.put("next", next);
+		
+		accountDAO.keepLogin(map);
 	}
 	@Override
-	public AccountVO checkUserWithSessionKey(String value) throws Exception {
-		return accountDAO.checkUserWithSessionKey(value);
+	public AccountVO checkUserWithSessionKey(String sessionId) throws Exception {
+		return accountDAO.checkUserWithSessionKey(sessionId);
 	}
 	@Override
 	public List<AccountVO> selectHomeList(AccountVO vo) throws Exception {

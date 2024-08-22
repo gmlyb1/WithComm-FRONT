@@ -2,6 +2,7 @@ package com.with.community.dao;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
@@ -22,13 +23,13 @@ public interface AccountDAO {
 	public int updateImg(AccountVO avo)throws Exception;
 	
 	// 로그인 유지 처리
-	public void keepLogin(String me_id, String sessionId, Date sessionLimit) throws Exception;
+	public void keepLogin(Map<String, Object> map) throws Exception;
 	
 	//비밀번호 변경
 	public void profileUdt(AccountVO vo) throws Exception;
 	
 	// 세션 키 검증
-	public AccountVO checkUserWithSessionKey(String value) throws Exception;
+	public AccountVO checkUserWithSessionKey(String sessionId) throws Exception;
 	
 	public List<AccountVO> selectHomeList(AccountVO vo) throws Exception;
 	
@@ -41,5 +42,8 @@ public interface AccountDAO {
 	public int memberPwdCheck(AccountVO aVO)throws Exception;
 	
 	public void passwordUpdate(AccountVO aVO)throws Exception;
+
+
+
 	
 }

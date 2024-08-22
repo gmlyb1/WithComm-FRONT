@@ -76,7 +76,7 @@
 							</c:if>
 						</c:forEach>
 					</c:if>
-					<c:if test="${member == null }">
+					<c:if test="${list.inq_name eq member.me_name && list == null}">
 						<td colspan="6" class="text-center">데이터가 없습니다.</td>
 					</c:if>
 					</tbody>
@@ -89,7 +89,7 @@
 				</c:if>
 				
 				<!-- 페이징 -->
-				<c:if test="${member != null || member.me_name == inquiry.inq_name}">
+				<c:if test="${list != null}">
 					<form name="form2">
 					    <div id="pagination" class="d-flex justify-content-center align-items-center">
 					        <ul id="pageUL" class="pagination">

@@ -50,71 +50,59 @@
 	<script src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
     <!-- socket lib -->
  	<script type="text/javascript">
+ 		var socket = null;
+		var sock = new SockJS("/echo");
  		$(document).ready(function() {
-		
- 			const alarmUL = document.querySelector("#alarmUL");
- 			const alarmI = document.querySelector("#alarmI");
- 		 	const alarmDiv = document.querySelector("#alarmDiv");
- 		 	var sock = null;
  			
- 		 //소켓
- 			function connectWs(){
- 				var ws = new SockJS("http://localhost:8081/echo");
- 				sock = ws;
-
- 				ws.onopen = function() {
- 					console.log("연결완료");
- 			 		ws.send($('#socketuserID').val());
- 				};
-
- 				ws.onmessage = function(event) {
- 					/* 받을 알람이 있을 때 */
- 					console.log(event.data);
- 					if(event.data.length>0){
- 						let newAlarm = '';
- 						newAlarm += '<li scope="col">' + event.data + "</li>"
- 						$('#alarmUL').append(newAlarm);
- 						alarmDiv.style.visibility = "visible";
- 					}
- 				};
-
- 				ws.onclose = function() {
- 				    console.log('close');
- 				};
-
- 			};
-
- 			/* 알람창 추가 */
- 			alarmI.addEventListener('click', function(){
- 				console.log('클릭1');
- 				alarmUL.classList.toggle('visible');
- 				$(this).stop(false, false);
+ 			var sessionId = $("#session_id").val();
+ 			
+ 			console.log("sessionId:"+sessionId);
+ 			
+ 			if(sessionId !== null) {
+ 				connectWS();
+ 			}
+ 			
+ 			$(".chat_start_main").click(function() {
+ 				$(this).css("display","none");
+ 				$(".chat_main").css("display","inline");
  			});
-
- 			alarmUL.addEventListener('click', function(e){
- 				console.log('클릭2');
- 				var endIdx = e.target.textContent.indexOf(")");
- 				var idx = e.target.textContent.substr(1, endIdx-1);
-
- 				$.ajax({
- 					url : '/alarmDel',
- 					data : {"idx" : idx},
- 					type : 'post',
- 					success : function(data){
- 						console.log(data);
- 						alert("성공");
- 					}
- 				})
+ 			
+ 			$(".chat_main .modal-header").click(function() {
+ 				$(".chat_start_main").css("display","inline");
+ 				$(".chat_main").css("display","none");
+ 			});
+ 			
+ 			function connectWS(){
+ 				sock.onopen = function() {
+ 					console.log('info: connection opened.');
+ 				};
  				
- 				$(e.target).remove();
- 				if(alarmUL.children.length == 0){
- 					alarmDiv.style.visibility = "hidden";
+ 				sock.onmessage = function(e) {
+ 					var splitdata = e.data.split(":");
+ 					if(splitdata[0].indexOf("recMs") > -1) {
+ 						console.log('통신');
+ 						$("#recMs").append("["+splitdata[1]+"통의 쪽지가 왔습니다.]");
+ 					}else {
+ 						$("#chat").append(e.data + "<br/>");
+ 					}
+ 				};
+ 				
+ 				sock.onclose = function() {
+ 					$("#chat").append("연결 종료");
+ 					
+ 				};
+ 				
+ 				sock.onerror = function (err) {
+ 					console.log('Errors:', err);
  				}
- 				
- 			});
- 		 	
- 			connectWs();
- 	
+			}
+ 			
+ 			$("#chatForm").submit(function(event){
+ 				event.preventDefault();
+ 				sock.send($("#message").val());
+ 				$("#message").val('').focus();
+ 			}); 
+ 			
  			
  			
  			// 자유게시판 클릭했을때 list를 get으로 넘겼기 때문에 default로 pageNum & amount를 설정한다.
@@ -143,8 +131,20 @@
  		
  		
  		
+ 		
  	</script>
- 
+ 	<style>
+ 		.custom-list {
+            margin-bottom: 20px;
+        }
+        .custom-link {
+            color: #007bff; /* 부트스트랩의 primary color */
+            text-decoration: none;
+        }
+        .custom-link:hover {
+            text-decoration: underline;
+        }
+ 	</style>
   </head>
 
   <body>
@@ -164,7 +164,6 @@
     <div class="layout-wrapper layout-content-navbar">
       <div class="layout-container">
         <!-- Menu -->
-
         <aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme">
           <div class="app-brand demo">
             <a href="/home" class="app-brand-link">
@@ -288,7 +287,7 @@
                 <div data-i18n="Documentation">파일 게시판</div>
               </a>
             </li>
-          <c:if test="${member.me_email == 'admin@with.com'}">
+          <c:if test="${member.state == '최고관리자'}">
             <li class="menu-item">
               <a href="/setting/control" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-file"></i>
@@ -324,7 +323,12 @@
 
              <ul class="navbar-nav flex-row align-items-center ms-auto">
 				    <!-- User -->
-				    <c:if test="${member != null}">
+			    <c:if test="${member != null}">
+				    <input type="hidden" value="${member.me_email}" id="session_id">
+				      <span id="recMs" name="recMs" style="float:right;cursor:pointer;margin-right:10px;color:pink;"></span>
+				      		<ul style="height:30px;float:right;margin-bottom:20px;" class="fn-font">
+				      			<li><a style="color:blue;" class="">${member.me_name}'s come in</a></li>
+				      		</ul>
 				        <li class="nav-item navbar-dropdown dropdown-user dropdown">
 				            <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown">
 				                <div class="avatar avatar-online">

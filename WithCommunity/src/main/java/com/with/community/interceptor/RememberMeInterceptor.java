@@ -26,14 +26,31 @@ public class RememberMeInterceptor implements HandlerInterceptor{
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
 			throws Exception {
-
-		HttpSession httpSession = request.getSession();
-		Cookie loginCookie = WebUtils.getCookie(request, "loginCookie");
-		if(loginCookie != null) {
-			AccountVO accountVO = accountService.checkUserWithSessionKey(loginCookie.getValue());
-			if(accountVO != null) 
-				httpSession.setAttribute("login", accountVO);
+		
+		HttpSession session = request.getSession();
+		Object obj = session.getAttribute("member");
+		AccountVO avo;
+		
+		if(obj == null) {
+			Cookie loginCookie = WebUtils.getCookie(request, "loginCookie");
+			logger.info("loginCookie:" + loginCookie);
+			if(loginCookie != null) {
+				String sessionId = loginCookie.getValue();
+				logger.info(sessionId);
+				avo = accountService.checkUserWithSessionKey(sessionId);
+				if(avo != null) {
+					session.setAttribute("member", avo);
+					logger.info("자동 로그인 합니다");
+					return true;
+				}
+			}
+			
+			response.sendRedirect("/account/login");
+			logger.info("Interceptor 후 로그인");
+			return false;
 		}
+		
+		logger.info("interceptor 통과");
 		return true;
 	}
 

@@ -44,20 +44,16 @@ public class AccountDAOImpl implements AccountDAO{
 	}
 
 	@Override
-	public void keepLogin(String me_id, String sessionId, Date sessionLimit) throws Exception {
-		
-		Map<String, Object> paramMap = new HashMap<String, Object>();
-		paramMap.put("me_id", me_id);
-		paramMap.put("sessionId", sessionId);
-		paramMap.put("sessionLimit", sessionLimit);
+	public void keepLogin(Map<String, Object> map) throws Exception {
 		
 		
-		sqlSession.update("namespace.keepLogin", paramMap);
+		
+		sqlSession.update("namespace.keepLogin", map);
 	}
 
 	@Override
-	public AccountVO checkUserWithSessionKey(String value) throws Exception {
-		return sqlSession.selectOne("namespace.checkUserWithSessionKey", value);
+	public AccountVO checkUserWithSessionKey(String sessionId) throws Exception {
+		return sqlSession.selectOne("namespace.checkUserWithSessionKey", sessionId);
 	}
 
 	@Override

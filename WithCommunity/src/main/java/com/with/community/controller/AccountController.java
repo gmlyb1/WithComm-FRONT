@@ -9,6 +9,7 @@ import java.util.Map;
 import java.util.UUID;
 
 import javax.inject.Inject;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -122,19 +123,13 @@ public class AccountController {
 	
 	
 	@RequestMapping(value="/login", method=RequestMethod.POST)
-	public String loginPOST(Model model,AccountVO vo, HttpServletRequest request, RedirectAttributes rttr) throws Exception
+	public String loginPOST(HttpSession session,Model model,AccountVO vo, HttpServletRequest request, HttpServletResponse response,RedirectAttributes rttr) throws Exception
 	{
-		HttpSession session = request.getSession();
+//		HttpSession session = request.getSession();
 		session.setMaxInactiveInterval(6000);
 		
 		AccountVO login = accountService.login(vo);
-		System.out.println(vo.isUseCookie());
-		if(vo.isUseCookie() == true) {
-			System.out.println("입장");
-			int amount = 60 * 60 * 24 * 7;
-			Date sessionLimit = new Date(System.currentTimeMillis() + (1000 * amount));
-			accountService.keepLogin(null, null, sessionLimit);
-		}
+//		System.out.println(vo.isUseCookie());
 		
 		if(login == null)  {
 			session.setAttribute("member", null);
@@ -142,7 +137,7 @@ public class AccountController {
 			return "redirect:/account/login";
 		}else if(login.getState().equals("승인대기중")) {
 			session.setAttribute("member", null);
-			rttr.addFlashAttribute("msg", "승인되지 않은 회원입니다.\n 관리자에게 문의해 주시기 바랍니다.");
+			rttr.addFlashAttribute("msg", "승인되지 않은 회원입니다.");
 			return "redirect:/account/login";
 		
 		}else if(login.getState().equals("활동중지")) {
@@ -150,12 +145,60 @@ public class AccountController {
 			rttr.addFlashAttribute("msg", "본 아이디는 관리자에 의해 중지된 아이디입니다.");
 			return "redirect:/account/login";
 			
-		}else {
+		}else{
+			
 			session.setAttribute("member", login);
 	        rttr.addFlashAttribute("msg", "로그인에 성공하였습니다.");
 			return "redirect:/home";
-	    }
+		}
 	}
+//	@RequestMapping(value = "/login", method = RequestMethod.POST)
+//	public String loginPOST(HttpSession session, Model model, AccountVO vo, HttpServletRequest request, HttpServletResponse response, RedirectAttributes rttr) throws Exception {
+//	    String returnURL = "";
+//
+//	    session.setMaxInactiveInterval(6000);
+//
+//	    AccountVO login = accountService.login(vo);
+//	    System.out.println(vo.isUseCookie());
+//
+//	    if (login == null) {
+//	        session.setAttribute("member", null);
+//	        rttr.addFlashAttribute("msg", "아이디 혹은 비밀번호를 다시 한번 확인해주세요!");
+//	        return "redirect:/account/login";
+//	    } else if (login.getState().equals("승인대기중")) {
+//	        session.setAttribute("member", null);
+//	        rttr.addFlashAttribute("msg", "승인되지 않은 회원입니다.\n 관리자에게 문의해 주시기 바랍니다.");
+//	        return "redirect:/account/login";
+//	    } else if (login.getState().equals("활동중지")) {
+//	        session.setAttribute("member", null);
+//	        rttr.addFlashAttribute("msg", "본 아이디는 관리자에 의해 중지된 아이디입니다.");
+//	        return "redirect:/account/login";
+//	    } else {
+//	        // Successful login
+//	        session.setAttribute("member", login);
+//	        logger.info("로그인 성공");
+//	        returnURL = "redirect:/home"; // Corrected typo
+//
+//	        if (vo.isUseCookie()) {
+//	            Cookie loginCookie = new Cookie("loginCookie", session.getId());
+//	            int amount = 60 * 60 * 24 * 1; // 1 day
+//	            loginCookie.setPath("/");
+//	            loginCookie.setMaxAge(amount);
+//
+//	            response.addCookie(loginCookie);
+//	            logger.info("Cookie 자동 로그인 체크 완료: " + loginCookie);
+//
+//	            Date sessionLimit = new Date(System.currentTimeMillis() + (1000 * amount));
+//	            accountService.keepLogin(vo.getMe_id(), session.getId(), sessionLimit);
+//	        } else {
+//	            model.addAttribute("msg", "로그인에 실패하였습니다.");
+//	            logger.info("로그인 실패");
+//	            return "redirect:/account/login";
+//	        }
+//
+//	        return returnURL;
+//	    }
+//	}
 	
 	@RequestMapping(value = "/logout", method=RequestMethod.GET)
 	public String logout(HttpSession session,RedirectAttributes rttr) {
@@ -235,37 +278,38 @@ public class AccountController {
 	
 	//비밀번호 변경
 	@RequestMapping(value="/profileUdt",method= RequestMethod.POST)
-	public String pwdUpdatePOST(AccountVO vo,RedirectAttributes rttr,MultipartHttpServletRequest multiRequest) throws Exception {
+	public String pwdUpdatePOST(AccountVO vo,
+			RedirectAttributes rttr/* ,MultipartHttpServletRequest multiRequest */) throws Exception {
 		
 		try {
-			String me_image = "";
-			
-			MultipartFile file = multiRequest.getFile("me_image");
-			
-			if(file.getOriginalFilename() == "") {
-				System.out.print("11 : 기존파일이 넣기");
-				me_image = multiRequest.getParameter("default_file");
-			}else {
-				System.out.print("11 : 변경파일이 넣기");
-				
-				String filePath = multiRequest.getSession().getServletContext().getRealPath("/resources/upload/mem_Image");
-				
-				String uuid = UUID.randomUUID().toString();
-				
-				me_image = uuid + "_" + file.getOriginalFilename();
-				
-				file.transferTo(new File(filePath + "/" + me_image));
-				
-				File f = new File(filePath + "/" + multiRequest.getParameter("default_file"));
-				
-				if(f.exists()) {
-					f.delete();
-				}
-			}
-			
+//			String me_image = "";
+//			
+//			MultipartFile file = multiRequest.getFile("me_image");
+//			
+//			if(file.getOriginalFilename() == "") {
+//				System.out.print("11 : 기존파일이 넣기");
+//				me_image = multiRequest.getParameter("default_file");
+//			}else {
+//				System.out.print("11 : 변경파일이 넣기");
+//				
+//				String filePath = multiRequest.getSession().getServletContext().getRealPath("/resources/upload/mem_Image");
+//				
+//				String uuid = UUID.randomUUID().toString();
+//				
+//				me_image = uuid + "_" + file.getOriginalFilename();
+//				
+//				file.transferTo(new File(filePath + "/" + me_image));
+//				
+//				File f = new File(filePath + "/" + multiRequest.getParameter("default_file"));
+//				
+//				if(f.exists()) {
+//					f.delete();
+//				}
+//			}
+//			
 			vo.setMe_pwd(vo.getMe_pwd());
 			vo.setMe_name(vo.getMe_name());
-			vo.setMe_image(me_image);
+//			vo.setMe_image(me_image);
 			
 			accountService.profileUdt(vo);
 			rttr.addFlashAttribute("msg", "회원 정보 변경에 성공하였습니다.");

@@ -36,6 +36,7 @@
 	        <groupId>javax.websocket</groupId>
 	        <artifactId>javax.websocket-api</artifactId>
 	        <version>1.1</version>
+	        <scope>provided</scope>
 	    </dependency>
 		 <dependency>
 	        <groupId>javax.annotation</groupId>
@@ -271,10 +272,15 @@
 			<version>5.0.8.RELEASE</version>
 		</dependency>
 		
+<!-- 		<dependency>
+		    <groupId>org.springframework</groupId>
+		    <artifactId>spring-websocket</artifactId>
+		    <version>5.3.23</version> 사용할 Spring 버전에 맞게 수정
+		</dependency> -->
 		<dependency>
 		    <groupId>org.springframework</groupId>
 		    <artifactId>spring-websocket</artifactId>
-		    <version>5.3.23</version> <!-- 사용할 Spring 버전에 맞게 수정 -->
+		    <version>${org.springframework-version}</version> <!-- 사용할 Spring 버전에 맞게 수정 -->
 		</dependency>
 
 

@@ -27,10 +27,9 @@ public class SessionInterceptor implements HandlerInterceptor{
 		 AccountVO member = (AccountVO)session.getAttribute("member");
 		 PrintWriter out = response.getWriter();
 		 
-		 if(member.getAdminCk() != 1 || member == null ) {
-			 out.println("<script>alert('권한이 없습니다.'); history.go(-1);</script>");
+		 if(member == null) {
+			 out.println("<script>alert('로그인이 필요합니다.'); history.go(-1);</script>");
 			 out.flush(); 
-			 response.sendRedirect("/home");
 			 return false;
 		 }
 		 return true;

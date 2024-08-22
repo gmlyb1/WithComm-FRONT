@@ -15,7 +15,7 @@ import lombok.ToString;
 @ToString
 public class AccountVO {
 	
-	private Integer me_id;
+	private int me_id;
 	private String me_email;
 	private String me_pwd;
 	private String me_name;
