@@ -40,5 +40,10 @@ public class MessageDAOImpl implements MessageDAO {
 		sqlSession.insert("namespace.sendMessage", messageVO);
 	}
 
+	@Override
+	public MessageVO sendMsgDetail(MessageVO messageVO) throws Exception {
+		return sqlSession.selectOne("namespace.sendMsgDetail",messageVO);
+	}
+
 
 }

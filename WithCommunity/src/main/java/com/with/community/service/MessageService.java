@@ -14,5 +14,7 @@ public interface MessageService {
 	public List<MessageVO> selectMessageList(MessageVO messageVO) throws Exception;
 
 	public void sendMessage(MessageVO messageVO) throws Exception;
+
+	public MessageVO sendMsgDetail(MessageVO messageVO) throws Exception;
 	
 }

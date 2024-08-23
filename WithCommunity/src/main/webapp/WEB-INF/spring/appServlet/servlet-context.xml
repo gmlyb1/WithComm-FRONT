@@ -42,8 +42,8 @@
     <beans:bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
         <beans:property name="maxUploadSize" value="50000000" />
     </beans:bean>
-
-    <!-- Interceptors Configuration -->
+	
+	<!-- 로그인 하지 않았을떄 제한할 url-->
     <mvc:interceptors>
         <mvc:interceptor>
             <mvc:mapping path="/account/profile"/>
@@ -51,6 +51,7 @@
             <mvc:mapping path="/board/update"/>
             <mvc:mapping path="/notice/create"/>
             <mvc:mapping path="/notice/update"/>
+            <mvc:mapping path="/message/*"/>
             <beans:bean class="com.with.community.interceptor.SessionInterceptor"/>
         </mvc:interceptor>
         

@@ -41,27 +41,6 @@
 		    }
 			
 		});
-		/*  function toggleChat() {
-			var charMain = $('.chat_main').val();
-			var chatStartMain = $('.chat_start_main').val();
-			
-			console.log(chatMain);
-	        console.log(chatStartMain);
-	        
-	        if (chatMain.style.display === 'none' || chatMain.style.display === '') {
-	            chatMain.style.display = 'block';
-	            chatStartMain.style.display = 'none';
-	        } else {
-	            chatMain.style.display = 'none';
-	            chatStartMain.style.display = 'block';
-	        }
-		}
-		
-		$('#toggleChatBtn').on('click',function() {
-			
-			toggleChat();
-		});  */
-	
 	});
 	
 	
@@ -376,7 +355,7 @@
 													<td class="text-center">
 														<c:out value="${ilist.rowNo}" />
 													</td>
-													<td><strong><a href="/message/detail?msg_id=${ilist.msg_id}">
+													<td><strong><a href="/message/detail?rowNo=${ilist.rowNo}">
 														<c:out value="${ilist.msg_title}" /></a></strong>
 													</td>
 													<td class="text-center">

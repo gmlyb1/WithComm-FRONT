@@ -90,10 +90,8 @@ public class NoticeController {
 		
 		model.addAttribute("read", noticeService.NoticeRead(vo.getNotice_no()));
 		
-		// ���� ��
 		model.addAttribute("lastNoticeList", noticeService.lastNoticeList(notice_no));
 		
-		// ���� ��
 		model.addAttribute("nextNoticeList", noticeService.nextNoticeList(notice_no));
 		
 		return "/notice/read";

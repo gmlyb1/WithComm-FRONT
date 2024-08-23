@@ -36,5 +36,10 @@ public class MessageServiceImpl implements MessageService {
 		messageDAO.sendMessage(messageVO);
 	}
 
+	@Override
+	public MessageVO sendMsgDetail(MessageVO messageVO) throws Exception {
+		return messageDAO.sendMsgDetail(messageVO);
+	}
+
 	
 }

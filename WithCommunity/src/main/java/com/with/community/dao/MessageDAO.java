@@ -15,4 +15,6 @@ public interface MessageDAO {
 
 	public void sendMessage(MessageVO messageVO) throws Exception;
 
+	public MessageVO sendMsgDetail(MessageVO messageVO) throws Exception;
+
 }

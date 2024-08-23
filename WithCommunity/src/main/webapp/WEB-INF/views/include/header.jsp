@@ -585,7 +585,7 @@
 							            <c:forEach items="${modalMessageList}" var="list">
 							                <tr>
 							                    <td class="text-center">${list.rowNo}</td>
-							                    <td class="text-center">${list.msg_title}</td>
+							                    <td class="text-center"><a href="/message/detail?rowNo=${list.rowNo}">${list.msg_title}</a></td>
 							                    <td class="text-center">${list.msg_content}</td>
 							                    <td class="text-center">${list.sender_name}</td>
 							                    <td class="text-center">${list.create_dt}</td>

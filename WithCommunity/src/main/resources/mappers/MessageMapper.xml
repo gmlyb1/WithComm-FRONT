@@ -37,8 +37,42 @@
 		    WHERE recev_name = #{recev_name}
 		      AND gubun = 0
 		) AS subquery
-		ORDER BY create_dt desc
-		LIMIT 5
+		ORDER BY rowNo desc
+		LIMIT 6
+	</select>
+
+	<select id="sendMsgDetail" resultType="MessageVO">
+		SELECT 
+		    rowNo,
+		    msg_id,
+		    msg_title,
+		    msg_content,
+		    recev_name,
+		    gubun,
+		    create_dt,
+		    sender_name,
+		    me_email,
+		    read_yn,
+		    state
+		FROM (
+		    SELECT 
+		        ROW_NUMBER() OVER (ORDER BY create_dt DESC) AS rowNo,
+		        a.msg_id,
+		        a.msg_title,
+		        a.msg_content,
+		        a.recev_name,
+		        a.gubun,
+		        a.create_dt,
+		        a.sender_name,
+		        a.me_email,
+		        a.read_yn,
+		        b.state
+		    FROM tbl_message a left join tbl_member b
+		    on a.me_email = b.me_email 
+		    WHERE a.recev_name = #{recev_name}
+		      AND a.gubun = 0
+		) AS subquery
+		where rowNo = #{rowNo}
 	</select>
 
 	<insert id="sendMessage">
