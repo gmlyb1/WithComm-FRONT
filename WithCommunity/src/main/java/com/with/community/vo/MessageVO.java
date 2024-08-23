@@ -11,6 +11,7 @@ import lombok.ToString;
 @ToString
 public class MessageVO {
 	
+	private int rowNo;
 	private int msg_id;
 	private String msg_title;
 	private String msg_content;

@@ -343,7 +343,7 @@
 					<div class="card h-100">
 						<div
 							class="card-header d-flex align-items-center justify-content-between">
-							<h5 class="card-title m-0 me-2">1:1 문의 완료 리스트</h5>
+							<h5 class="card-title m-0 me-2">나의 쪽지 리스트</h5>
 							<div class="dropdown">
 								<button class="btn p-0" type="button" id="transactionID"
 									data-bs-toggle="dropdown" aria-haspopup="true"
@@ -366,28 +366,26 @@
 										<tr>
 											<th class="text-center">번호</th>
 											<th class="text-center">주제</th>
-											<th class="text-center">작성자</th>
-											<th class="text-center">수정일자</th>
+											<th class="text-center">내용</th>
+											<th class="text-center">작성일자</th>
 										</tr>
 									</thead>
 									<tbody>
-										<c:forEach items="${HomeInquiryList}" var="ilist">
-											<c:if test="${ilist.inq_name eq member.me_name}">
+										<c:forEach items="${modalMessageList}" var="ilist">
 												<tr>
 													<td class="text-center">
-														<c:out value="${ilist.inq_no}" />
+														<c:out value="${ilist.rowNo}" />
 													</td>
-													<td><strong><a href="/inquiry/detail?inq_no=${ilist.inq_no}">
-														<c:out value="${ilist.inq_title}" /></a></strong>
-													</td>
-													<td class="text-center">
-														<c:out value="${ilist.inq_name}" />
+													<td><strong><a href="/message/detail?msg_id=${ilist.msg_id}">
+														<c:out value="${ilist.msg_title}" /></a></strong>
 													</td>
 													<td class="text-center">
-														<fmt:formatDate pattern="yyyy-MM-dd" value="${ilist.inq_updateDate}" />
+														<c:out value="${ilist.msg_content}" />
+													</td>
+													<td class="text-center">
+														<fmt:formatDate pattern="yyyy-MM-dd" value="${ilist.create_dt}" />
 													</td>
 												</tr>
-											</c:if>
 										</c:forEach>
 								</tbody>
 							</table>

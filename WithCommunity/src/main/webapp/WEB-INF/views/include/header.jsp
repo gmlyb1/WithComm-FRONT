@@ -44,6 +44,7 @@
 	<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 	<link rel="stylesheet" href="/resources/css/main.css">
 	
+	<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
     <script src="/resources/assets/vendor/js/helpers.js"></script>
     <script src="/resources/assets/js/config.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script> 
@@ -53,7 +54,6 @@
  		var socket = null;
 		var sock = new SockJS("/echo");
  		$(document).ready(function() {
- 			
  			var sessionId = $("#session_id").val();
  			
  			if(sessionId !== null) {
@@ -101,10 +101,49 @@
  			}); 
  			
  			
- 			$("#alarmCount").on("click",function() {
- 				console.log('클릭');
+ 			$("#message_send_btn").on("click",function() {
+				$('#MsgForm').modal("show");
  			});
  			
+ 			$("#msg_submit").click(function() {
+ 				var recevName = $("#recev_name").val();
+ 				var msgTitle = $("#msg_title").val();
+ 				var msgContent = $("#msg_content").val();
+ 				
+ 				if(recevName == "") {
+ 					alert("받는 사람을 선택해 주십시오.");
+ 					return false;
+ 				}
+ 				
+ 				if(msgTitle == "") {
+ 					alert("제목을 입력해 주십시오");
+ 					return false;
+ 				}
+ 				
+ 				if(msgContent == "") {
+ 					alert("내용을 입력해 주십시오 ");
+ 					return false;
+ 				}
+ 				
+ 				var msg = "쪽지를 보내시겠습니까?";
+ 				
+ 				if(!confirm(msg)) 
+				return false;
+ 				
+ 				$.ajax({
+ 					url:"/message/sendMsg",
+ 					type:"post",
+ 					data: $(".msg_form").serialize(),
+ 					success:function(data) {
+ 						alert("쪽지 보내기를 완료하였습니다!");
+ 						console.log('보내기 완료');
+ 						$('#MsgForm').modal('hide');
+ 					},
+ 				    error: function(jqXHR, textStatus, errorThrown) {
+ 				        console.log("AJAX 요청 실패:", textStatus, errorThrown);
+ 				    }
+ 				}); 
+ 			});
  			
  			// 자유게시판 클릭했을때 list를 get으로 넘겼기 때문에 default로 pageNum & amount를 설정한다.
  			$("#BoardLink").click(function(e) {
@@ -128,23 +167,85 @@
  				$("#noticeForm").submit();
  			});
  			// 제이쿼리 끝
+ 			
+ 			 // 'alarmCount' 클릭 시 모달 열기
+ 		    $('#alarmCount').click(function(event) {
+ 		        event.preventDefault(); // 기본 동작 방지
+ 		        $('#MsgForm').modal('show'); // 모달 열기
+ 		    });
+ 			
+ 			$("#exit").click(function(event) {
+ 				event.preventDefault();
+ 				$("#MsgForm").modal('hide');
+ 			})
  		});
- 		
  		
  		
  		
  	</script>
  	<style>
- 		.custom-list {
-            margin-bottom: 20px;
-        }
-        .custom-link {
-            color: #007bff; /* 부트스트랩의 primary color */
-            text-decoration: none;
-        }
-        .custom-link:hover {
-            text-decoration: underline;
-        }
+	/* 모달 기본 스타일 */
+	.modal-content {
+	    border-radius: 8px;
+	    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+	}
+	
+	.modal-header {
+	    border-bottom: none;
+	    padding: 15px;
+	    background-color: #f8f9fa;
+	}
+	
+	.modal-title {
+	    font-weight: bold;
+	    font-size: 1.25rem;
+	}
+	
+	.close {
+	    font-size: 1.5rem;
+	    line-height: 1;
+	    color: #000;
+	    opacity: 0.5;
+	}
+	
+	.modal-body {
+	    padding: 20px;
+	}
+	
+	.form-group {
+	    margin-bottom: 1rem;
+	}
+	
+	.form-group label {
+	    font-weight: bold;
+	}
+	
+	.form-control {
+	    border-radius: 4px;
+	    border: 1px solid #ced4da;
+	    box-shadow: none;
+	}
+	
+	.modal-footer {
+	    border-top: none;
+	    padding: 15px;
+	    background-color: #f8f9fa;
+	}
+	
+	.btn-primary {
+	    background-color: #007bff;
+	    border-color: #007bff;
+	}
+	
+	.btn-secondary {
+	    background-color: #6c757d;
+	    border-color: #6c757d;
+	}
+	
+	.btn {
+	    border-radius: 4px;
+	    padding: 10px 20px;
+	}
  	</style>
   </head>
 
@@ -388,7 +489,7 @@
 				                    </a>
 				                </li>
 				                <li>
-				                    <a class="dropdown-item" href="/msg/list">
+				                    <a class="dropdown-item" href="/message/list">
 				                        <i class="bx bx-cog me-2"></i>
 				                        <span class="align-middle" id="ready">쪽지</span>
 				                    </a>
@@ -433,3 +534,73 @@
 				</ul>
             </div>
           </nav>
+          
+        <!-- 쪽지 모달 -->
+		<div class="modal fade" id="MsgForm" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+		    <div class="modal-dialog" role="document">
+		        <div class="modal-content">
+		            <div class="modal-header">
+		                <h5 class="modal-title" id="exampleModalLabel">쪽지 작성</h5>
+		                <button type="button" class="close" data-dismiss="modal" aria-label="Close" id="exit">
+		                    <span aria-hidden="true">&times;</span>
+		                </button>
+		            </div>
+		            <form class="msg_form">
+		                <input type="hidden" id="flag" name="flag" value="insert"/>
+		                <input type="hidden" id="me_email" name="me_email" value="${member.me_email}"/>
+		                <div class="modal-body">
+		                    <div class="form-group">
+		                        <label for="sender_name">작성자</label>
+		                        <input type="text" id="sender_name" name="sender_name" class="form-control" value="${member.me_email}" readonly/>
+		                    </div>
+		                    <div class="form-group">
+		                        <label for="recev_name">받는 사람</label>
+		                        <select id="recev_name" name="recev_name" class="form-control">
+		                        		<option value="">선택</option>
+		                            <c:forEach var="list" items="${messageMemberList}" varStatus="status">
+		                                <option value="${list.me_email}">${list.me_email}</option>
+		                            </c:forEach>
+		                        </select>
+		                    </div>
+		                    <div class="form-group">
+		                        <label for="msg_title">제목</label>
+		                        <input type="text" id="msg_title" name="msg_title" class="form-control"/>
+		                    </div>
+		                    <div class="form-group">
+		                        <label for="msg_content">내용</label>
+		                        <textarea id="msg_content" name="msg_content" class="form-control"></textarea>
+		                    </div>
+		                  <div class="form-group">
+							    <table class="table table-bordered table-striped">
+							        <thead>
+							            <tr>
+							                <th class="text-center">번호</th>
+							                <th class="text-center">제목</th>
+							                <th class="text-center">내용</th>
+							                <th class="text-center">보낸사람</th>
+							                <th class="text-center">작성일자</th>
+							            </tr>
+							        </thead>
+							        <tbody>
+							            <c:forEach items="${modalMessageList}" var="list">
+							                <tr>
+							                    <td class="text-center">${list.rowNo}</td>
+							                    <td class="text-center">${list.msg_title}</td>
+							                    <td class="text-center">${list.msg_content}</td>
+							                    <td class="text-center">${list.sender_name}</td>
+							                    <td class="text-center">${list.create_dt}</td>
+							                </tr>
+							            </c:forEach>
+							        </tbody>
+							    </table>
+							</div>
+		                </div>
+		                <div class="modal-footer">
+		                    <button class="btn btn-primary" type="button" id="msg_submit">SEND</button>
+		                </div>
+		            </form>
+		        </div>
+		    </div>
+		</div>
+         
+         <!-- 쪽지 모달 -->

@@ -43,6 +43,8 @@ public interface AccountDAO {
 	
 	public void passwordUpdate(AccountVO aVO)throws Exception;
 
+	public List<AccountVO> messageMemberList(AccountVO vo)throws Exception;
+
 
 
 	

@@ -101,6 +101,11 @@ public class AccountDAOImpl implements AccountDAO{
 		return sqlSession.selectOne("namespace.idChk", aVO);
 	}
 
+	@Override
+	public List<AccountVO> messageMemberList(AccountVO vo) throws Exception {
+		return sqlSession.selectList("namespace.messageMemberList",vo);
+	}
+
 
 
 

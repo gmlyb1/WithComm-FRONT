@@ -41,4 +41,6 @@ public interface AccountService {
 	public void passwordUpdate(AccountVO aVO)throws Exception;
 
 	public AccountVO memberIdSearch(AccountVO aVO)throws Exception;
+
+	public List<AccountVO> messageMemberList(AccountVO vo)throws Exception;
 }

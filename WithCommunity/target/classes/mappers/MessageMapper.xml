@@ -6,7 +6,65 @@
 <mapper namespace="com.with.community.dao.MessageDAO">
 	
 	<select id="countMessageView" resultType="String">
-	select count(*) from tbl_message where recev_name = #{recev_name} and gubun = 0
+		select count(*) from tbl_message where recev_name = #{recev_name} and gubun = 0
 	</select>
+	
+	<select id="selectMessageList" parameterType="MessageVO" resultType="MessageVO">
+		SELECT 
+		    rowNo,
+		    msg_id,
+		    msg_title,
+		    msg_content,
+		    recev_name,
+		    gubun,
+		    create_dt,
+		    sender_name,
+		    me_email,
+		    read_yn
+		FROM (
+		    SELECT 
+		        ROW_NUMBER() OVER (ORDER BY create_dt DESC) AS rowNo,
+		        msg_id,
+		        msg_title,
+		        msg_content,
+		        recev_name,
+		        gubun,
+		        create_dt,
+		        sender_name,
+		        me_email,
+		        read_yn
+		    FROM tbl_message
+		    WHERE recev_name = #{recev_name}
+		      AND gubun = 0
+		) AS subquery
+		ORDER BY create_dt desc
+		LIMIT 5
+	</select>
+
+	<insert id="sendMessage">
+		insert into tbl_message 
+		(
+			 msg_id
+			,msg_title
+			,msg_content
+			,recev_name
+			,gubun
+			,create_dt
+			,sender_name
+			,me_email
+			,read_yn
+		) values
+		(
+			#{msg_id}
+		,	#{msg_title}
+		,	#{msg_content}
+		,	#{recev_name}
+		,	#{gubun}
+		,	SYSDATE()
+		,	#{sender_name}
+		,   #{me_email}
+		,	#{read_yn}	
+		)	
+	</insert>
 	
 </mapper>

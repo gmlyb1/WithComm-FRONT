@@ -29,10 +29,10 @@ public class EchoHandler extends TextWebSocketHandler{
 	@Override
 	public void afterConnectionEstablished(WebSocketSession session) throws Exception {
 		String user_name = searchUserName(session);
-		logger.info("user_name:"+user_name);
+//		logger.info("user_name:"+user_name);
 		sessionList.add(session);
 		session.sendMessage(new TextMessage("recMs : " + messageService.countMessageView(user_name)));
-		logger.info("recMs: " + messageService.countMessageView(user_name));
+//		logger.info("recMs: " + messageService.countMessageView(user_name));
 	}
 	
 	@Override
@@ -63,7 +63,7 @@ public class EchoHandler extends TextWebSocketHandler{
 		        logger.error("Error retrieving user name during afterConnectionClosed: " + e.getMessage(), e);
 		    }
 		    
-		    logger.info("연결 끊어짐: " + (user_name != null ? user_name : "Unknown user"));
+//		    logger.info("연결 끊어짐: " + (user_name != null ? user_name : "Unknown user"));
 
 		    // Iterate over a copy of the session list to avoid ConcurrentModificationException
 		    List<WebSocketSession> sessionsToRemove = new ArrayList<>();
@@ -93,7 +93,7 @@ public class EchoHandler extends TextWebSocketHandler{
 		map = session.getAttributes();
 		AccountVO account = (AccountVO) map.get("member");
 		user_name = (account != null) ? account.getMe_email() : null;
-		logger.info("여기서는?:"+user_name);
+//		logger.info("여기서는?:"+user_name);
 		return user_name;
 	}
 }

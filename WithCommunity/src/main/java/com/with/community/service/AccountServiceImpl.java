@@ -81,6 +81,11 @@ public class AccountServiceImpl implements AccountService {
 	public AccountVO idChk(AccountVO aVO) throws Exception {
 		return accountDAO.idChk(aVO);
 	}
+	@Override
+	public List<AccountVO> messageMemberList(AccountVO vo) throws Exception {
+		// TODO Auto-generated method stub
+		return accountDAO.messageMemberList(vo);
+	}
 
 
 }
